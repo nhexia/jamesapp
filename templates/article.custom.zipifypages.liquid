@@ -1,9 +1,5 @@
-{% assign zp_use_favicon = false %}{% assign zp_use_meta_tags = false %}{% assign zp_use_open_graph_tags = false %}{% assign wholesale = false %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
+{% assign zp_use_favicon = false %}{% assign zp_use_meta_tags = false %}{% assign zp_use_open_graph_tags = false %}
+{% include 'wholesale-check' %}
 
 {% assign disable_cart = false %}
 {% if wholesale and settings.wholesale_min_cart != blank %}
@@ -677,12 +673,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   
   
-  {% assign wholesale = false %}
-  {% if customer %}
-    {% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-      {% assign wholesale = true %}
-    {% endif %}
-  {% endif %}
+  {% include 'wholesale-check' %}
 
   <script>
   {% if cart.item_count > 0 %}

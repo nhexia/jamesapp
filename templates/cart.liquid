@@ -1,10 +1,5 @@
-{% assign wholesale = false %}
 {% assign cart_total = cart.total_price | money_without_currency %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
+{% include 'wholesale-check' %}
 
 {% if wholesale %}
 	{% if settings.freeship_whole_en and settings.freeship_whole_amount != blank and cart_total >= settings.freeship_whole_amount and settings.freeship_whole_code != blank %}

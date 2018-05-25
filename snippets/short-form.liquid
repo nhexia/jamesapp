@@ -1,11 +1,5 @@
 {% assign clearance_prod = false %}
-
-{% assign wholesale = false %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
+{% include 'wholesale-check' %}
 
 {% assign selectedVariant = product.selected_or_first_available_variant %}
 {% assign proceedChange = false %}
@@ -144,8 +138,12 @@
     <a class="shipping-icon" >
       <img src="{{ 'shipping-icon.png' | asset_url }}"  />
       <span>
-        <a href="/pages/shipping-policy"> 
-          Fast &amp; Free Shipping for purchases ${{ settings.freeship_msg_amount }}  &amp; over 
+        <a href="/pages/shipping-policy">
+          {% if wholesale %}
+            {{ 'products.product.wholesale_promotion' | t: amount: settings.freeship_msg_amount }}
+          {% else %}
+            {{ 'products.product.promotion' | t: amount: settings.freeship_msg_amount }}
+          {% endif %}
         </a>
       </span>
     </a>

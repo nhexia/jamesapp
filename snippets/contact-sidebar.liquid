@@ -2,21 +2,27 @@
   <div class="secondary-content need-assistance-asset">
   	<title>Quick Links</title>
     <ul class="contact-info">
-      <li>
-        <a href="/pages/faq">FAQ</a>
-      </li>
-      <li>
-        <a href="/pages/exchanges-returns">Exchanges &amp; Returns</a>
-      </li>
-      <li>
-        <a href="/pages/shipping-info">Shipping Info</a>
-      </li>
-      <li>
-        <a href="/pages/about-us">About Us</a>
-      </li>
-      <li>
-        <a href="/pages/privacy-policy">Privacy Policy</a>
-      </li>
+      {% if template contains 'wholesale' and linklists[settings.wholesale-sidebar-linklist].links.size > 0 %}
+        {% for link in linklists[settings.wholesale-sidebar-linklist].links %}
+          <li>{{ link.title | link_to: link.url }}</li>   
+        {% endfor %}
+      {% else %}
+        <li>
+          <a href="/pages/faq">FAQ</a>
+        </li>
+        <li>
+          <a href="/pages/exchanges-returns">Exchanges &amp; Returns</a>
+        </li>
+        <li>
+          <a href="/pages/shipping-info">Shipping Info</a>
+        </li>
+        <li>
+          <a href="/pages/about-us">About Us</a>
+        </li>
+        <li>
+          <a href="/pages/privacy-policy">Privacy Policy</a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 </div>

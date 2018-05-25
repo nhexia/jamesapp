@@ -8,7 +8,7 @@
 
 	.selecter-element { *left: -999999px; position: absolute; opacity: 0; }
 	.selecter { display: block; margin: 10px 0; position: relative; z-index: 1; }
-.selecter .selecter-selected { background: transparent url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/select-arrow.png?10545828690735457811) no-repeat right center; border: 1px solid #f0f0f0; border-radius: 3px; color: #333333; cursor: pointer; display: block; font-size: 13px; margin: 0; overflow: hidden; padding: 8px 10px; position: relative; text-overflow: clip; z-index: 49; }
+.selecter .selecter-selected { background: transparent url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/select-arrow.png?13710705598528881501) no-repeat right center; border: 1px solid #f0f0f0; border-radius: 3px; color: #333333; cursor: pointer; display: block; font-size: 13px; margin: 0; overflow: hidden; padding: 8px 10px; position: relative; text-overflow: clip; z-index: 49; }
 	.selecter .selecter-options { border: 1px solid #ccc; border-left: 0; border-right: 0;border-width: 0 1px 1px; background-color: #fefefe; border-radius: 0 0 3px 3px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15); display: none; left: 0; margin: 0; max-height: 260px; overflow: auto; overflow-x: hidden; padding: 0; position: absolute; top: 100%; width: 100%; *width: auto; z-index: 50; }
 	.selecter .selecter-group { background: #F9F9F9; border-bottom: 1px solid #e3e3e3; color: #999; display: block; font-size: 11px; padding: 5px 10px 4px; text-transform: uppercase; }
 	.selecter .selecter-item { background: #fff; border-bottom: 1px solid #e3e3e3; color: #333; cursor: pointer; display: block; font-size: 13px; margin: 0; overflow: hidden; padding: 8px 10px; text-overflow: ellipsis; width: 100%; }

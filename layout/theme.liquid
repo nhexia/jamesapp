@@ -1,10 +1,4 @@
-{% assign wholesale = false %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
-
+{% include 'wholesale-check' %}
 {% assign disable_cart = false %}
 {% if wholesale and settings.wholesale_min_cart != blank %}
   {% assign disable_cart = true %}
@@ -285,6 +279,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>  
           
       		<ul class="top-right-bar">
+              
               {% if customer %}
 	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
             <li><a class="button" href="/account/logout">Wholesale Logout</a></li>             
@@ -294,6 +289,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               {% else %}
             <li><a class="button" href="/pages/wholesale">Wholesale Login</a></li>
               {% endif %}
+              
         		{% comment %}
             <li><a href="https://butterflycraze.myshopify.com/pages/shipping-policy "><img src="{{ 'shipping-icon.png' | asset_url }}"  /><span class="box-title">Free Shipping</span><br><span class="box-tag">Over ${{ settings.freeship_msg_amount }}</span></a></li>
         		<li><a href="https://butterflycraze.myshopify.com/pages/return-policy "><img src="{{ 'return-icon.png' | asset_url }}"  /><span class="box-title">Easy Returns</span><br><span class="box-tag">30 Day Policy</span></a></li>
@@ -688,12 +684,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   
   
-  {% assign wholesale = false %}
-  {% if customer %}
-    {% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-      {% assign wholesale = true %}
-    {% endif %}
-  {% endif %}
+  {% include 'wholesale-check' %}
 
   <script>
   {% if cart.item_count > 0 %}

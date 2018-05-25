@@ -14,7 +14,7 @@
 .newsletter-new .newsletterMsg span, .connect-with-us-text span {letter-spacing: 2px; font-weight: 400;}
 
 .newsletter-new {
-  background: url( //cdn.shopify.com/s/files/1/1957/5419/t/57/assets/newsletterBg.jpg?10545828690735457811 ) repeat scroll 0 0 rgba(0, 0, 0, 0);
+  background: url( //cdn.shopify.com/s/files/1/1957/5419/t/59/assets/newsletterBg.jpg?13710705598528881501 ) repeat scroll 0 0 rgba(0, 0, 0, 0);
 	background-size: cover;
   background-position: bottom;
   padding: 36px 0 20px;
@@ -64,12 +64,12 @@
 .privacy-link {padding: 6px 0 15px 0;text-align:left;}
 .privacy-link a{font-size:14px;color:#000 !important;line-height:30px;letter-spacing:0.5px;font-family: 'open_sanssemibold';text-transform:uppercase;}
 .newsletterwrapper{
-  /*background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/popup-back.jpg?10545828690735457811); border: 5px solid #ffffff;*/ 
+  /*background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/popup-back.jpg?13710705598528881501); border: 5px solid #ffffff;*/ 
   width:100%; /*height:513px; background-size: cover; */ background-color:#fff;position:relative;}
 .newsletterpopup{display:block ;}
 #newsletterthanks{display:none;}
 .newsletterpopup form{ margin: 0 0 8px;}
-#newsletterpopup {/* background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/popup-back.jpg?10545828690735457811);*/ color:#fff; /*height:470px;*/ text-align:center;padding: 25px 60px 45px; }
+#newsletterpopup {/* background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/popup-back.jpg?13710705598528881501);*/ color:#fff; /*height:470px;*/ text-align:center;padding: 25px 60px 45px; }
 #newsletterpopup .TextBox h2{ margin:0 0 18px 0; font-size:54px; text-transform:capitalize;color:#f0a3c7;font-family: 'FiraSansCondensedRegular';}
 #newsletterpopup .TextBox h4{line-height:32px;font-size:30px;letter-spacing:1.2px;color:#000; font-family: 'open_sansregular';margin: 8px 0;}
 #newsletterpopup .TextBox p{line-height:34px;font-size:20px;}
@@ -108,7 +108,7 @@
 #newsletterpopup .NewsForm .fieldFixH input::-moz-placeholder { opacity:0.5; font-style:normal !important; text-transform:uppercase; font-size:14px; }
 #newsletterpopup .NewsForm .fieldFixH input:-ms-input-placeholder { opacity:0.5; font-style:normal !important; text-transform:uppercase; font-size:14px; }
 
-#newsletterthanks { /* background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/popup-back.jpg?10545828690735457811) ;*/ 
+#newsletterthanks { /* background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/popup-back.jpg?13710705598528881501) ;*/ 
   color:#fff; width:auto; height:470px; text-align:center; }
 #newsletterthanks h2{color:; line-height:33px; margin:0px 0px 7px 0px; font-size:30px; text-transform:uppercase; font-weight:bold;}
 #newsletterthanks h3{color:; line-height:26px; margin:20px auto; font-size:18px; font-weight:normal; width:60%;}
@@ -171,7 +171,7 @@
   #newsletterpopup .NewsForm .row-fluid {margin-bottom:0 !important;}
   #newsletterpopup .NewsForm input.first {margin-bottom:0 !important;}
   .newsletterwrapper {width:100% !important; height:auto;}
-#newsletterpopup{ background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/popup-back.jpg?10545828690735457811) no-repeat center center fixed;  color:#fff;   -webkit-background-size: cover;
+#newsletterpopup{ background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/popup-back.jpg?13710705598528881501) no-repeat center center fixed;  color:#fff;   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover; width:100% !important; height:100%; text-align:center;}
@@ -183,7 +183,7 @@
   
 #newsletterthanks .TextBox{width:80% !important; margin:0px auto;}
 
-#newsletterthanks{ background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/popup-back.jpg?10545828690735457811) no-repeat center center fixed;  color:#fff;   -webkit-background-size: cover;
+#newsletterthanks{ background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/popup-back.jpg?13710705598528881501) no-repeat center center fixed;  color:#fff;   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover; width:100% !important; height:100%; text-align:center;}
@@ -205,7 +205,7 @@
   min-height: 15px;
 }
 
-.p-loader{background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/loader-heart.GIF?10545828690735457811) no-repeat scroll center center #ffffff !important;}
+.p-loader{background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/loader-heart.GIF?13710705598528881501) no-repeat scroll center center #ffffff !important;}
 
 
 }
@@ -222,7 +222,7 @@
   
 }
 
-#newsletterwrapper .fancybox-close-popup { position:absolute; /*background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/close-icon.png?10545828690735457811) no-repeat scroll 0 0;*/  right: 20px; top: 20px;}
+#newsletterwrapper .fancybox-close-popup { position:absolute; /*background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/close-icon.png?13710705598528881501) no-repeat scroll 0 0;*/  right: 20px; top: 20px;}
 #newsletterwrapper .fancybox-close-popup img {width: 100%; }
 
 @media (max-width: 768px) {

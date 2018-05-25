@@ -1,9 +1,5 @@
-{% assign wholesale = false %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
+{% include 'wholesale-check' %}
+
 {% if wholesale and settings.freeship_whole_en and settings.freeship_whole_code != blank %}
 	{% assign ship_amount = settings.freeship_whole_amount %}
 {% endif %}

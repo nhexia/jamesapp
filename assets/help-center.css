@@ -95,7 +95,7 @@ body.page-support .fancybox-wrap {
 .email-popup-form .sbHolder { border-radius:0; margin:50px 0 20px; border:2px solid #323334; font-family: 'open_sansbold'; font-weight:normal; letter-spacing:0.35px; }
 .email-popup-form .sbOptions { left:-2px; border:2px solid #000; margin:-4px 0 0 !important;}
 body.page-support { transition:all 0.5s ease; -webkit-transition:all 0.5s ease; -moz-transition:all 0.5s ease; }
-body.page-support .fancybox-close {background: url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/popup-closeicon.png?10545828690735457811) no-repeat right center; width:28px; height:28px; margin:0; right:20px; top:20px; }
+body.page-support .fancybox-close {background: url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/popup-closeicon.png?13710705598528881501) no-repeat right center; width:28px; height:28px; margin:0; right:20px; top:20px; }
 body.page-support .fancybox-close:before { display:none;}
 body.page-support .fancybox-overlay { background:none;}
 body.page-support .fancybox-skin { height:100% !important; box-shadow:none; }

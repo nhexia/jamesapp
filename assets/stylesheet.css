@@ -151,7 +151,7 @@ top: 0;}
 .collection-banner{margin-bottom:20px;}
 #homepage-products .owl-controls .owl-buttons .owl-prev { float:left; position:absolute;left:-40px;}
 #homepage-products .owl-controls .owl-buttons .owl-next { float:right;position:absolute;right:-40px;}
-.header-bottom .searchbox .search_btn{ background-repeat: no-repeat;background-size: 100% auto;border: medium none;height: 21px;margin-top: -8px;position: absolute;left: 10px;text-indent: -9999px !important;top: 50%;width: 16px;background-color: rgba(0, 0, 0, 0);background-repeat: no-repeat;margin: 0;padding: 0;transform: translateY(-50%);-moz-transform: translateY(-50%);-webkit-transform: translateY(-50%);-o-transform: translateY(-50%);-ms-transform: translateY(-50%); background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/search.png?10545828690735457811) no-repeat center center;}
+.header-bottom .searchbox .search_btn{ background-repeat: no-repeat;background-size: 100% auto;border: medium none;height: 21px;margin-top: -8px;position: absolute;left: 10px;text-indent: -9999px !important;top: 50%;width: 16px;background-color: rgba(0, 0, 0, 0);background-repeat: no-repeat;margin: 0;padding: 0;transform: translateY(-50%);-moz-transform: translateY(-50%);-webkit-transform: translateY(-50%);-o-transform: translateY(-50%);-ms-transform: translateY(-50%); background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/search.png?13710705598528881501) no-repeat center center;}
 .header-bottom .right-block{display: inline-block;width: 100%;text-align:right;}
 .header-bottom .right-block p{ padding: 11px 9px 7px 10px;display:inline-block;  margin: 0;font-family: 'Imprima', sans-serif;color:#fff;font-size:19px;vertical-align:middle;}
 .header-bottom .cart-ad li{list-style:none;display:inline-block;}
@@ -200,7 +200,7 @@ ul#main-nav li a:hover{color:#f269a8 !important;}
 #footer-icons{margin-top:40px !important;}
 ul#main-nav li ul.submenu li a{padding:5px;}
 .selecter .selecter-item{font-size:16px !important;}
-.selecter .selecter-selected{background: transparent url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/down-arrow.png?10545828690735457811) no-repeat right center !important;border: 2px solid #cdcccc !important;font-size:16px !important;color:#616262; font-family: "imprima";background-position: 97% 50% !important;} 
+.selecter .selecter-selected{background: transparent url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/down-arrow.png?13710705598528881501) no-repeat right center !important;border: 2px solid #cdcccc !important;font-size:16px !important;color:#616262; font-family: "imprima";background-position: 97% 50% !important;} 
 .selecter-selected{color:#c1c5c8;}
 .section-title.collectio-head h1{font-size:38px !important;text-transform:capitalize;font-family: 'Fira Sans Condensed', sans-serif;font-weight:normal;}
 .selector.collection .selecter-selected{color:#cdcccc;}
@@ -221,7 +221,7 @@ ul#main-nav li ul.submenu li a{padding:5px;}
 #sidebar ul li a:hover{color:#f269a8;}
 #sidebar.sticky{position:static !important;width:100% !important;}
 .sale-thum{position:absolute;right:-10px;;top:-60px;}
-.selector-wrapper .single-option-selector{margin-bottom:10px;background: transparent url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/down-arrow.png?10545828690735457811) no-repeat right center !important;border: 2px solid #cdcccc !important;font-size:16px;color:#616262; font-family: "imprima";background-position: 97% 50% !important;padding:8px 10px;appearance: none;-moz-appearance: none;-webkit-appearance: none;-ms-appearance: none;-o-appearance: none;width:100%;}
+.selector-wrapper .single-option-selector{margin-bottom:10px;background: transparent url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/down-arrow.png?13710705598528881501) no-repeat right center !important;border: 2px solid #cdcccc !important;font-size:16px;color:#616262; font-family: "imprima";background-position: 97% 50% !important;padding:8px 10px;appearance: none;-moz-appearance: none;-webkit-appearance: none;-ms-appearance: none;-o-appearance: none;width:100%;}
 #product-description .single-option-selector{color:#c1c5c8 !important;}
 .heading-top-title{padding:20px  0 5px 0!important;margin-bottom:8px !important;}
 .product-content .right a{display:none;}
@@ -2874,7 +2874,7 @@ body[data-template="product"] .jdgm-form__rating-fieldset .jdgm-star{color:#72c5
 
 /* 404 page */
 
-.int-banner{display:inline-block;width:100%;background-image:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/404bg.png?10545828690735457811); background-position:right bottom; background-repeat:no-repeat;padding:75px 0 150px 0;background-size:75% auto;}
+.int-banner{display:inline-block;width:100%;background-image:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/404bg.png?13710705598528881501); background-position:right bottom; background-repeat:no-repeat;padding:75px 0 150px 0;background-size:75% auto;}
 .int-banner .inner-content {width:100%;max-width:435px;}
 .int-banner .inner-content h1{ color: #72c5ba;font-size: 103px;text-transform: capitalize;font-family: 'FiraSansCondensedMedium';margin-bottom:25px;font-weight:normal;}
 .int-banner .inner-content h3{color: #72c5ba;font-size: 38px;text-transform: none;font-family: 'imprima';font-weight:normal;line-height:53px;margin-bottom:28px;}
@@ -4098,8 +4098,8 @@ nav.shifter-navigation {
   transition: 		transform 0.2s ease !important;
 }
 .shifter-active .shifter-handle { 
- /* background: url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/jquery.fs.shifter-icon.png?10545828690735457811) no-repeat center center; */
- /* background: url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/mobile-bar.png?10545828690735457811) no-repeat center center; */
+ /* background: url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/jquery.fs.shifter-icon.png?13710705598528881501) no-repeat center center; */
+ /* background: url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/mobile-bar.png?13710705598528881501) no-repeat center center; */
   cursor: pointer; content: ''; 
   display: block; 
   float: right; 
@@ -4402,7 +4402,7 @@ a.fr {
 
 .flex-loading {
   min-height: 500px; 
-  background: url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/loader.gif?10545828690735457811);
+  background: url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/loader.gif?13710705598528881501);
   background-repeat: no-repeat;
   background-position: center center !important;
 }
@@ -4632,7 +4632,7 @@ a.bx-next:after {
 /* Password Page */
 
 body.password { 
-  background: #ffffff url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/password-page-background.jpg?10545828690735457811) ;  background-position: center center;
+  background: #ffffff url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/password-page-background.jpg?13710705598528881501) ;  background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
@@ -4891,7 +4891,7 @@ transition: all 0.5s ease 0s; -webkit-transition: all 0.5s ease 0s; -moz-transit
   .wishlistbodycontainer .products .container-fluid [class*="col-"] { float: left; width: 50%; }
 .wishlistbodycontainer .products .container-fluid .product .text .variant_title { min-height:18px; }
  #main-newsletter{background: #ffffff none repeat scroll 0 0;bottom: -500px;left: 0;position: fixed;right: 0;transition: all 0.7s ease-in 0.3s;-moz-transition: all 0.7s ease-in 0.3s;-webkit-transition: all 0.7s ease-in 0.3s;-o-transition: all 0.7s ease-in 0.3s;-ms-transition: all 0.7s ease-in 0.3s;width: 100%;z-index: 99; overflow-y: scroll;padding:40px 0 15px 0;height:auto;border-top:1px solid #f0f0f0;display:block !important;}  
-  #main-newsletter .close-popup{background:url(//cdn.shopify.com/s/files/1/1957/5419/t/57/assets/close-popup.jpg?10545828690735457811);background-position:left top; background-repeat:no-repeat; height: 18px;position: absolute;right: 20px;top: 12px;width: 17px;}  
+  #main-newsletter .close-popup{background:url(//cdn.shopify.com/s/files/1/1957/5419/t/59/assets/close-popup.jpg?13710705598528881501);background-position:left top; background-repeat:no-repeat; height: 18px;position: absolute;right: 20px;top: 12px;width: 17px;}  
   #subscribe_popup{width:100%;display:block !important;}  
   #main-newsletter .left.fifty{display:none;}
   #main-newsletter .right.fifty{width:100%;padding:0 20px;}

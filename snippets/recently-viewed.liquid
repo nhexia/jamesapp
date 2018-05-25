@@ -1,9 +1,4 @@
-{% assign wholesale = false %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
+{% include 'wholesale-check' %}
 
 <div id="recently-viewed-products" class="collection clearfix" style="display:none">
   <h4>{{ 'cart.general.recently_viewed' | t }}</h4>

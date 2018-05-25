@@ -58,32 +58,52 @@
                     </div>
 
                     <div class="action_bottom account-show-form" >
-                        {% form 'create_customer' %}
-                            {{ form.errors | default_errors }}
-                            <input type="hidden" id="customer_tags" name="customer[tags]" value="wholesaler"/>
+                        {% form 'contact' %}
+                            {% if form.posted_successfully? %}
+                              {% assign contact_posted = true %}
+                              <p class="success">{{ 'contact.form.post_success' | t }}</p>
+                            {% endif %}
+
+                            {% if form.errors %}
+                              {% assign contact_posted = true %}
+                              <div class="errors">
+                                <!-- {{ form.errors.size }} or {{ form.errors | size }} -->
+                                <p>Your contact form has {{ form.errors | size | pluralize: ‘an error’, ‘a few errors’ }}. To submit your form, make the following changes and try again:</p>
+
+                                {% for field in form.errors %}
+                                  <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+
+                            <input type="hidden" name="contact[form type]" value="{{ contact-form | default: page.title }}" />
 
                             <div class="register-form">
                                 <div id="first_name" class="clearfix large_form">
-                                    <input type="text" value="" name="customer[first_name]" id="first_name" class="large" required placeholder="First Name" size="30" />
+                                    <input type="text" value="" name="contact[first_name]" id="first_name" class="large" required placeholder="First Name" size="30" />
                                 </div>
 
                                 <div id="last_name" class="clearfix large_form">
-                                    <input type="text" value="" name="customer[last_name]" id="last_name" class="large" required placeholder="Last Name" size="30" />
+                                    <input type="text" value="" name="contact[last_name]" id="last_name" class="large" required placeholder="Last Name" size="30" />
+                                </div>
+
+                                <div id="business_name" class="clearfix large_form">
+                                    <input type="text" value="" name="contact[business name]" id="business_name" class="large" required placeholder="Business Name" size="30" />
                                 </div>
 
                                 <div id="resale_license" class="clearfix large_form">
-                                    <input type="text" value="" name="customer[note][Resale License]" id="resale_license" class="large" required placeholder="Resale License" size="30" />
+                                    <input type="text" value="" name="contact[resale license]" id="resale_license" class="large" required placeholder="Resale License" size="30" />
                                 </div>
 
                                 <div id="email" class="clearfix large_form">
-                                    <input type="email" value="" name="customer[email]" id="email" class="large" required placeholder="Email" size="30" />
+                                    <input type="email" value="" name="contact[email]" id="email" class="large" required placeholder="Email" size="30" />
                                 </div>
 
-                                <div id="password" class="clearfix large_form">
-                                    <input type="password" value="" name="customer[password]" id="password" class="large password" required placeholder="Password" size="30" />
+                                <div id="phone" class="clearfix large_form">
+                                    <input type="text" value="" name="contact[phone]" id="phone" class="large" required placeholder="Phone" size="30" />
                                 </div>
 
-                                <input class="button create-accountbtn" type="submit" value="Login" />
+                                <input class="button create-accountbtn" type="submit" value="Submit" />
                             </div>
                         {% endform %}
                     </div>

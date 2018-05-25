@@ -1,9 +1,4 @@
-{% assign wholesale = false %}
-{% if customer %}
-	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
-		{% assign wholesale = true %}
-	{% endif %}
-{% endif %}
+{% include 'wholesale-check' %}
 {% assign min_price = 999999 %}
 {% assign max_price = 0 %}
 {% for variant in product.variants %}

@@ -1,15 +1,23 @@
-{% if settings.promos %}
+{% include 'wholesale-check' %}
+{% assign show_promos = settings.promos %}
+{% assign version = '' %}
+{% if wholesale %}
+	{% assign show_promos = settings.wholesale-promos %}
+	{% assign version = 'wholesale-' %}
+{% endif %}
+
+{% if show_promos %}
 	<div id="promo-banners" class="text-center">
 		<div class="inner">
 			{% for i in (1..3) %}
-				{% assign promo_show = 'promo-' | append: i %}
-				{% assign promo_title = 'promo-' | append: i | append: '-title' %}
-				{% assign promo_text = 'promo-' | append: i | append: '-text' %}
-				{% assign promo_link = 'promo-' | append: i | append: '-url' %}
-				{% assign popup_show = 'promo-' | append: i | append: '-popup' %}
-				{% assign popup_title = 'promo-popup-' | append: i | append: '-title' %}
-				{% assign popup_subtitle = 'promo-popup-' | append: i | append: '-subtitle' %}
-				{% assign popup_text = 'promo-popup-' | append: i | append: '-text' %}
+				{% assign promo_show = 'promo-' | prepend: version | append: i %}
+				{% assign promo_title = 'promo-' | prepend: version | append: i | append: '-title' %}
+				{% assign promo_text = 'promo-' | prepend: version | append: i | append: '-text' %}
+				{% assign promo_link = 'promo-' | prepend: version | append: i | append: '-url' %}
+				{% assign popup_show = 'promo-' | prepend: version | append: i | append: '-popup' %}
+				{% assign popup_title = 'promo-popup-' | prepend: version | append: i | append: '-title' %}
+				{% assign popup_subtitle = 'promo-popup-' | prepend: version | append: i | append: '-subtitle' %}
+				{% assign popup_text = 'promo-popup-' | prepend: version | append: i | append: '-text' %}
 
 				{% if settings[promo_show] %}
 					<div class="promo">
