@@ -1,0 +1,186 @@
+{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+
+{% assign opt_down = product-swatch | downcase %}
+
+{% if product-swatch == blank %}
+
+{% else %}
+
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+          {% assign curDowncaseOption = option | downcase %}
+          {% if curDowncaseOption contains 'size' %}
+            {% assign size_option_index = forloop.index0 %}
+                  {% endif %}
+  {% if option == product-swatch %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+    <style>
+      label[for="product-select-option-{{ option_index }}"] { display: none; }
+      #product-select-option-{{ option_index }} { display: none; }
+      #product-select-option-{{ option_index }} + .custom-style-select-box { display: none !important; }
+    </style>
+    <script>$(window).load(function() { $('.selector-wrapper:eq({{ option_index }})').hide(); });</script>
+    {% assign downcased_option = product-swatch | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+  
+{% else %}
+
+<div class="swatch clearfix {% if is_color %}select-product-color{% endif %}" data-option-index="{{ option_index }}">
+  
+  
+  <!--<div class="header">{{ product-swatch }}</div>-->
+  {% assign values = '' %}
+  <span>{{ product-swatch }}:</span>
+  
+  <!-- Color name -->
+  {% if is_color == true %}
+  <div class="swatch select-product-color color-name-cont">
+                <span class="selected-color">
+                  {% for xoption in product.selected_or_first_available_variant.options %}
+                    {% if product.options[forloop.index0] == 'Color' %}
+                    {{ xoption }}  
+                    {% endif %}
+                  {% endfor %}
+                </span>
+  </div>
+  {% endif %}
+  <!-- Color name -->
+  
+  <ul {% if is_color == false %}class="sizes"{% endif %} class="colors-variant">
+  {% for variant in product.variants %}
+    {% assign value = variant.options[option_index] %}
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}
+      {% assign values = values | append: ',' | append: value %} 
+      {% assign values = values | split: ',' %}
+      
+      {% assign filtering_size = '' %}
+      {% if is_color %}
+        {% include 'product-size-selector' %}
+      {% endif %}
+          <li data-filters="{{ filtering_size }}" data-value="{{ value | escape }}" class="swatch-element {% if is_color %}color {% endif %}{{ value | handle }} {% if variant.available %}available{% else %}soldout{% endif %} {% if is_color %}{% if variant == product.selected_or_first_available_variant %}{% if is_color %} active {% endif %}{% endif %}{% else %}{% if forloop.first %}{% if is_color %} active {% endif %}{% endif %} {% endif %} item">
+            
+            <input id="swatch-{{ option_index }}-{{ value | handle }}" type="radio" name="option-{{ option_index }}" value="{{ value | escape }}"{% if product.selected_or_first_available_variant == variant %}{% if is_color %} checked{% endif %}{% endif %} {% unless variant.available %}disabled{% endunless %}  style="display: none;"/>
+            {% if is_color %}
+            
+              {% assign is_color_found = false %}
+              {% assign color_image = 'soldout.png' | asset_url %}
+                {% for image in product.images %}
+                  {% if value == image.alt and is_color_found == false %}
+                      
+                  {% assign color_image = image.src | asset_url: 'small' %}
+                      {% assign is_color_found = true %}
+                  {% endif %}
+                {% endfor %}
+            
+            <!--<label for="swatch-{{ option_index }}-{{ value | handle }}" {% if is_color_found != true %}style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})"{% endif %}>
+                <img  src="{{ color_image }}" />
+            </label>-->
+            
+            
+            {% if is_color %}
+              <label for="swatch-{{ option_index }}-{{ value | handle }}-{{ product.id }}" style="background-color: {{ value | split: ' ' | last | handle }}; background-image: url({{ value | handle | downcase  | append: '.' | append: file_extension | asset_url }})">
+                <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+              </label>
+            {% else %}
+              <label for="swatch-{{ option_index }}-{{ value | handle }}-{{ product.id }}">
+                {{ value }}
+                <img class="crossed-out" src="{{ 'soldout.png' | asset_url }}" />
+              </label>
+            {% endif %}
+            
+            
+            {% else %}
+            <label for="swatch-{{ option_index }}-{{ value | handle }}">
+              {{ value }}
+            </label>
+            {% endif %}
+            {% if variant.available %}
+            <script>
+              jQuery('.swatch[data-option-index="{{ option_index }}"] .{{ value | handle }}').removeClass('soldout').addClass('available').find(':radio').removeAttr('disabled');
+            </script>
+            {% endif %}
+          </li>
+    {% endunless %}
+    
+  {% endfor %}
+  </ul>
+  
+</div>
+
+{% endunless %}
+
+{% endif %}
+<script>
+  $(document).ready(function(){
+    $('.owl-carousel').on('initialized.owl.carousel', function(event) {
+      SetSliderArrows()
+    });
+    $('.owl-carousel').owlCarouselNew({
+      loop:false,
+      margin:10,
+      nav:true,
+      mouseDrag: false,
+      touchDrag: false,
+      pullDrag: false,
+      responsive:{
+          0:{
+              items:2
+          },
+          600:{
+              items:3
+          },
+          1000:{
+              items:4
+          }
+      }
+  });
+  });
+</script>
+<script>
+  function SetSliderArrows()
+  {
+    var winW = $(window).width();
+    var items = $('.select-product-color .owl-carousel .owl-item').length;
+    if((winW >= 1000 && items <= 4 ) || (winW >= 600 && winW < 1000 && items <= 3 ) || (winW >= 0 && winW < 600 && items <= 3 ))
+    {
+      $('.select-product-color .owl-carousel .owl-nav').css('display','none');
+        $('.product-content .select-product-color ul').addClass('no-margin');
+    }
+    else
+    {
+      $('.select-product-color .owl-carousel .owl-nav').css('display','block');
+        $('.product-content .select-product-color ul').removeClass('no-margin');
+    }
+    
+  }
+  /*$(window).load(function(){
+    SetSliderArrows();
+    $(window).resize(function(){
+      SetSliderArrows();
+    });
+  });*/
+  
+</script>
+
+{% if found_option != true %}
+{% if opt_down contains 'color' or opt_down contains 'colour' %}
+    <style>
+          #product-photos .thumbnail-slider .slide { display: block !important; }
+        </style>
+  {% endif %}
+{% endif %}

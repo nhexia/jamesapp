@@ -1,0 +1,72 @@
+{% assign wholesale = false %}
+{% if customer %}
+	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+		{% assign wholesale = true %}
+	{% endif %}
+{% endif %}
+
+<div class="desktop-12 mobile-3 like-title" id="related">
+   <h4>You May Also Like...</h4>
+   <div class="related-carousel">
+     {% for i in (1..5) %}
+     	{% capture metaHandle %}similar_product_{{ i }}_handle{% endcapture %}
+     	{% assign prod_handle = product.metafields.c_f[metaHandle] %}
+    	{% if prod_handle != blank %}
+     		{% assign cur_prod = all_products[prod_handle] %}
+     		{% assign wholesale = false %}
+            {% if customer %}
+                {% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+                    {% assign wholesale = true %}
+                {% endif %}
+            {% endif %}
+     		{% assign min_price = 999999 %}
+            {% assign max_price = 0 %}
+            {% for cur_var in cur_prod.variants %}
+
+                {% assign proceed = false %}
+
+                {% if wholesale and cur_var.metafields.c_f.wholesale_variant == 'yes' %}
+                    {% assign proceed = true %}
+                {% endif %}
+
+                {% if wholesale != true and cur_var.metafields.c_f.wholesale_variant != 'yes' %}
+                    {% assign proceed = true %}
+                {% endif %}
+
+                {% if proceed %}
+
+                    {% if cur_var.price > max_price %}
+                        {% assign max_price = cur_var.price %}
+                    {% endif %}
+
+                    {% if cur_var.price < min_price %}
+                        {% assign min_price = cur_var.price %}
+                    {% endif %}
+
+                {% endif %}
+            {% endfor %}
+            <div class="lazyOwl" data-alpha="{{ cur_prod.title }}" data-price="{{ cur_prod.price }}">
+               <a href="{{ cur_prod.url }}" title="{{ cur_prod.title }}">
+               <img src="{{ cur_prod.featured_image | img_url: '500x' }}" alt="{{ cur_prod.title }}" />
+               </a>
+               <div class="product-details hide-product-price">
+                  <a href="{{ cur_prod.url }}">
+                     <h3>{{ cur_prod.title }}</h3>
+                  </a>
+                  <div class="price">
+    
+                    <div class="prod-price">
+                      {% if min_price < max_price %} 
+                        {{ 'products.general.from' | t }} 
+                        {{ min_price | money }} - {{ max_price | money }} 
+                      {% else %}
+                        {{ max_price | money }}
+                      {% endif %}
+                    </div>
+                  </div>
+               </div>
+            </div>
+     	{% endif %}
+    {% endfor %}
+   </div>
+</div>

@@ -1,0 +1,179 @@
+{{ 'newsletter.css' | asset_url | stylesheet_tag }}
+
+<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.11.3/themes/dark-hive/jquery-ui.min.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+
+
+<div id="newsletterwrapper" class="newsletterwrapper" style="display:none;">
+  <a href="javascript:;" class="fancybox-close-popup" title="Close"><img src="{{ 'close-icon.png' | asset_url }}"  /></a>
+<div id="newsletterpopup" class="newsletterpopup" >
+  <div class="TextBox">
+    <!-- <h2>{{ settings.p_f_headertext }}sign up today </h2>
+    <h4>{{ settings.p_f_subtext }} <!--Be the first to hear the news about our latest styles, 
+special events and exclusive offers.and receive 10% off your next order</h4> -->
+  <h2>Sign Up Today!</h2>  
+    <p>Enter your information below to receive discount codes and keep up to date with butterflycraze’s latest products</p>
+  </div>
+
+<!-- transforming -->
+  
+<form id="Newsletter-Form"  accept-charset="UTF-8" method="post" enctype="multipart/form-data" data-dojo-attach-point="formNode" novalidate="">
+  <div class="NewsForm"> 
+     <div class="row-fluid top">
+      
+      <div class="form-group lft-box">
+        <label>Email Address</label>
+        <input name="email" value="" id="mc-EMAIL" placeholder="" class="first required email" autocomplete="off" required >
+       	<span class="error" for="mc-EMAIL"></span>
+       </div>       
+      <div class="form-group rt-box">
+        <label>Confirm Email</label>
+        <input id="email-confirm" type="text" equalTo='#mc-EMAIL' placeholder="" autocomplete="off" required >
+       	<span class="error" for="email-confirm"></span>
+       </div>
+    </div>    
+     <div class="row-fluid mobile-data"> 
+        <div class="form-group name">
+          <label>first name</label>
+          <input type="text" name="firstName" id="mc-FNAME" placeholder="" class="first" autocomplete="off">
+          <span class="error" for="mc-FNAME"></span>
+          <p class="optional">optional </p>
+         </div>
+        <div class="form-group name">
+          <label>last name</label>
+          <input type="text" name="lastname" id="mce-LNAME" placeholder="" autocomplete="off">
+          <span class="error" for="mce-LNAME"></span>
+       		<p class="optional">optional </p>
+       </div>    
+        <div class="form-group code">
+          <label> zip </label>
+          <input type="text" placeholder="" name="postal" id="mc-ZIPCODE" autocomplete="off" class="first">
+          <span class="error" for="mc-ZIPCODE"></span>
+          <p class="optional">optional </p>
+         </div>
+        <div class="form-group code">         
+          <label> birthdate </label>
+          <input type="text" placeholder=""  name="birthdate" id="mc-BIRTHDATE" autocomplete="off" class="datepicker">
+          <span class="error" for="mc-BIRTHDATE"></span>
+          <p class="optional">optional </p>
+         </div>
+    </div>
+    <input type="hidden" id="mc-COUPON" name="COUPON" value=""/>
+    <div  class="row-fluid"> 
+      <label id="error-msg" style="color: red;"></label>
+    </div> 
+    <div class="row-fluid last">
+      <div class="span12"><input class="submit" type="submit" value="Submit" data-dojo-attach-point="submitButton"></div>
+    </div> 
+    
+  </div>
+</form> 
+
+
+ 
+</div>
+  
+
+  <!-- thank you npafge-->
+<div id="newsletterthanks" class="newsletterthanks">
+ <div class="TextBox">
+    <h2>thank you for signing up to receive our newsletters<!--thank you for signing up to receive our newsletters--></h2>
+    
+      <div class="shopBtn"><input type="button" onclick="javascript:location.href='/collections/all'" value="Shop" class="shop"></div>
+      <div class="socialBox">
+        <h4>visit us:</h4>
+        <a href="https://www.facebook.com/" target="_blank"><img src="//cdn.shopify.com/s/files/1/0200/5056/t/239/assets/facebook.png?1284566419218378372"></a>
+        <a href="https://instagram.com/butterfly" target="_blank"><img src="//cdn.shopify.com/s/files/1/0200/5056/t/239/assets/instagram.png?1284566419218378372"></a>
+        {% comment %}
+        <a href="https://twitter.com/matisse_ftwr" target="_blank"><img src="//cdn.shopify.com/s/files/1/0200/5056/t/239/assets/twitter.png?1284566419218378372"></a>
+        <a href="http://pinterest.com/matissefootwear/" target="_blank"><img src="//cdn.shopify.com/s/files/1/0200/5056/t/239/assets/pinterest.png?1284566419218378372"></a>
+        {% endcomment %}
+      </div>
+  </div> 	
+</div>
+  
+     
+  <!-- thank you already subcribrer Start-->
+<div id="newsletteralreadysubcribrer" class="thanksalreadysubcribrer"  style="display:none;">
+ <div class="TextBox">
+   <p class="htmlappend"></p>
+    <h4>Thank You! </h4>    
+  </div> 	
+</div>
+     <!-- thank you already subcribrer End-->
+  
+</div>
+
+
+
+<a href="#newsletterwrapper" id="triggerpopup" style="display:none;" > </a>
+
+<script>
+  function SetNewsMobileHeight()
+  {
+    if($(window).width() <= 768)
+    {
+      $('#newsletterpopup').css('height','auto')
+      var newsPopH = $('#newsletterpopup').height();
+      var newsH = $(window).height() - 77;
+      //$('#newsletterwrapper').height(newsH);
+      if(newsPopH > newsH)
+      {
+      	$('#newsletterpopup').height(newsH - 40);
+      }
+      else
+      {
+      	$('#newsletterpopup').css('height','auto');
+      }
+    }
+    else
+    {
+    	$('#newsletterwrapper').css('height','auto');
+       $('#newsletterpopup').css('height','auto');
+    }
+  }
+  $(document).ready(function(){
+  	SetNewsMobileHeight();
+    $('.fancybox-close-popup').click(function(){
+      if($(window).width() > 768)
+      {
+         parent.$.fancybox.close();
+    	//$.fn.fancybox.close();
+      }else{
+      	$('#newsletterwrapper').removeClass('open');
+      }
+    });
+  });
+  $(window).resize(function(){
+  	SetNewsMobileHeight();
+  });
+   $(document).ready(function(){
+    $('#Newsletter-Form').submit(function(e){
+    	e.preventDefault();
+      $.ajax({
+        url: '/apps/newsletter/Newsletter/Subscribe',
+        data: $(this).serialize(),
+        dataType: 'json',
+        type: 'POST',
+        beforeSubmit: function(){
+          $('#error-msg').html('');
+        	$('#Newsletter-Form input[type="submit"]').attr('disabled','disabled');
+        },
+        success: function(data){
+          if(data.result == 'success'){
+            $('#newsletterpopup').slideUp(function(){
+            	$('#newsletterthanks').slideDown();
+            });
+          }else{
+          	$('#error-msg').html(data.msg);
+          }
+          $('#Newsletter-Form input[type="submit"]').removeAttr('disabled');
+        },
+        error: function(data){
+        	//console.log(data);
+          $('#Newsletter-Form input[type="submit"]').removeAttr('disabled');
+        }
+      })
+    });
+  });
+</script>

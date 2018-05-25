@@ -1,0 +1,27 @@
+<!-- Shown on Mobile Only -->
+{% comment %}
+<div class="mobile-top-msg">
+  <p><a href="/pages/give-10-get-10" style="color: #fff;">Give $10, Get $10</a></p>
+</div>
+{% endcomment %}
+<ul id="cart" class="mobile-3 mobile-only">       
+
+  {% comment %}
+<!-- Smart Wishlist link -->
+<li><a id="sw_wishlist_link" href="/a/wishlist"><i class="fa fa-heart"></i></a></li> 
+<!-- end Smart Wishlist link -->
+  {% endcomment %}
+	<li class="wider"><span class="shifter-handle"><img src="{{ 'mobile-bar-grey.png' | asset_url }}"  /></span></li>
+                   
+  <li class="seeks"><a id="inline" href="#search_popup" class="open_popup"><img src="{{ 'search-mobile-grey.png' | asset_url }}"  /></a>
+    {% if settings.show_multiple_currencies %}{% include 'currencies-switcher' %}{% endif %}</li>
+  
+   <li class="cart-v">
+    <a href="/cart" class="site-header__cart-toggle js-drawer-open-right" aria-controls="CartDrawer" aria-expanded="false">
+      <span class="cart-words">{{ 'cart.general.title' | t }}</span>
+      &nbsp;<img src="{{ 'mobile-cart-grey.png' | asset_url }}"  /> 
+      <span class="CartCount">{{ cart.item_count }}</span>
+    </a> 
+  </li>    
+  
+</ul>  

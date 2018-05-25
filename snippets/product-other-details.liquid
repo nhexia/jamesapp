@@ -1,0 +1,263 @@
+
+<!-- Metafields -->
+ {% assign size_chart_image_url = product.metafields.c_f.size_chart_image_url %}
+ {% assign raw_specs = product.metafields.c_f.specification_content | newline_to_br %}
+  {% assign raw_ques = product.metafields.c_f.questions_content | newline_to_br %}
+
+
+{% if size_chart_image_url != blank %}       
+<div class="accordion-slide">
+  <a href="{{ size_chart_image_url }}" class="fancybox-old size-chart-popup">     
+    <div class="title"><img src="{{'size-chart.png' | asset_url }}"> size chart</div> 
+  </a>
+</div>
+ {% endif %}
+
+
+<div class="accordion-box">  
+  {% if raw_specs != blank %}
+  <div class="accordion-slide">
+      <div class="title"><img src="{{'specs.png' | asset_url }}">specs</div>
+    <div class="accordion-content">
+      <!--<p>
+        The Aligned Men's crew neck showcases the Forged® trademark in a sight picture style graphic. Sure to make anyone feel like a superhero!
+      </p> -->
+      
+       <div class="tab-content"> 
+         {% if product.metafields.c_f.specification_title != blank %}
+         	<p>{{ product.metafields.c_f.specification_title }}</p>
+         {% endif %}
+         
+         {% assign specs = raw_specs | split: '<br />' %}
+         {% for spec_point in specs %}
+         	<p>•  {{ spec_point }}</p>
+         {% endfor %}
+         
+       </div>      
+      
+      
+    </div>
+  </div>
+  {% endif %}
+  
+  
+  {% comment %}
+  {% if raw_ques != blank %}
+              <div class="accordion-slide">
+                  <div class="title"><img src="{{'question.png' | asset_url }}">questions?</div>
+                <div class="accordion-content">
+                  <!--<p>
+                    The Aligned Men's crew neck showcases the Forged® trademark in a sight picture style graphic. Sure to make anyone feel like a superhero! A premium fit with exceptional comfort.
+                  </p> -->
+
+                  <div id="tab-3" class="tab-content">
+                    {% include 'comment-form' %}
+
+
+                    {% comment %}
+                    <p>Need help with your size? Have a suggestion or feedback?</p>
+                     {% if product.metafields.c_f.questions_title != blank %}
+                     <p>{{ product.metafields.c_f.questions_title }}</p>
+                    {% endif %}
+
+
+                     {% assign ques = raw_ques | split: '<br />' %}
+                     {% for que_point in ques %}
+                        <p>• {{ que_point }}</p>
+                     {% endfor %}
+                    {% endcomment %}
+                  </div>       
+
+                </div>
+              </div>
+  {% endif %}
+  {% endcomment %}
+  
+</div>
+{% comment %}
+{% assign cf_size_chart_title = product.metafields.c_f.size_chart_title | strip  %}
+{% assign cf_size_chart = product.metafields.c_f.size_chart_content | strip  %}
+{% assign cf_size_chart_note = product.metafields.c_f.size_chart_note | strip  %}
+{% assign cf_size_chart_measurement = product.metafields.c_f.size_chart_measurement | strip  %}
+
+	{% assign size_chart = cf_size_chart | newline_to_br %}
+    {% assign rows = size_chart | split: '<br />' %}
+	{% assign header = rows[0] | split: '#' %}
+
+<div class="product-detail-tab">
+  {% assign raw_specs = product.metafields.c_f.specification_content | newline_to_br %}
+  {% assign raw_ques = product.metafields.c_f.questions_content | newline_to_br %}
+  {% assign size_chart_image_url = product.metafields.c_f.size_chart_image_url %}
+	
+  
+  <div id="tabs-container">
+    <div class="tab">
+      
+      {% if raw_specs != blank %}
+       <div id="tab-1" class="tab-content"> 
+         {% if product.metafields.c_f.specification_title != blank %}
+         	<p>{{ product.metafields.c_f.specification_title }}</p>
+         {% endif %}
+         
+         {% assign specs = raw_specs | split: '<br />' %}
+         {% for spec_point in specs %}
+         	<p>•  {{ spec_point }}</p>
+         {% endfor %}
+         
+       </div> 
+      {% endif %}
+      
+
+      {% if size_chart_image_url != blank %}
+
+        {% endif %}
+      <div id="tab-2" class="tab-content">  
+        
+        <div class="table">
+          <table>
+            <caption>{{ cf_size_chart_title }}</caption>
+            <tr>
+              <!--<th></th>-->
+              {% for head in header %}
+              	<th>{{ head }}</th>
+              {% endfor %}
+              
+              <!--<th>S</th>
+              <th>M</th>
+              <th>L</th>
+              <th>XL</th>
+              <th>2XL</th>
+              <th>3XL</th>-->
+            </tr>
+            {% for row in rows offset:1 %}
+                    <tr>
+                      {% assign cells = row | split: '#' %}
+                      {% for cell in cells %}
+                      	{% comment %}
+                          {% if cells.first == cell%}
+                              <th>{{ cell }}</th>
+                          {% else %}
+
+                          {% endif %}
+                        {% endcomment %}
+                      <td>
+                        {% assign cell_data = cell | split: '@' %}
+                        {{ cell_data[0] }}
+                        {% if cell_data[1] != empty %}
+                        	<sup>{{ cell_data[1] }}</sup>
+                        {% endif %}
+                      </td>
+                      {% endfor %}
+                	</tr>
+                {% endfor %}
+            <!--<tr>
+                <td>HPS<span>*</span></td>
+                <td>27</td>
+                <td>28</td>		
+                <td>29</td>
+                <td>30 <sup>1/2</sup></td>
+                <td>31 <sup>1/2</sup></td>		
+                <td>33</td>
+              </tr>
+              <tr>
+                <td>CHEST <br/> 1" below arm hole across chest </td>
+                <td>19<sup> 1/2</sup></td>
+                <td>20<sup> 1/2</sup></td>		
+                <td>21<sup> 1/2</sup></td>
+                <td>23<sup> 1/2</sup></td>
+                <td>25<sup> 1/2</sup></td>		
+                <td>28</td>
+              </tr>-->
+          </table>
+          
+          <div class="bottom-row">
+            <p>{{ cf_size_chart_note }}</p>
+            <span style="text-align:right">{{ cf_size_chart_measurement }}</span>
+          </div>
+        </div>
+         <!-- <img style="width: auto;" src="{{ size_chart_image_url }}" />-->
+        
+      </div>   
+      
+
+    
+
+      
+      {% if raw_ques != blank %}
+      <div id="tab-3" class="tab-content">
+         {% if product.metafields.c_f.questions_title != blank %}
+      	 <p>•  {{ product.metafields.c_f.questions_title }}</p>
+        {% endif %}
+        
+         
+         {% assign ques = raw_ques | split: '<br />' %}
+         {% for que_point in ques %}
+         	<p>{{ que_point }}</p>
+         {% endfor %}
+      </div> 
+      {% endif %}
+      
+    </div>
+    <ul class="tabs-menu">
+      <li><a href="#tab-1">specs</a></li>
+      
+      <li><a href="#tab-2">size chart</a></li>
+      
+      <li><a href="#tab-3">questions?</a></li>
+      
+    </ul>    
+  </div>    
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".tabs-menu a").click(function(event) {
+        event.preventDefault();
+        $(this).parent().toggleClass("current");
+        $(this).parent().siblings().removeClass("current");
+        var tab = $(this).attr("href");
+        $(".tab-content").not(tab).css("display", "none");
+       	$(".tab-content").not(tab).removeClass('active');
+      	$(tab).toggleClass('active');
+        $(tab).slideToggle(300);
+    });
+    
+    /*$(document).click(function(e){
+    	$(".tabs-menu li.current a").trigger('click');
+    });*/
+    $(document).click(function(e){
+      if($(e.target).closest('#tabs-container').length < 1 )
+      {
+          $(".tabs-menu li.current a").trigger('click');
+      }
+    });
+});
+</script>
+	{% endcomment %}
+ 
+          <script>
+            $(".accordion-box .accordion-slide .title").each(function() {
+    $(this).click(function(){
+		if($(this).next(".accordion-content").is(":visible"))	
+		{
+			$(this).removeClass("active");
+			$(this).next(".accordion-content").slideUp();
+			$(this).parent(".accordion-slide").removeClass("active");
+		}
+		else
+		{
+			$(this).parent(".accordion-slide").parent(".accordion-box").children(".accordion-slide").removeClass("active");
+			$(this).parent(".accordion-slide").parent(".accordion-box").children(".accordion-slide").children(".title").removeClass("active");
+			$(this).addClass("active");
+			$(this).parent(".accordion-slide").addClass("active");
+			$(this).parent(".accordion-slide").parent(".accordion-box").children(".accordion-slide").children(".accordion-content").slideUp();
+			$(this).next(".accordion-content").slideDown();
+			
+		}
+	});
+});
+            $(document).ready(function(){
+            	$('.size-chart-popup').fancybox();
+            });
+            
+ </script>

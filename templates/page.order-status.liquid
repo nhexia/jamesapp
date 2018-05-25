@@ -1,0 +1,233 @@
+<div {% if template != 'page.contact-us' %}id="content" class="row" {% endif %}>
+  
+  <div class="row" id="content">
+    <div class="section-title desktop-12 customer account-topmain">
+      <div class="desktop-9 tablet-4 mobile-3 right">
+        <div class="right-detail account-rightpart">
+      		<h1>{{ page.title }}</h1>
+          			<div class="container">
+<div class="ten columns">
+<p>Simply enter your order number and email address into the form provided. We will display the status of your order below with any additional notes that may have been added. Tracking information can also be found in the results, so please refer to the tracking links if you have any questions regarding the transit of your package.<br /><br /></p>
+<ul></ul>
+</div>
+<div class="six columns" id="order-status-form">
+<form class="track-order"><input name="order_id" placeholder="Order Number" type="text" /> <input name="order_email" placeholder="Email Address" type="email" /> <input value="Lookup Order Status" type="submit" />
+<!--<div class="loading"></div>-->
+<div class="clearfix"></div>
+</form>
+</div>
+</div>
+<div id="scroll-to-here" style="height: 20px;"></div>
+          <div class="order-status"></div>
+<style type="text/css"><!--
+form.track-order { margin-left: 100px; }
+		
+		div.loading {
+			display: none;
+			background: url('https://cdn.shopify.com/s/files/1/0198/9644/t/4/assets/loader.gif?4385') no-repeat;
+			height: 16px; width: 16px;
+			margin: 12px 0px 0px 12px;
+			float: left;
+		}
+		
+		div.order-status {
+			clear: both;
+			border-top: 1px solid #d7d4d3;
+			padding: 20px 0px;
+			margin-top: 20px;
+		}
+		div.order-status table { width: 100%; }
+		div.sos_vitals { width: 48%; float: left; }
+		div.sos_status { width: 48%; float: right; }
+		div.sos_billing { clear: both; width: 48%; float: left; }
+		div.sos_shipping { width: 48%; float: right; }
+		div.sos_items { width: 100%; }
+--></style><script>// <![CDATA[
+function parse_order_display(){
+var status = $('.sos_status.sos_right .sos_highlight');
+if(status.length>0){
+    var status_el = $('td', status),
+	clean_status_text = status_el.text().toLowerCase().split(' ').join('');
+	if(clean_status_text == 'fullfilled' || clean_status_text == 'closed'){
+		clean_status_text = 'completed';
+		status_el.text('Completed');
+	}
+    if(clean_status_text == 'completed'){
+        status_el.addClass('order-completed');
+    }else{
+        status_el.addClass('order-progress');
+    }
+}
+
+	var fulfillment = $('.sos_fulfillment');
+    if(fulfillment.length>0){
+        var items_info = []; //data for all products
+        fulfillment.each(function(){
+            var item_parts = []; //data for product
+            //format <strong>shipped</strong> Date, tracking company, tracking number
+
+            //divide data using the strong tags
+            var parts_1 = $(this).html().split('<strong>');
+			if(parts_1.length === 2){
+				parts_1 = parts_1[1];
+				parts_1 = parts_1.split('</strong>').join(',').split(',');
+				
+				items_info.push(parts_1);
+			}
+            
+        });
+        var all_data_equal = true;
+        if(items_info.length <= 0){
+            all_data_equal = false;
+        }if(items_info.length>1){
+            for(var k=1;k<items_info.length;k++){
+                var item = items_info[k],
+                    prev_item = items_info[k-1];
+                //make sure all items have 4 parts
+                if(item.length!=4 || prev_item.length!=4){
+                    all_data_equal = false;
+                    continue;
+                }
+                //now compare all data is equal
+                for(var m=0; m<item.length; m++){
+                    if(item[m] != prev_item[m]){
+                        all_data_equal = false;
+                    }
+                }
+            }
+        }
+        if(all_data_equal){
+            $('.sos_fulfillment').empty();
+            var new_el = $('<tr></tr>'),
+                data1_header = $('<th></th>').append(items_info[0][0]),
+                data1_val = $('<td></td>').addClass('order-track-info').append(items_info[0][1]);
+            new_el.append([data1_header, data1_val]);
+            
+            $('.sos_status.sos_right table tbody').append(new_el);
+            
+            new_el = $('<tr></tr>'),
+                data1_header = $('<th></th>').append('Tracking'),
+                data1_val = $('<td></td>').addClass('order-track-info').append(items_info[0][2]+', '+items_info[0][3]);
+            new_el.append([data1_header, data1_val]);
+            
+            $('.sos_status.sos_right table tbody').append(new_el);
+        }
+    }
+
+var order_id_format="#5326-9";
+    var info_headers = $('.sos_vitals .sos_highlight th');
+    if(info_headers.length>0){
+        info_headers.each(function(){
+            var val = $(this).text().toLowerCase();
+            if(val == 'order:'){
+                var order_id_cell = $(this).siblings('td');
+                var order_id_val = order_id_cell.text();
+                if(order_id_val.length>0 && order_id_val.indexOf(order_id_format) <=-1 && order_id_val.indexOf('#')===0){
+                    order_id_val = order_id_format+order_id_val.slice(1,order_id_val.length);
+                }
+                order_id_cell.text(order_id_val);
+            }
+        });
+    }
+}
+$('form.track-order').on('submit', function(e){
+			// Prevent form from submitting
+			e.preventDefault();
+			
+			// Define Order Values
+			var trackUrl ='http://sosapp.sinelabs.com/api/orders/lookup/?callback=?',
+				orderId = $(this).find('input[name="order_id"]').val(),
+				orderEmail = $(this).find('input[name="order_email"]').val(),
+				validate_msg = $(this).find('.validate-msg');
+	
+			// validate values before submiting
+			if(orderId == '' || orderEmail == ''){
+				if(validate_msg.length <= 0){
+					validate_msg = $('<div></div')
+						.addClass('validate-msg')
+						.html('Please fill in both Order Number and Email Address to look up your order status')
+					$(this).find('input[name="order_email"]').after(validate_msg);
+				}
+				$("html, body").animate({ scrollTop: $('#order-status-form').offset().top }, 200);
+				validate_msg.fadeIn();
+				return false;
+			}else{
+				validate_msg.fadeOut();
+			}
+			
+			
+			// Hide/ Show Elements
+			$('div.loading').show();
+		    $('form.track-order input[type="submit"]').val('Requesting...').addClass('disabled');
+			
+		    var order_id_format="5326-9";
+		    if(orderId.indexOf(order_id_format) === 0){
+				orderId = orderId.split(order_id_format)[1];
+		    }
+			 
+			// Request Order Details from Simple Order Status API
+		    $.getJSON(trackUrl, {
+			    sos_sid : 1989644,
+			    sos_oid : orderId,
+			    sos_eml : orderEmail
+		    }, function(d){
+		    	$('div.order-status').fadeOut(300, function(){
+			    	if( d.status == 'OK' ){
+			    		$(this).html('<h3>Order Details</h3>');
+			    		$(this).append('<div class="print-icon-wrap"><a href="#" class="print">Print</div></p>');
+			    		$(this).append(d.order_html);
+                        if($('.sos_fulfillment',this).length>0)
+                        $('.sos_fulfillment',this).html($('.sos_fulfillment',this).html().split('Fulfilled').join('Processed'));
+                        parse_order_display();
+			    	} else {
+			    		$(this).html('<h3>No Order Details Found</h3>');
+			    		$(this).append('<h6>Confirm the Order ID and Email and try again.</h6>');
+			    	}
+		    		$('div.loading').hide();
+		    		$('form.track-order input[type="submit"]').val('Lookup Order Status').removeClass('disabled');
+					$(this).fadeIn(300, function(){
+				    	$("html, body").animate({ 
+                          scrollTop: $('#scroll-to-here').offset().top },
+                                                300
+                                               );
+					});
+					// LEANDROARTS Tweak
+					// $(function () {
+					    // Get all text fields:
+					    var entries = $("div.sos_vitals td:contains('UTC')");
+					    // Process each:
+					    entries.each(   
+					        function () {
+					           // Remove last strings from text: 
+					           var string = $(this).text().slice(0, -5);
+					           // Update:
+					           $(this).text(string);
+					    });
+					// });
+					// end LEANDROARTS Tweak
+			    });
+		    });
+			
+		});	
+		$('a.print').live('click', function(e){
+			e.preventDefault();
+			window.print();
+		});
+// ]]></script>
+        </div>
+      </div>
+      {% if customer  %}
+      	{% include 'account-side-bar' %}
+      {% else %}
+      	{% include 'contact-sidebar' %}
+      {% endif %}
+    </div>
+    </div>
+
+</div>
+<style>
+  form.track-order {
+  	margin: 0 !important;
+    max-width: 400px;
+  }
+</style>

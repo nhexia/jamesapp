@@ -1,0 +1,151 @@
+{% layout settings.customer_layout %}
+<div id="customer-wrapper" class="desktop-12 mobile-3">
+  <div class="customer-blockmain account-login">  
+  {% include 'contact-sidebar' %}
+    <div id="template" class="desktop-9 tablet-4 mobile-3 login-rightpart right">
+    {% comment %}
+    <div id="guest" class="heading desktop-12">
+      <div class="template_header">
+        <h2>account login</h2>
+      </div>
+    </div>
+    
+    
+    <div class="clear"></div>
+    {% endcomment %}
+    
+    <div id="" class="formblock">
+      	
+      <div class="desktop-6 mobile-3 login-form">
+        <h5>returning customers</h5>
+        <!--<p>Please enter your email and password.</p>-->
+        
+        {% form 'customer_login' %}
+        <p>{{ form.errors | default_errors }}</p>
+        
+        <div id="login_email" class="clearfix large_form">
+          <input placeholder="Email Address" type="email" value="" name="customer[email]" id="customer_email" class="large" size="30" />
+        </div>
+        <div id="login_password" class="clearfix large_form">
+          <input type="password" placeholder="Password" value="" name="customer[password]" id="customer_password" class="large password" size="16" />
+        </div>
+        <div class="action_bottom">
+          <input class="button" type="submit" value="Login" />
+        </div>
+        <div id="forgot_password">
+            <a class="forgot_password" href="#"  onclick="showRecoverPasswordForm();return false;">{{ 'customer.login.forgot_password' | t }}</a>
+        </div>
+        {% endform %}
+        
+        <div id="recover-password" class="desktop-12 mobile-3" style='display:none'>
+          <div class="template_header">
+            <h2>{{ 'customer.recover_password.title' | t }}</h2>
+            <p class="note">{{ 'customer.recover_password.subtext' | t }}</p>
+          </div>
+
+          {% form 'recover_customer_password' %}
+
+          {{ form.errors | default_errors }}
+
+          <div id="recover_email" class="clearfix large_form">
+            <label for="email" class="large">{{ 'customer.recover_password.email' | t }}</label>
+            <input type="email" value="" size="30" name="email" id="recover-email" class="large" />
+          </div>
+
+          <div class="action_bottom">
+            <input class="secondary button" type="submit" value="{{ 'customer.recover_password.submit' | t }}" />
+            <span class="note"><a href="#" onclick="hideRecoverPasswordForm();return false;">{{ 'customer.recover_password.cancel' | t }}</a></span>
+          </div>
+
+          {% endform %}
+        </div>
+	  </div>
+      
+      <div id="create-customer" class="desktop-6 mobile-3 new-customer">
+        <div class="template_header">
+          <h5 class="title">New Customers</h5>
+          <!--<p>Create your Forged Account! You can track your orders, update and share your wishlist and edit personal billing/shipping info.</p>-->
+        </div>
+       
+        <div class="action_bottom account-show-form" >
+          
+          {% form 'create_customer' %}
+      		{{ form.errors | default_errors }}
+          
+          <div class="register-form">
+        	<div id="first_name" class="clearfix large_form">
+              <input type="text" value="" name="customer[first_name]" id="first_name" class="large" placeholder="First Name" size="30" />
+            </div>
+        	<div id="last_name" class="clearfix large_form">
+              <input type="text" value="" name="customer[last_name]" id="last_name" class="large" placeholder="Last Name" size="30" />
+            </div>
+        	<div id="email" class="clearfix large_form">
+              <input type="email" value="" name="customer[email]" id="email" class="large" placeholder="Email" size="30" />
+            </div>
+        	<div id="password" class="clearfix large_form">
+              <input type="password" value="" name="customer[password]" id="password" class="large password" placeholder="Password" size="30" />
+            </div>
+            <input class="button create-accountbtn" type="submit" value="Login" />
+        	</div>
+          {% endform %}
+          
+        </div>
+        
+    	</div>
+      
+    </div>
+  </div>  
+</div>
+
+</div>
+
+<script type="text/javascript">
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'inline-block';
+    document.getElementById('customer').style.display='none';
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('customer').style.display = 'inline-block';
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+</script>
+
+
+
+<script type="text/javascript">
+  
+  
+$(document).ready(function(){
+  $('#hideshowaccount').on('click',function(){
+    $('.account-hide-form').hide();
+    $('.account-show-form').slideDown();
+  });
+	//toggleRegister();
+});
+/*  
+function toggleRegister(){
+	$(document).click (function(e){
+		 if($(e.target).closest('.button').length == 0) {
+			if($('.register-form').is(':visible')) {
+				$('.register-form').slideUp();
+			}
+		}
+	});
+	$(".button").click(function(){
+		if($(this).next(".register-form").is(":visible")){
+			$(this).next().slideUp();
+		}
+		else
+		{
+			$(".register-form").slideUp();
+			$(this).next().slideDown();
+		}
+	});
+}*/
+</script>
+
+
+

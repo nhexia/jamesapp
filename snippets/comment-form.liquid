@@ -1,0 +1,78 @@
+<form accept-charset="UTF-8" class="contact-form-tab" id="contact_form" action="/contact#contact_form" method="post">
+  <input type="hidden" name="form_type" value="contact">
+  <input type="hidden" value="✓" name="utf8">
+    <h6>Need help with your size?  Have a suggestion or feedback?</h6>
+  	<input type="hidden" name="contact[type]" value="Suggestions/Feedback" />
+    <input type="hidden" id="contact_product" name="contact[product]" value="{{ product.title }}" />
+    <input type="text" id="contact_email" name="contact[email]" onfocus="if(this.value == 'Email') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Email'; }" value="Email" />
+    <textarea id="contact_message" name="contact[message]" onfocus="if(this.value == 'Let us know...') { this.value = ''; }" onblur="if(this.value == '') { this.value = 'Let us know...'; }">Let us know...</textarea>
+    <input type='submit' class="submit btn btn-reverse" value="Send" />
+
+    {% if form.posted_successfully? %}
+        <p id="msg">Thanks for contacting us! We'll get back to you as soon as possible.</p>
+    {% endif %}
+
+    {% if form.errors %}
+        <ul>
+            {% for field in form.errors %}
+                <li>{{ field }} - {{ form.errors.messages[field] }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</form>
+<div class="suggest-thank-you" style="display: none;">
+  <h5>
+  	Thank you for your suggestions/feedback.
+  </h5>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.contact-form-tab').submit(function(){
+
+		var url = "/contact"; // the script where you handle the form input.
+
+   	 $.ajax({
+           type: "POST",
+           url: url,
+           data: $(".contact-form-tab").serialize(), // serializes the form's elements.
+           success: function(response)
+           {
+             $('.contact-form-tab').slideUp(1500,function(){
+                      $('.suggest-thank-you').slideDown(1500,function(){
+                        	$('.contact-form-tab')[0].reset();
+                      });
+                    });
+                 setTimeout(function(){
+                 	$('.suggest-thank-you').slideUp(1500,function(){
+                      
+                      $('.contact-form-tab').slideDown(1500,function(){
+                      });
+                    });
+                 },15000);
+
+           },
+           error: function(response)
+               {
+                 $('.contact-form-tab').slideUp(1500,function(){
+                          $('.suggest-thank-you').slideDown(1500,function(){
+                                $('.contact-form-tab')[0].reset();
+                          });
+                        });
+                     setTimeout(function(){
+                        $('.suggest-thank-you').slideUp(1500,function(){
+
+                          $('.contact-form-tab').slideDown(1500,function(){
+                          });
+                        });
+                     },15000);
+
+               }
+         });
+
+  	  return false; // avoid to execute the actual submit of the form.
+
+   }); 
+    
+  });
+  
+</script>

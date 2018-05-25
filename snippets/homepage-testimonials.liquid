@@ -1,0 +1,24 @@
+<div id="featured-testimonials" class="row">
+  {% unless settings.home-testimonials-title == blank %}
+    <div class="section-title row feature-product">
+      <h2>{{ settings.home-testimonials-title }}</h2>
+    </div>
+  {% endunless %}
+  
+  {% for i in (1..4) %}
+    {% assign show = 'home_testimonials_' | append: i %}
+  	{% assign image = 'home_testimonials_image' | append: i %}
+  	{% assign text = 'home-testimonials-text' | append: i %}
+    {% if settings[show] %}
+      <div class="testimonial desktop-half tablet-half mobile-full">
+        {% unless settings[image] == blank %}
+          <img src="{{ settings[image] | img_url: '200x200', crop: 'center' }}" alt="{{ settings[image].alt | escape }}" rel="noshare" />
+        {% endunless %}
+
+        {% unless settings[text] == blank %}
+        <div>{{ settings[text] }}</div>
+        {% endunless %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

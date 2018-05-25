@@ -1,0 +1,22 @@
+<div class="desktop-3 tablet-2 mobile-3 loginleftPart">
+  <div class="secondary-content need-assistance-asset account-sidebar">
+    <div class="left-column">
+      {% for link in linklists[settings.account-sidebar-linklist].links %}
+      	<h6>{{ link.title }}</h6>
+      	{% capture child_list_handle %}{{ link.title | handleize }}{% endcapture %}
+      	{% if linklists[child_list_handle] %}
+      		<ul>
+              {% for clink in linklists[child_list_handle].links %}
+				<li>{{ clink.title | link_to: clink.url }}</li>		
+              {% endfor %}	
+            </ul>
+      	{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<style>
+  .need-assistance-asset.account-sidebar {
+  	background: none !important;
+  }
+</style>

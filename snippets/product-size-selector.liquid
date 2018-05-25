@@ -1,0 +1,13 @@
+
+{% assign filtering_size = '' %}
+
+{% for curVar in product.variants %}
+	{% assign cur_var_color = curVar.options[option_index] %}
+	{% assign cur_var_color_new = cur_var_color | downcase %}
+	{% assign curColorValue = value | downcase %}
+	{% if curColorValue contains cur_var_color_new %}
+  		
+  		{% capture filtering_size %}{{ filtering_size }} {% if curVar.available %}avail-{{ curVar.options[size_option_index] }}{% endif %}{% endcapture %}
+  		
+	{% endif %}
+{% endfor %}

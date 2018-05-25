@@ -1,0 +1,98 @@
+<ul id="prod-insta-feed" class="instagram-feed"></ul>
+<div style="clear:both;"></div>
+<!--<h5 class="instagram-header">Follow <a href="http://www.instagram.com/forgedclothing" target="_blank">@forgedclothing</a> on Instagram</h5>-->
+
+<style type="text/css">
+  div.home-instagram { 
+      background: #fff;
+  }
+  ul.instagram-feed { 
+    	margin: 0px; 
+  }
+  ul.instagram-feed li { 
+    	display:block; 
+    	float:left;
+    	margin: 0px;
+ 	}
+  ul.instagram-feed li img { 
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%); opacity: 0.6;
+    
+    	transition:all 0.5s ease;
+    	-webkit-transition:all 0.5s ease;
+    	-moz-transition:all 0.5s ease;
+    	-ms-transition:all 0.5s ease;
+  }
+  ul.instagram-feed li:hover img { 
+    filter:none;
+    -webkit-filter:none;
+    -moz-filter:none;
+    -ms-filter:none; opacity:1;
+  }
+  
+  h5.instagram-header { 
+    	clear: both;
+    	font-size: 13px; 
+   		background: url('{{ 'instagram-home-icon.png' | asset_url }}') center right no-repeat;
+    	padding: 8px 0px 10px 0px;
+    	margin-top: 20px;
+    	border-bottom: 6px solid #222;
+ 	}
+  .fancybox-inner img { cursor: pointer; }
+  .fancybox-inner h5 { 
+    	text-align: center;
+    	font-size: 14px;
+    	margin: 10px 0px 0px 0px;
+      padding: 0px;
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var instafeed = $('#prod-insta-feed').clone();
+    $('#prod-insta-feed').remove();
+    $('.page-wrap').append(instafeed);
+    
+    $.ajax({
+      type : 'GET',
+      //url : 'https://api.instagram.com/v1/users/11721096/media/recent/?access_token=10824521.1fb234f.23f60336287b499d8d2745b4ab0eb7cc&count=9',
+      url: 'http://returns.forged.com/hashtag/recentuser/11721096/9',
+      dataType : 'json',
+      cache : false,
+      success : function(d){
+      	$.each(d.data, function(index, value){
+	      	$('ul.instagram-feed').append('<li class="item"><a href="#image-'+index+'" id="inline"><img src="'+value.images.low_resolution.url+'"/></a></li>');
+          //$('ul.instagram-feed').append('<div id="image-'+index+'" style="display:none;"><img src="'+value.images.standard_resolution.url+'"/><h5><a href="'+value.link+'" target="_blank">View on Instagram</a></h5></div>');
+      	});
+        $.each(d.data, function(index, value){
+	      	$('ul.instagram-feed').append('<li class="item"><a href="#image-'+index+'" id="inline"><img src="'+value.images.low_resolution.url+'"/></a></li>');
+          //$('ul.instagram-feed').append('<div id="image-'+index+'" style="display:none;"><img src="'+value.images.standard_resolution.url+'"/><h5><a href="'+value.link+'" target="_blank">View on Instagram</a></h5></div>');
+      	});
+        
+        $('#prod-insta-feed').owlCarouselNew({
+            loop:true,
+            margin:0,
+            
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:3
+                },
+                1000:{
+                    items:6
+                }
+            }
+        });
+      }
+	});
+    $('.fancybox-inner img').on('click', function(){
+      $.fancybox.close();
+    });
+  });
+	
+</script>

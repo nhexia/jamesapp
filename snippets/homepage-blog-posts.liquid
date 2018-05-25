@@ -1,0 +1,16 @@
+{% assign blog = blogs[settings.homepage-blog] %}
+<section id="homepage-blog" class="no-fouc gridlock">    
+
+  
+
+  <div class="row"> 
+	<div class="section-title row">
+    	<h2>Follow Our Blog</h2>
+ 	 </div>
+    {% for article in blog.articles limit: settings.homepage-post-limit %}
+    {% include 'article-loop' %}
+    {% endfor %}
+
+  </div>
+</section>
+<div class="clear"></div>

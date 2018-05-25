@@ -1,0 +1,73 @@
+{% if settings.popup %}
+$(window).load(function () {
+  
+    $('#triggerpopup').fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+      border: '4px solid #fff',
+      afterShow: function(){
+      	$('.fancybox-inner').css('border','4px solid #fff');
+      },
+      //padding: '4px',
+     // autoSize:false,
+     // fitToView:false,
+    //  width:'60%',
+    //  height:'40%',
+    //  aspectRatio : true,
+      autoResize: true,
+      autoSize: true,
+      padding: '5',
+        helpers: {
+            media: {},
+ 			overlay: {
+                        showEarly: false,
+                        speedOut: 1000,
+                        css: {
+                            'background': 'rgba(0,0,0,0.9)' 
+                        }
+						//,locked: true
+                    }
+        },
+      onCancel:function(){
+      
+         if($.cookie('BCPopupshow')!= 'undefined')
+     	 {
+      		$.cookie('BCPopupshow', 'false', { expires: 365, path:'/' });
+      	 }
+       
+      },
+      beforeClose:function(){
+       
+      		$.cookie('BCPopupshow', 'false', { expires: 365, path:'/' });
+      	
+      },
+      beforeLoad: function(){
+        $('.fancybox-overlay').addClass('news-fancy');
+      },
+      afterLoad: function(){
+        $('.fancybox-overlay').addClass('news-fancy');
+      }
+    });
+
+  
+	 if($.cookie('BCPopupshow')!== 'false')
+      {
+        
+        if($(window).width() > 768)
+      	{
+          $('#triggerpopup').trigger('click');  
+        }else
+        {
+        	$('#newsletterwrapper').addClass('open');
+        }
+      }
+   if($(window).width() <= 768)
+   {
+     $('#newsletterwrapper a.fancybox-close-popup').click(function(e){
+     	e.preventDefault();
+       	$('#newsletterwrapper').removeClass('open');
+       	$.cookie('BCPopupshow', 'false', { expires: 365, path:'/' });
+     });
+   }
+});
+{% endif %}

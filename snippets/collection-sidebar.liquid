@@ -1,0 +1,332 @@
+{% assign col_url = collection.url %}
+
+{% if current_tags %}
+  {% for cur_tag in current_tags %}
+      {% assign tagHand = cur_tag | handleize %}
+      {% assign col_url = col_url | append: '/' | append: tagHand %}
+  {% endfor %}
+{% endif %}
+
+{% comment %}
+<a class="show mobile-3" href="#"><img src="{{ 'jquery.fs.shifter-icon.png' | asset_url }}"></a>
+{% endcomment %}
+<div data-test="{{ collection.metafields.c_f.sidebar_navigation_1 }}"  class="desktop-3 tablet-2 mobile-3" id="aside">
+   <div id="sidebar">
+     
+      {% if template contains 'collection' %}
+        <label>{{ 'collections.sorting.title' | t }}:</label> 
+        <div>
+           <select id="sort-by" class="styled-select">
+              <option value="manual">{{ 'collections.sorting.featured' | t }}</option>
+              <option value="price-ascending">{{ 'collections.sorting.price_ascending' | t }}</option>
+              <option value="price-descending">{{ 'collections.sorting.price_descending' | t }}</option>
+              <option value="best-selling">{{ 'collections.sorting.best_selling' | t }}</option>
+           </select>
+        </div>
+      {% endif %}
+    
+      {% assign side_nav1 = collection.metafields.c_f.sidebar_navigation_1 %}
+      {% if side_nav1 != blank %}
+        <ul>
+           <label>{{ linklists[side_nav1].title }}</label>
+           {% for link in linklists[side_nav1].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% assign side_nav2 = collection.metafields.c_f.sidebar_navigation_2 %}
+      {% if side_nav2 != blank %}
+        <ul>
+           <label>{{ linklists[side_nav2].title }}</label>
+           {% for link in linklists[side_nav2].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% assign side_nav3 = collection.metafields.c_f.sidebar_navigation_3 %}
+      {% if side_nav3 != blank %}
+        <ul>
+           <label>{{ linklists[side_nav3].title }}</label>
+           {% for link in linklists[side_nav3].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% assign side_nav4 = collection.metafields.c_f.sidebar_navigation_4 %}
+      {% if side_nav4 != blank %}
+        <ul class="filter">
+           <label>{{ linklists[side_nav4].title }}</label>
+           {% for link in linklists[side_nav4].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% if settings.collection_links_1 %}
+        <ul>
+          {% comment %} 
+          	<label>{{ linklists[settings.collection_side_1].title }}</label>
+          {% endcomment %}
+          <label>Filter by:</label>
+           {% for link in linklists[settings.collection_side_1].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% if settings.collection_links_2 %}
+        <ul>
+           <label>{{ linklists[settings.collection_side_2].title }}</label>
+           {% for link in linklists[settings.collection_side_2].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% if settings.collection_links_3 %}
+        <ul>
+           <label>{{ linklists[settings.collection_side_3].title }}</label>
+           {% for link in linklists[settings.collection_side_3].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% if settings.collection_links_4 %}
+        <ul>
+           <label>{{ linklists[settings.collection_side_4].title }}</label>
+           {% for link in linklists[settings.collection_side_4].links %}
+           <li class="{{ link.title}}">{{ link.title | link_to: link.url }}</li>
+           {% endfor %}
+        </ul>
+      {% endif %}
+     
+      {% if collection %}
+        {% if settings.shop_by_designer %}
+          {% if collection.handle == "all" %}
+            <ul>
+               <label>{{ 'collections.general.shop_by_designer' | t }}</label>
+               {% for product_vendor in shop.vendors %}
+               <li>{{ product_vendor | link_to_vendor  }}</li>
+               {% endfor %}
+            </ul>
+          {% else %}
+            <ul>
+               <label>{{ 'collections.general.shop_by_designer' | t }}</label>
+               {% for product_vendor in collection.all_vendors %}
+               <li class="{{ product_vendor | handelize }}">{{ product_vendor | link_to_vendor }}</li>
+               {% endfor %}
+            </ul>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+            
+     
+     {% if linklists.thmes.links %}  
+     <div class="theme-collection"> 
+       <ul id="theme"> 
+          <lable>Theme</lable>
+         {% for tag in collection.all_tags %}
+         	{% assign tag_url = '' %}
+         	{% assign tagLow = tag | downcase %}
+         	{% if tagLow contains 'theme-' %}
+         		
+         		<li {% if tag_url == col_url %}selected="selected"{% endif %}>
+                  {% if current_tags contains tag %}
+                  {{ tag | downcase | remove: "theme-" | camelcase | link_to_remove_tag: tag }}
+                  {% else %}
+                  {{ tag | downcase | remove: "theme-" | camelcase | link_to_add_tag: tag }}
+                  {% endif %}</li>
+         
+         	{% endif %}
+          {% endfor %}
+         
+         {% comment %}
+          {% for tag in linklists.thmes.links %}        
+          <li value="{{ tag.url }}" {% if tag.handle == collection.handle %}selected="selected"{% endif %}>{{ tag.title | link_to: tag.url }}</li>                  
+         {% endfor %}
+         {% endcomment %}
+       </ul>  
+     </div>
+     {% endif %}
+     
+     <div class="gender-collection"> 
+       <ul id="gender">
+         <lable>Gender</lable>       
+         {% for tag in collection.all_tags %}
+         	{% assign tag_url = '' %}
+         	{% assign tagLow = tag | downcase %}
+         	{% if tagLow contains 'gender-' %}
+         		
+         		<li {% if tag_url == col_url %}selected="selected"{% endif %}>
+                  {% if current_tags contains tag %}
+                  {{ tag | downcase | remove: "gender-" | camelcase | link_to_remove_tag: tag }}
+                  {% else %}
+                  {{ tag | downcase | remove: "gender-" | camelcase | link_to_add_tag: tag }}
+                  {% endif %}</li>
+         
+         	{% endif %}
+          {% endfor %}
+         
+       </ul>
+     </div>
+     
+     <div class="color-collection"> 
+       <ul id="color" class="color-wrape">
+         <lable class="lblcolor">Color</lable>
+         
+          {% for tag in collection.all_tags %}
+         	{% assign tag_url = '' %}
+         	{% assign tagLow = tag | downcase %}
+         	{% if tagLow contains 'color-' %}
+         		{% assign tag_handle = tag | handleize %}
+         		{% assign tag_url = '/' | append: tag_handle %}
+         		{% if col_url contains tag_url %}
+         			{% assign tag_url = col_url %}
+         		{% else %}
+         			{% assign tag_url = col_url | append: tag_url %}
+         		{% endif %}
+         		{% assign color_name = tag | downcase | remove: "color-" | capitalize %}
+       			{% if color_name == "Pink" %}
+         			
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                        {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/pink.png?2801644896036991016" >' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/pink.png?2801644896036991016" >' | link_to_add_tag: tag }}
+                    {% endif %}
+                    </li>  
+                {% endif %}	
+                {% if color_name == "Multi-pink" %}
+                     <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                       {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/multi-pink.png?2801644896036991016">' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/multi-pink.png?2801644896036991016">' | link_to_add_tag: tag }}
+                    {% endif %}
+                        
+                    </li>
+                {% endif %}
+                {% if color_name == "Green" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/green.png?2801644896036991016">' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/green.png?2801644896036991016">' | link_to_add_tag: tag }}
+                    {% endif %}
+                        
+                    </li>
+                {% endif %}
+                {% if color_name == "Hot-pink" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/hot-pink.png?2801644896036991016">' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/hot-pink.png?2801644896036991016">' | link_to_add_tag: tag }}
+                    {% endif %}
+                        
+                    </li>
+                {% endif %}
+                {% if color_name == "Light-pink" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/light-pink.png?2801644896036991016"> ' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/light-pink.png?2801644896036991016"> ' | link_to_add_tag: tag }}
+                    {% endif %}
+                    </li>
+                {% endif %}	
+                {% if color_name == "Yellow" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/yellow.png?2801644896036991016"> ' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/yellow.png?2801644896036991016"> ' | link_to_add_tag: tag }}
+                    {% endif %}
+                         
+                    </li>
+                {% endif %}	
+                {% if color_name == "Purple" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/purple.png?2801644896036991016"> ' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/purple.png?2801644896036991016"> ' | link_to_add_tag: tag }}
+                    {% endif %}
+                    </li>
+                {% endif %}	
+                {% if color_name == "Aqua-green" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/aqua-green.png?2801644896036991016"> ' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/aqua-green.png?2801644896036991016"> ' | link_to_add_tag: tag }}
+                    {% endif %}
+                         
+                    </li>
+                {% endif %}
+                {% if color_name == "Blue" %}
+                    <li value="{{ tag_url }}" {% if tag_url == col_url %}selected="selected"{% endif %}>
+                      {% if current_tags contains tag %}
+         			{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/blue.png?2801644896036991016">' | link_to_remove_tag: tag }}
+                    {% else %}
+                    	{{ '<img src="https://cdn.shopify.com/s/files/1/1957/5419/files/blue.png?2801644896036991016"> ' | link_to_add_tag: tag }}
+                    {% endif %}
+                         {{ link_to_add_tag: tag_url | link_to_remove_tag: tag_url}} </img>
+                    </li>                 
+                {% endif %}
+         		
+         	{% endif %}
+          {% endfor %}
+       </ul>
+     </div>
+         
+     
+   </div>
+   <script>
+      Shopify.queryParams = {};
+      if (location.search.length) {
+        for (var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+          aKeyValue = aCouples[i].split('=');
+          if (aKeyValue.length > 1) {
+            Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+          }
+        }
+      }
+      jQuery('#sort-by')
+      .val('{{ collection.sort_by | default: collection.default_sort_by  }}')
+           .bind('change', function() {
+        Shopify.queryParams.sort_by = jQuery(this).val();
+        console.log()
+        location.search = jQuery.param(Shopify.queryParams);
+      });
+   </script>   
+   {% if settings.sticky-sidebar %}
+   <script>
+      if($(window).width() > 980){
+      
+        $('#sidebar').stickySidebar({
+      
+          sidebarTopMargin: 130,
+          footerThreshold: 100
+      
+        });  
+      };
+   </script>
+   {% endif %}
+</div>
+<script>
+  $(document).ready(function(){
+  	$(".styled-select").selecter();
+    $(".styled-select").not('#sort-by').change(function(){
+      var value =  $(this).val();
+      if(location.pathname != value && value != '')
+      {
+    	location.href = value;
+      }
+    });
+  });
+</script>

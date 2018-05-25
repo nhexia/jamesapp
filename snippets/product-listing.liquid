@@ -1,0 +1,95 @@
+{% assign wholesale = false %}
+{% if customer %}
+	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+		{% assign wholesale = true %}
+	{% endif %}
+{% endif %}
+{% assign min_price = 999999 %}
+{% assign max_price = 0 %}
+{% for variant in product.variants %}
+
+	{% assign proceed = false %}
+
+	{% if wholesale and variant.metafields.c_f.wholesale_variant == 'yes' %}
+		{% assign proceed = true %}
+	{% endif %}
+
+	{% if wholesale != true and variant.metafields.c_f.wholesale_variant != 'yes' %}
+		{% assign proceed = true %}
+	{% endif %}
+
+	{% if proceed %}
+
+		{% if variant.price > max_price %}
+			{% assign max_price = variant.price %}
+		{% endif %}
+		
+		{% if variant.price < min_price %}
+			{% assign min_price = variant.price %}
+		{% endif %}
+
+	{% endif %}
+{% endfor %}
+
+<div class="ci">
+  {% if product.available %}
+  {% for col in product.collections %}
+  {% if col.handle == 'new' %}
+  <div class="new icn">{{ 'products.general.new' | t }}</div>
+  {% endif %}
+  {% endfor %}
+
+  {% if product.price < product.compare_at_price %}
+  	<div class="sale-item icn"><img src="{{ 'sale.png' | asset_url }}"  /></div>
+  {% endif %}
+
+  {% else %}
+  <div class="so icn">{{ 'products.general.sold' | t }}</div>
+  {% endif %}   
+  <a href="{{ product.url | within: collection }}" title="{{ product.title | escape }}">
+    <div class="reveal">
+      {% assign prod_tags = product.tags | downcase %}
+      {% if prod_tags contains 'sale' %}
+      <div class="sale-thum">
+          <img class='shappify-sales-icon-collection' src='{{ 'sale.png' | asset_url }}' />
+      </div>
+      {% endif %} 
+      <img src="{{ product.featured_image.src | product_img_url: '500x' }}" alt="{{ product.featured_image.alt | escape }}" />
+      {% if settings.image-flip and product.images.size > 1 %}
+      <div class="hidden">
+        <img src="{{ product.images[1] | product_img_url: '500x' }}" alt="{{ product.images[1].alt | escape }}" />      	
+      </div>
+      {% endif %}
+    </div>
+  </a>
+</div>
+<div class="product-info"> 
+  {% if settings.quickview %}
+  <a class="fancybox.ajax product-modal" href="{{ product.url }}?view=quick">{{ 'products.general.quick_view' | t }}</a>
+  {% endif %}
+</div> 
+
+<div class="product-details hide-product-price">  
+  <a href="{{ product.url | within: collection }}"> 
+    <h3>{{ product.title }}</h3>      
+    {% if settings.vendor %}<h4>{{ product.vendor }}</h4>{% endif %}
+  </a>  
+
+  <div class="price">
+    
+    <div class="prod-price">
+      {% if min_price < max_price %} 
+        {{ 'products.general.from' | t }} 
+        {{ min_price | money }} - {{ max_price | money }} 
+      {% else %}
+      	{{ max_price | money }}
+      {% endif %}
+    </div>
+    
+  </div>
+ 
+  {% unless template contains 'index' %}
+      <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+  {% endunless %}
+  {% comment %}{% endcomment %}
+</div>

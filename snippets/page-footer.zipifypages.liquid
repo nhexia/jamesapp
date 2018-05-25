@@ -1,0 +1,51 @@
+{% if zp_alternative_entity_present == true %}{% capture zp_entity_data %}
+  {% assign zp_blocks_data = '' | append: zp_alternative_entity.metafields['zipifypages']['btnpopups'] | strip | default: 'nobuttons' | replace: 'https://s3.amazonaws.com/shopify-pages-development/pictures/', 'https://cdn01.zipify.com/' %}
+  {% if zp_blocks_data != 'nobuttons' %}
+    <script type="json/template" id="zp-alternative-blocks-json-data">{{ zp_blocks_data }}</script>
+  {% endif %}
+  {% assign zp_blocks_data = '' %}
+{% endcapture %}{{ zp_entity_data | strip }}{% endif %}{% assign zp_alternative_entity = nil %}{% capture zp_entity_data %}
+  {% assign zp_blocks_data = '' | append: zp_current_entity.metafields['zipifypages']['btnpopups'] | strip | default: 'nobuttons' | replace: 'https://s3.amazonaws.com/shopify-pages-development/pictures/', 'https://cdn01.zipify.com/' %}
+  {% if zp_blocks_data != 'nobuttons' %}
+    {% if zp_alternative_entity_present == true %}
+      <script type="json/template" id="zp-main-blocks-json-data">{{ zp_blocks_data }}</script>
+    {% else %}
+      <script type="json/template" id="zp-blocks-json-data">{{ zp_blocks_data }}</script>
+    {% endif %}
+    {% assign zp_blocks_data = '' %}
+  {% endif %}
+{% endcapture %}{{ zp_entity_data | strip }}{% if zp_alternative_entity_present == true %}
+<script>!function(){var t=!1;window.ZipifyPages.SplitTest.onEntityStateLoaded(function(){if(!t){t=!0;var e=document.querySelector("#zp-"+this.currentEntity()+"-blocks-json-data");if(e){var n=document.createElement("script");n.setAttribute("id","zp-blocks-json-data"),n.setAttribute("type","template/json"),n.innerHTML=e.innerHTML,document.getElementsByTagName("body")[0].appendChild(n)}}})}();</script>{% endif %}{% capture zp_entity_data %}
+  {% if zp_entity_data_settings.size > 0 %}
+    {% if zp_alternative_entity_present == true %}
+      <script type="template/json" id="zp-main-entity-settings">{{ zp_entity_data_settings }}</script>
+    {% else %}
+      <script type="template/json" id="zp-entity-settings">{{ zp_entity_data_settings }}</script>
+    {% endif %}
+  {% endif %}
+  {% assign zp_entity_data_settings = '' %}
+{% endcapture %}{{ zp_entity_data | strip }}{% if zp_alternative_entity_present == true and zp_alternative_data_settings.size > 0 %}
+<script type="template/json" id="zp-alternative-entity-settings">{{ zp_alternative_data_settings }}</script>{% endif %}{% if zp_alternative_entity_present == true %}
+<script>!function(){var t=!1;window.ZipifyPages.SplitTest.onEntityStateLoaded(function(){if(!t){t=!0;var e=document.querySelector("#zp-"+this.currentEntity()+"-entity-settings");if(e){var n=document.createElement("script");n.setAttribute("id","zp-entity-settings"),n.setAttribute("type","template/json"),n.innerHTML=e.innerHTML,document.getElementsByTagName("body")[0].appendChild(n)}}})}();</script>{% endif %}
+<script defer src="https://cdn03.zipify.com/javascript/page-published-scripts.min.js"></script><script defer>window.addEventListener("load",function(){function i(){var i=document.querySelector(".zpa-sticky-block");Stickyfill.add(i)}function n(){if(window.ZipifyPages&&window.ZipifyPages.SplitTest&&"function"==typeof window.ZipifyPages.SplitTest.onEntityContentInjected){var n=!1;window.ZipifyPages.SplitTest.onEntityContentInjected(function(){n||(n=!0,i())})}else i()}Modernizr.csspositionsticky||function(i){var t=document.createElement("script");t.src=i,t.async=!0,t.onload=n,document.body.appendChild(t)}("https://cdn03.zipify.com/javascript/stickyfill.min.js")});</script>{% capture zp_entity_data %}
+  {% if zp_entity_footer_scripts.size > 0 %}
+    {% if zp_alternative_entity_present == true %}
+      {% assign zp_replacement_key = '</script' %}
+      {% assign zp_replacement_value = '<\/script' %}
+      <script type="text/template" id="zp-main-footer-scripts">{{ zp_entity_footer_scripts | replace: zp_replacement_key, zp_replacement_value }}</script>
+    {% else %}
+      {{ zp_entity_footer_scripts }}
+    {% endif %}
+  {% endif %}
+  {% assign zp_entity_footer_scripts = '' %}
+{% endcapture %}{{ zp_entity_data | strip }}{% capture zp_entity_data %}
+  {% if zp_alternative_entity_present == true and zp_alternative_footer_scripts.size > 0 %}
+    {% assign zp_replacement_key = '</script' %}
+    {% assign zp_replacement_value = '<\/script' %}
+    <script type="text/template" id="zp-alternative-footer-scripts">{{ zp_alternative_footer_scripts | replace: zp_replacement_key, zp_replacement_value }}</script>
+    {% assign zp_alternative_footer_scripts = '' %}
+  {% endif %}
+{% endcapture %}{{ zp_entity_data | strip }}{% assign zp_entity_data = '' %}{% if zp_alternative_entity_present == true %}
+<script>!function(){var t=!1;window.ZipifyPages.SplitTest.onEntityContentInjected(function(){if(!t){t=!0;var e=document.querySelector("#zp-"+this.currentEntity()+"-footer-scripts");if(e){var n=document.getElementsByTagName("body")[0];this.prepareAndAppendHTML(e.innerHTML,n)}}})}();</script>{% endif %}{% if zp_show_buttons_popup %}
+<script id="published-popup-template" type="text/template"> <div class="zpa-crm-popup-wrap" role="dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description"> <form class="zpa-crm-popup-form" id="zpa-crm-form" action="/subscribe" method="post"> <header class="zpa-crm-popup-header"> <button class="zpa-crm-popup-btn-close" type="button" aria-label="Close Navigation" data-close-btn> <svg class="zpa-crm-popup-btn-close-icon" width="20" height="20" data-name="btn-close"> <use xlink:href="#btn-close"></use> </svg> </button> </header> <div class="zpa-crm-popup-body" data-popup-content></div> </form> </div></script> <script id="crm-button-popup" type="text/template"> <div class="zpa-crm-popup-progressbar-wrap {!= progress_image_option == 1 ? '' : 'hidden' !}"> <img class="zpa-crm-popup-img-progress zpa-img-fluid zpa-center-block" src="{!= progress_image.src !}" > </div> <h1 class="zpa-crm-popup-title" style="color:{!= form_name_color !}; font-size:{!= form_name_font_size !};">{!= form_name !}</h1> <div class="zpa-crm-popup-form-container"> <div class="zpa-crm-popup-image-box {!= form_image_option == 1 ? '' : 'hidden' !}"> <img class="zpa-crm-popup-img-asside zpa-img-fluid zpa-center-block" style="border-radius:{!= form_image_shape !};" src="{!= form_image.src !}"> </div> <div class="zpa-crm-popup-form-box"> <div class="zpa-crm-popup-field-wrap"> <input class="zpa-crm-popup-field zpa-crm-popup-field-first-name zpa-offset-bottom-xs {!= first_name_option == 1 ? '' : 'hidden' !}" type="text" placeholder="First Name" autofocus data-user-fname> <input class="zpa-crm-popup-field zpa-crm-popup-field-last-name zpa-offset-bottom-xs {!= last_name_option == 1 ? '' : 'hidden' !}" type="text" placeholder="Last Name" data-user-lname> </div> <input class="zpa-crm-popup-field" type="email" placeholder="Best Email Address Here" required data-user-email> <input class="zpa-crm-popup-field zpa-crm-popup-field-phone {!= phone_option == 1 ? '' : 'hidden' !}" type="tel" placeholder="Phone Number" data-user-phone> </div> </div> <button class="zpa-crm-button-checkout zpa-btn-custom" type="button" style="color:{!= checkout_button_color !}; background-color: {!= checkout_button_background_color !}" data-checkout-btn>{!= checkout_button_caption !}</button> <p class="zpa-crm-popup-description">{!= comment_text !}</p> <img class="zpa-crm-popup-img-footer zpa-img-fluid zpa-center-block {!= banner_image_option == 1 ? '' : 'hidden' !}" src="{!= banner_image.src !}"></script>{% endif %}{% if zp_current_entity.template_suffix == 'zipifypages' and zp_app_integrations contains 'couponcountdown' %}
+{% include 'incentivized-theme' %}{% endif %}

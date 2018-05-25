@@ -1,0 +1,156 @@
+{{ 'jquery.validate.min.js' | asset_url | script_tag }}
+{{ 'additional-methods.min.js' | asset_url | script_tag }}
+
+<script>
+  function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+</script>
+<!--
+<p>Your business is very important to us! Forged® takes great pride in offering the very BEST Customer Service experience!</p>
+          	<p>10625 Scripps Ranch Blvd. Suite D <br> San Diego, CA 92131</p> -->
+          
+          	
+<form id="contact_form" class="contact-form" accept-charset="UTF-8" 
+      action="https://submit.jotform.me/submit/62023210092438/" method="post">
+
+<div id="suc-msg" class="successForm feedback">
+  <p>{{ 'contact.form.post_success' | t }}</p>
+</div>
+<style>
+  .successForm { display: none; }
+  .successForm.true { display: block; }
+</style>
+  <script>
+  	var submited = getParameterByName('submit');
+    if(submited == 'true')
+    {
+      var d = document.getElementById("suc-msg");
+        d.className += " true";
+    }
+    $(document).ready(function(){
+      	if(submited == 'true')
+    	{
+          var sucOf = $('#suc-msg').offset().top;
+          var headH = $('header').height();
+          $("html, body").animate({ scrollTop: (sucOf-headH) }, 600);
+        }
+    });
+  </script>
+<div class="clear"></div>
+<input type="hidden" name="formID" value="62023210092438" />
+<div class="clear"></div>
+
+  				<select name="q1_whatCan" id="contact-select" class="reqField" tabindex="1" required>
+                  <option value="General Questions">What Can we help you with?</option>
+                  <option value="General Questions">General Questions </option>
+                        <option value="Order Information">Order Information </option>
+                        <option value="Forged Events">Forged Events </option>
+                        <option value="Shipping &amp; Returns">Shipping &amp; Returns </option>
+                </select>
+              <div class="fields-main">
+                <div class="block-left">
+                  <div class="input-data">
+                  	<input type="text" placeholder="Your Name" class="reqField" name="q3_name"  required>
+                  </div>
+                  <div class="input-data">  
+                  	<input id="email" type="email" placeholder="Email Address" class="reqField emailField" name="q4_email4"  required>
+                  </div>
+                  <div class="input-data">
+                  	<input type="email" placeholder="Confirm Email Address" class="reqField emailField confirm-email" name="confEmail" required>
+                  </div>
+                </div>
+                <div class="block-right">
+                  <div class="input-textarea">
+                  	<textarea name="q5_comments"  placeholder="Comments / Questions" class="reqField" required></textarea>
+                  </div>
+                </div>
+                <div class="submit-btn">
+                  	<input type="submit" value="submit" class="link">
+        		</div>
+              </div>
+
+<div class="clear"></div>
+
+</form>
+<script>
+jQuery.validator.addClassRules("confirm-email", {
+      equalTo: '#email'
+    });
+  
+  jQuery.validator.addClassRules("reqField", {
+    	required: true
+    });
+  
+  jQuery.validator.addClassRules("emailField", {
+    	email: true
+    });
+  
+   $("#contact_form").validate({
+      onfocusout: true,
+      onkeyup: true,
+      submitHandler: function(form) {
+        var dataObj = { 
+           "cf_text_value--1": $('#contact-select').val(),
+           "first_name": $('input[name="q3_name"]').val(),
+           "email": $('#email').val(),
+           "cf_text_value--0": $('textarea[name="q5_comments"]').val(),
+          	"ca": 'a45b0b09-197d-4055-9ce9-ed10a673db4f',
+            "cf_text_name--0": 'comments_questions',
+            "cf_text_label--0": 'Comments / Questions',
+            "cf_text_name--1": 'what_can_we_help_you_with',
+            "cf_text_label--1": 'What can we help you with?'
+         };
+        $.ajax({
+          url: 'https://visitor2.constantcontact.com/api/signup',
+          type: 'POST',
+          data: dataObj,
+          dataType: 'json',
+          async: false,
+          success:function(e){
+          	console.log(e);
+          },
+          error:function(e){
+          	console.log(e);
+          },
+        })
+       form.submit();
+      }
+    });
+</script>
+          
+
+<style>
+  #contact_form .input-data, #contact_form .input-textarea {
+  	position: relative;
+  }
+  #contact_form .input-textarea textarea {
+  	height: 200px;
+  }
+  #contact_form .input-data {
+  	margin-bottom: 10px;
+  }
+  #contact_form .input-data label.error {
+    bottom: -10px;
+    color: red;
+    position: absolute;
+	}
+    #contact_form .input-textarea label.error {
+		bottom: -15px;
+    color: red;
+    position: absolute;
+    }
+  #contact_form ul.sbOptions li:first-child {
+  	display: none;
+  }
+  .successForm.feedback > p {
+      font-weight: bold;
+  }
+</style>
+         

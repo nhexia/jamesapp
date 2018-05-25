@@ -1,0 +1,106 @@
+{% paginate search.results by 24 %}  	
+
+<div class="section-title search-title desktop-12 mobile-3">
+  <h1>{{ 'general.search.title' | t }}</h1>
+</div>
+
+<div id="page" class="desktop-12 tablet-6 mobile-3">
+
+  <div id="search-bar">
+    <form action="/search" method="get">
+      {% if search.performed %}
+      {% if search.results_count == 0 %}
+      <p>{{ 'general.search.no_results_html' | t: terms: search.terms }}</p>
+      {% else %}
+      <p>{{ 'general.search.results_for_html' | t: terms: search.terms }}</p>
+      {% endif %}
+      {% endif %}
+      <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}"/>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+{% if search.performed %}
+
+<div class="desktop-12 tablet-6 mobile-3" id="four-per-row">
+  <div id="product-loop">
+    {% for product in search.results %} 
+    {% assign cur_prod_price = product.price_max | money_without_currency | plus: 0 %}
+    
+            {% if cur_prod_price <= 1 %}
+                {% continue %}
+            {% endif %}
+	{% if product.object_type == 'product' %}
+		{% assign prod_color_found = false %}
+        {% assign cur_prod_price = product.price_max | money_without_currency | plus: 0 %}
+                {% if cur_prod_price <= 1 %}
+                    {% continue %}
+                {% endif %}
+        {% comment %}
+        {% include 'bold-product' with product, hide_action: 'skip' %}
+        {% endcomment %}
+
+          {% for option in product.options %}
+          {% if option == 'Color' %}
+            {% assign prod_color_found = true %}
+            {% assign index = forloop.index0 %}
+            {% assign colorlist = '' %}
+            {% assign color = '' %}
+            {% for variant in product.variants %}
+              {% assign currentColor = variant.options[index] %}
+              {% assign colorTagFound = false %}
+              {% for tag in current_tags %}
+                  {% assign tag_low = tag | downcase %}
+                  {% if tag_low contains 'color' %}
+                      {% assign colorTagFound = true %}
+                  {% endif %}
+              {% endfor %}
+              {% if colorTagFound %}
+                  {% assign tagColor = 'color-' | append: currentColor | handleize | downcase %}
+                  {% assign cur_tag_low = current_tags | downcase %}
+                  {% if cur_tag_low contains tagColor %}
+                  {% else %}
+                      {% continue %}
+                  {% endif %}
+              {% endif %}
+
+              {% capture color %}
+                {{ variant.options[index] }}
+              {% endcapture %}
+
+              {% unless colorlist contains color %}
+
+                  <div data-color="{{ colorTagFound }}" data-tags="{{ current_tags }}" class="product {% if settings.products_per_row  == '3' %}desktop-4{% cycle ' first', '', ' last' %}{% elsif settings.products_per_row == '4' %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} tablet-half mobile-full" id="prod-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+                  {% include 'product-variant-listing' %}
+                  </div>
+
+                {% capture tempList %}
+                  {{ colorlist | append: color | append: ‘ ‘}}
+                {% endcapture %}
+                {% assign colorlist = tempList %}
+              {% endunless %}
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+
+        {% if prod_color_found != true %}
+          <div class="product {% if settings.products_per_row  == '3' %}desktop-4{% cycle ' first', '', ' last' %}{% elsif settings.products_per_row == '4' %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} tablet-half mobile-full" id="prod-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+          {% include 'product-listing' %}
+          </div>
+        {% endif %}
+    
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% include 'pagination' %}
+
+{% endif %}
+
+{% endpaginate %}
+

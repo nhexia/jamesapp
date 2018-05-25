@@ -1,0 +1,115 @@
+<div id="prod-tabs">
+                      <ul class="tabs">
+                        <li><a href="#tabs-1"><span>Description</span></a></li>
+                        <li><a href="#tabs-2"><span>Specs</span></a></li>
+                        <li><a href="#tabs-3"><span>Q &amp; A</span></a></li>
+                      </ul>
+                      <div id="tabs-1">
+                        {% if product.description != blank %}
+                          <div class="description" itemprop="description">
+                            {{ product.description }}
+                          </div>
+                        {% endif %}
+                      </div>
+                      <div id="tabs-2">          	
+                        {% if settings.size_chart_description != blank %}
+                        <p class="prod-size-chart-description">
+                          <span >{{ settings.size_chart_description }}</span>
+                        </p>
+                        {% endif %}
+                                  <table class="table">      
+                            <thead>
+                              <tr>
+                                <th>Size</th>
+                                <th>XS</th>
+                                <th>S</th>
+                                <th>M</th>
+                                <th>L</th>
+                                <th>XL</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th>Numerical</th>
+                                <td>0</td>
+                                <td>2-4</td>
+                                <td>6-8</td>
+                                <td>10-12</td>
+                                <td>14</td>
+                              </tr>
+                              <tr>
+                                <th>Bust</th>
+                                <td>33</td>
+                                <td>34-35</td>
+                                <td>36-37</td>
+                                <td>38-39</td>
+                                <td>40-41</td>
+                              </tr>
+                              <tr>
+                                <th>Waist</th>
+                                <td>26</td>
+                                <td>28</td>
+                                <td>30</td>
+                                <td>32</td>
+                                <td>34</td>
+                              </tr>
+                              <tr>
+                                <th>Hip</th>
+                                <td>36</td>
+                                <td>37-38</td>
+                                <td>39-40</td>
+                                <td>41-42</td>
+                                <td>43-44</td>
+                              </tr>
+                              <tr>
+                                <th>Inseam</th>
+                                <td>30</td>
+                                <td>30.5</td>
+                                <td>31</td>
+                                <td>31.5</td>
+                                <td>32</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        {% if settings.size_chart_description_bot != blank %}
+                        <p class="prod-size-chart-description bottom">
+                          <span >{{ settings.size_chart_description_bot }}</span>
+                        </p>
+                        {% endif %}
+                        {% comment %}
+                          <div class="product-details-part">
+                              <div class="input-slide">
+                                  <label>Model Size:</label>
+                                  <div class="product-info">
+                                      <span>Bust: 34.5</span>
+                                      <span>Waist: 26</span>
+                                      <span>Hip: 37</span>
+                                      <span>Inseam: 33</span>
+                                  </div>
+                              </div>
+                          </div>
+                        {% endcomment %}
+                      </div>
+                      <div id="tabs-3">
+
+                        {% include 'comment-form' %}
+                        {% comment %}{% if product.metafields.c_f.product_detail_tab %}
+                               {{product.metafields.c_f.product_detail_tab }}
+                        {% endif %}
+                        {% endcomment %}
+                      </div>
+                     <div id="tabs-4">
+                            {% if settings.returns_tab_content %}
+                             <p>
+                               {{ settings.returns_tab_content | newline_to_br }}
+                             </p>
+                            {% endif %}
+
+                      </div>
+                    </div>
+                    <script>
+                      $(document).ready(function(){
+                        $( "#prod-tabs" ).tabs();
+                        $('#prod-tabs ul.tabs li:first a').addClass('active');
+                      });      
+                    </script>

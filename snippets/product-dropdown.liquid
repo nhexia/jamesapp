@@ -1,0 +1,58 @@
+{% comment %}
+  Set the extension of your color files below. Use 'png', 'jpeg', 'jpg' or 'gif'.
+{% endcomment %}
+
+{% assign file_extension = 'png' %}
+
+{% if product-dropdown == blank %}
+
+{% else %}
+
+{% assign found_option = false %}
+{% assign is_color = false %}
+{% assign option_index = 0 %}
+
+{% for option in product.options %}
+					{% assign curDowncaseOption = option | downcase %}
+  {% if option == product-dropdown %}
+    {% assign found_option = true %}
+    {% assign option_index = forloop.index0 %}
+    
+    {% assign downcased_option = product-dropdown | downcase %}
+    {% if downcased_option contains 'color' or downcased_option contains 'colour' %}
+      {% assign is_color = true %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% unless found_option %}
+
+{% else %}
+
+<div class="swatch dropdown clearfix" data-option-index="{{ option_index }}">
+  
+  
+  {% assign values = '' %}
+  <span>{{ product-dropdown }}</span>
+  
+ 
+  <select id="dropdown-{{ option_index }}-{{ value | handle }}"  name="option-{{ option_index }}">
+  {% for variant in product.variants %}
+    {% assign value = variant.options[option_index] %}
+    {% unless values contains value %}
+      {% assign values = values | join: ',' %}
+      {% assign values = values | append: ',' | append: value %} 
+      {% assign values = values | split: ',' %}
+    	<option value="{{ value | escape }}" {% if variant == product.selected_or_first_available_variant %} selected="selected"{% endif %}>{{ value }}</option>
+    		
+    {% endunless %}
+    
+  {% endfor %}
+    
+  </select>
+    
+</div>
+
+{% endunless %}
+
+{% endif %}

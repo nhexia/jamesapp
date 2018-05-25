@@ -1,0 +1,277 @@
+
+
+{% layout settings.customer_layout %}
+<div id="customer-wrapper" class="desktop-12 mobile-3">
+  <div class="customer-blockmain">
+  {% include 'account-side-bar' %}
+  
+  <div id="template" class="desktop-9 tablet-4 mobile-3 login-rightpart">
+    <div id="guest" class="heading desktop-12">
+      <div class="template_header">
+        <h2>Account Information</h2>
+      </div>
+    </div>
+    
+    
+    <div class="clear"></div>
+    <div id="customer" class="formblock">
+      
+      {% comment %}
+      <div class="login-form">
+        <form id="customer-update" name="fake-form">
+          <input type="hidden" name="Id" value="{{ customer.id }}" />
+          <div class="column-six">
+            <div class="template_header">
+              <h5 class="title">Name</h5>
+            </div>
+            <div class="action_bottom account-show-form">
+              <div class="register-form">
+                <div id="first_name" class="clearfix large_form">
+                  <input type="text" value="{{ customer.first_name }}" name="FirstName" id="first-name" class="large" placeholder="First Name" />
+                </div>
+                <div id="last_name" class="clearfix large_form">
+                  <input type="text" value="{{ customer.last_name }}" name="LastName" id="last-name" class="large" placeholder="Last Name" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <div  class="column-six">
+            <div id="customer" class="template_header">
+              <h5 class="title">Login Information</h5>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <div class="desktop-5 mobile-3">
+            <div class="action_bottom account-show-form">
+              <div class="register-form">
+                <div class="clearfix large_form">
+                  <input value="{{ customer.email }}" type="email" name="Email" id="email" class="large" placeholder="Email Address" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="desktop-5 mobile-3">
+            <div class="action_bottom account-show-form">
+              <div class="register-form">
+                <div class="clearfix large_form">
+                  <input type="email" value="{{ customer.email }}" name="ConfirmEmail" id="conf-email" class="large" placeholder="Confirm Email Address" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <div class="desktop-5 mobile-3">
+            <div class="action_bottom account-show-form">
+              <div class="register-form">
+                <div  class="clearfix large_form">
+                  <input type="password" name="Password" id="password" class="large password" placeholder="Password" required />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="desktop-5 mobile-3">
+            <div class="action_bottom account-show-form">
+              <div class="register-form">
+                <div class="clearfix large_form">
+                  <input type="password" name="ConfirmPassword" id="conf-password" class="large password" placeholder="Re-enter Password" required />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+          <div class="desktop-5 mobile-3">
+            <input class="button create-accountbtn" type="submit" value="Update Info" />
+          </div>
+          <div class="clear"></div>
+          <p class="customr-success"></p>
+        </form>
+      </div>
+      {% endcomment %}
+      
+      <div class="login-form update-info">
+        <p>Click and edit any of the information below. Once you are done, click save to update this information.</p>
+        <form id="customer-update" name="fake-form">
+          <input type="hidden" name="Id" value="{{ customer.id }}" />
+          <div class="row">
+            <div class="col-six">
+              <div class="template_header">
+                 <h5 class="title">Name</h5>
+              </div>
+              <div class="login-name">
+                <div id="first_name" class="form-group">
+                  <input type="text" value="{{ customer.first_name }}" name="FirstName" id="first-name" class="form-control" placeholder="First Name" />
+                </div>
+                <div id="last_name" class="form-group">
+                  <input type="text" value="{{ customer.last_name }}" name="LastName" id="last-name" class="form-control" placeholder="Last Name" />
+                </div>
+              </div>
+            </div>
+            <div class="col-six right-col">
+              <div class="template_header">
+                <h5 class="title">Login Information</h5>
+              </div>
+              <div class="login-info">
+                <div class="form-group">
+                  <input value="{{ customer.email }}" type="email" name="Email" id="email" class="form-control" placeholder="Email Address" />
+                </div>
+                <div class="form-group">
+                  <input type="email" value="{{ customer.email }}" name="ConfirmEmail" id="conf-email" class="form-control" placeholder="Confirm Email Address" />
+                </div>
+                <div class="form-group">
+                  <input type="password" name="Password" id="password" class="form-control password" placeholder="Password" required />
+                </div>
+                <div class="form-group">
+                  <input type="password" name="ConfirmPassword" id="conf-password" class="form-control password" placeholder="Re-enter Password" required />
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-update" type="submit" value="Update Info">update info</button>
+                </div>
+              </div>
+              <p class="customer-success"></p>
+            </div>
+          </div>
+         </form>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+</div>
+
+</div>
+<style>
+  #fake-form .large_form {
+  	position: relative;
+  }
+  #fake-form .large_form label.error {
+  	position: absolute;
+    color: red;
+    bottom: -12px;
+  }
+</style>
+
+<script>
+ 
+  $(document).ready(function(){
+    $( "#customer-update" ).validate({
+      rules: {
+        ConfirmPassword: {
+          equalTo: '#password'
+        },
+         Email: {
+          email: true
+        },
+         ConfirmEmail: {
+          email: true,
+          equalTo: '#email'
+        },
+         Password: {
+          required: true
+        }
+      },
+      submitHandler: function(form) {
+        $.ajax({
+          url: '/apps/newsletter/Customer/Update',
+          type: 'POST',
+          data: $(form).serialize(),
+          dataType: 'json',
+          beforeSend: function(){
+            $('#customer-update .customr-success').removeClass('error');
+            $('#customer-update .customr-success').removeClass('success');
+          	$("#customer-update .create-accountbtn").attr('disabled','disabled');
+            $("#customer-update .create-accountbtn").val('Updating...');
+          },
+          success: function(data){
+            if(!data.error){
+            	$("#customer-update")[0].reset();
+              	$('#customer-update .customr-success').addClass('success');
+              	$('#customer-update .customr-success').html(data.message);
+            }else{
+            	$('#customer-update .customr-success').addClass('error');
+              	$('#customer-update .customr-success').html(data.message);
+            }
+            $("#customer-update .create-accountbtn").attr('disabled','disabled');
+            $("#customer-update .create-accountbtn").val('Update Info');
+          },
+          error: function(data){
+          	console.log(data);
+            $("#customer-update .create-accountbtn").removeAttr('disabled');
+            $("#customer-update .create-accountbtn").val('Update Info');
+          }
+        });
+        return false; 
+      }
+    });
+    {% comment %}
+    $("#fake-form").submit(function(e){
+    	e.preventDefault();
+      	$.ajax({
+          url: '/apps/newsletter/Customer/Update',
+          type: 'POST',
+          data: $(this).serialize(),
+          dataType: 'json',
+          beforeSend: function(){
+            $('#fake-form .customr-success').removeClass('error');
+            $('#fake-form .customr-success').removeClass('success');
+          	$("#fake-form .create-accountbtn").attr('disabled','disabled');
+            $("#fake-form .create-accountbtn").val('Updating...');
+          },
+          success: function(data){
+            if(!data.error){
+            	$("#fake-form")[0].reset();
+              	$('#fake-form .customr-success').addClass('success');
+              	$('#fake-form .customr-success').html(data.message);
+            }else{
+            	$('#fake-form .customr-success').addClass('error');
+              	$('#fake-form .customr-success').html(data.message);
+            }
+            $("#fake-form .create-accountbtn").attr('disabled','disabled');
+            $("#fake-form .create-accountbtn").val('Updating...');
+          },
+          error: function(data){
+          	console.log(data);
+            $("#fake-form .create-accountbtn").removeAttr('disabled');
+            $("#fake-form .create-accountbtn").val('Update Info');
+          }
+        });
+    });
+    {% endcomment %}
+  });
+</script>
+
+
+<style>
+  
+  #customr-form .customr-success {
+    display: none;
+    background: #f0f3f5;
+    color: white;
+    padding: 10px;
+  }
+
+   #customr-form .customr-success.active {
+    display: inline-block;
+  }
+
+  .customr-container-item .radio input {
+    margin-right: 5px;
+  }
+  
+  .customr-control-label {
+    display: block;
+    margin: 10px 0 2px 0;
+  }
+
+  .customr-actionable {
+    margin: 15px 0;
+    display: none;
+  }
+  
+  {% if template contains 'register' %}
+    .customr-hide-registration {
+      display: none
+    }
+  {% endif %}
+</style>

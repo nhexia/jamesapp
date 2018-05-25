@@ -1,0 +1,17 @@
+{% if product.metafields.c_f.specification != blank %}
+{% assign specObj = product.metafields.c_f.specification | newline_to_br | split: '<br />' %}
+<div class="spec-content">
+  <h3>
+  	Specs
+  </h3>
+  <ul>
+    {% for spec in specObj %}
+      {% if spec != blank %}
+      <li>
+        {{ spec }}
+      </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}

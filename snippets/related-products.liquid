@@ -1,0 +1,89 @@
+{% assign wholesale = false %}
+{% if customer %}
+	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+		{% assign wholesale = true %}
+	{% endif %}
+{% endif %}
+
+{% capture number_of_related_products_to_fetch %}{{ number_of_related_products_to_show | plus: 1 }}{% endcapture %}
+
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+{% assign found_a_collection = false %}
+{% for c in product.collections %}
+{% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+{% assign found_a_collection = true %}
+{% assign collection = c %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+<div class="desktop-12 mobile-3 related-title" id="related">
+
+  <h4>Related Items</h4>
+
+
+  <div class="related-carousel">
+    {% assign current_product_found = false %}
+    {% for prod in collection.products limit: 6 %}
+    {% if prod.title == product.title %}
+    {% assign current_product_found = true %}
+    {% else %}
+    {% unless current_product_found == false and forloop.last %}
+    		{% assign min_price = 999999 %}
+            {% assign max_price = 0 %}
+            {% for variant in prod.variants %}
+
+                {% assign proceed = false %}
+
+                {% if wholesale and variant.metafields.c_f.wholesale_variant == 'yes' %}
+                    {% assign proceed = true %}
+                {% endif %}
+
+                {% if wholesale != true and variant.metafields.c_f.wholesale_variant != 'yes' %}
+                    {% assign proceed = true %}
+                {% endif %}
+
+                {% if proceed %}
+
+                    {% if variant.price > max_price %}
+                        {% assign max_price = variant.price %}
+                    {% endif %}
+
+                    {% if variant.price < min_price %}
+                        {% assign min_price = variant.price %}
+                    {% endif %}
+
+                {% endif %}
+            {% endfor %}
+    <div class="lazyOwl" data-alpha="{{ prod.title }}" data-price="{{ prod.price }}">     
+      <a href="{{ prod.url | within: collection }}" title="{{ prod.title | escape }}">
+        <img src="{{ prod.featured_image | product_img_url: '500x' }}" alt="{{ product.title | escape }}" />
+      </a>
+
+      <div class="product-details hide-product-price">  
+
+          <a href="{{ prod.url | within: collection }}"> 
+            {% if settings.vendor %}<h4>{{ prod.vendor }}</h4>{% endif %}
+            <h3>{{ prod.title }}</h3>
+          </a>        
+          <div class="price">
+    
+            <div class="prod-price">
+              {% if min_price < max_price %} 
+                {{ 'products.general.from' | t }} 
+                {{ min_price | money }} - {{ max_price | money }} 
+              {% else %}
+                {{ max_price | money }}
+              {% endif %}
+            </div>
+          </div>
+
+      </div> 
+    </div>
+    {% endunless %}
+    {% endif %}
+    {% endfor %}
+  </div>  
+
+</div>

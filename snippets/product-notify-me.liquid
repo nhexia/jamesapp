@@ -1,0 +1,57 @@
+{% assign clearance_prod = false %}
+{% for curCol in product.collections %}
+  {% if curCol.handle == 'clearance' %}
+	{% assign clearance_prod = true %}
+  {% endif %}
+{% endfor %}
+
+<div class="notify_form notify-form-{{ product.id }}" id="notify-form-{{ product.id }}" >
+    <div class="message-pdp"></div>
+    {% form 'contact' %}
+  <p class="out-of-stock-msg">
+  	This item is currently Out of Stock
+  </p>
+  {% if clearance_prod != true %}
+  <div class="form">
+      {% if form.posted_successfully? %}
+        <p><em>{{ 'products.notify_form.post_success' | t }}</em></p>
+      {% elsif form.errors %}
+        <p><em>{{ 'products.notify_form.post_error' | t }}</em></p>
+      {% else %}
+        <p>
+          {% if customer %}
+            <input type="hidden" name="contact[email]" class="notify_email" value="{{ customer.email }}" />
+          {% else %}
+         
+            <input required type="email" class="notify_email" name="contact[email]" id="contact[email]" placeholder="Email Address" value="{{ contact.fields.email }}" />
+          {% endif %}
+          <input type="hidden" name="contact[subject]" class=""  value="Notify me when the product is available." />
+          <input type="hidden" name="contact[body]" class="notify_form_message" data-body="{{ product.title }}{{  t: product: product.title, url: canonical_url }}" value="{{ product.title }}{{  t: product: product.title, url: canonical_url }}" />
+          
+        </p>
+    </div>
+  
+  			<input type="submit" class="add-to-cart floatleft notifybtn" value="notify me when available" name="add">
+  <div class="wishlist-cont-outstock"></div>
+ {% endif %}
+      {% endif %}
+    {% endform %}
+  </div>
+{% if clearance_prod != true %}
+<script>
+$(document).ready(function(){
+  $('#contact_form').submit(function(e){
+  	e.preventDefault();
+       var email = $(this).find('[name="contact[email]"]').val();
+           var varId = $('#AddToCartForm select[name="id"]').val();
+
+    BISPopover.create(email, varId,{{ product.id }}).then(function(d){
+          $('#contact_form').fadeOut("slow", function(){
+                $('#contact_form').prev('.message-pdp').html("<p>Ok, great! We will notify you once this item is back in stock.</p>");
+               $('#contact_form').prev('.message-pdp').css('padding','25px 0');
+              });
+        });
+  });
+});
+</script>
+{% endif %}

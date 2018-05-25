@@ -1,0 +1,817 @@
+{% assign wholesale = false %}
+{% if customer %}
+	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+		{% assign wholesale = true %}
+	{% endif %}
+{% endif %}
+
+{% assign disable_cart = false %}
+{% if wholesale and settings.wholesale_min_cart != blank %}
+  {% assign disable_cart = true %}
+  {% assign cart_total = cart.total_price | money_without_currency %}
+  {% if settings.wholesale_min_cart_en and settings.wholesale_min_cart <= cart_total %}
+	{% assign disable_cart = false %}
+  {% endif %}
+{% endif %}
+
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M3MMJNK');</script>
+<!-- End Google Tag Manager -->
+  
+  <meta charset="utf-8" />
+
+  {% include 'google-fonts' %}
+  {% include 'social-media-meta-tags' %}
+
+  <!-- Basic Page Needs
+================================================== -->
+
+  <title>
+    {% if template == 'index' %}{% if page_title contains 'Welcome' %}{{ shop.name }} &ndash; Welcome{% else %}{{ page_title }}{% endif %}{% elsif template == '404' %}Page Not Found{% elsif page_title contains shop.name %}{{ page_title }}{% else %}{{ page_title }} &ndash; {{ shop.name }}{% endif %}
+  </title>
+  {% if page_description %}
+  <meta name="description" content="{{ page_description }}" />
+  {% endif %}
+  <link rel="canonical" href="{{ canonical_url }}" />
+  
+
+  <!-- CSS
+================================================== -->
+
+  {{ 'stylesheet.css' | asset_url | stylesheet_tag }}
+  {{ 'custom.css' | asset_url | stylesheet_tag }}
+  {{ 'help-center.css' | asset_url | stylesheet_tag }}
+  
+  
+  {% comment %}
+  {{ 'jquery.fs.selecter.css' | asset_url | stylesheet_tag }}
+  {{ 'font-awesome.css' | asset_url | stylesheet_tag }}
+  {{ 'queries.css' | asset_url | stylesheet_tag }}
+  {{ 'jquery.fancybox.css' | asset_url | stylesheet_tag }}
+  {{ 'owl.carousel.css' | asset_url | stylesheet_tag }}
+  {{ 'jquery.selectbox.css' | asset_url | stylesheet_tag }}
+  {% endcomment %}
+
+  {{ 'css-combined-header.css' | asset_url | stylesheet_tag }}
+  
+  <!--[if IE 8 ]>{{ 'ie8.css' | asset_url | stylesheet_tag }}<![endif]-->
+
+  <!--[if IE 7]>
+{{ 'font-awesome-ie7.css' | asset_url | stylesheet_tag }}
+<![endif]-->
+
+  <!-- JS
+================================================== -->
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}  
+  
+  {% comment %}
+  {{ 'jquery.min.js' | asset_url | script_tag }}
+  {{ 'jquery-migrate.js' | asset_url | script_tag }}
+  {% endcomment %}
+  
+  {{ 'jquery-combined.js' | asset_url | script_tag }}
+  
+  {% if template contains 'account' %}
+    {{ 'jquery.validate.min.js' | asset_url | script_tag }}
+    {{ 'additional-methods.min.js' | asset_url | script_tag }}
+  {% endif %}
+  
+  {{ 'theme.js' | asset_url | script_tag }}  
+  
+  {% comment %}
+  {{ 'owl.carousel-mod.js' | asset_url | script_tag }}
+  {{ 'jquery.selectbox-0.2.js' | asset_url | script_tag }}
+  {{ 'imagesloaded.pkgd.js' | asset_url | script_tag }}
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+{% endcomment %}
+	
+  {% if template == 'index' %}
+  {% if settings.slideshow == 'backstretch' %}
+  {{ 'jquery.backstretch.min.js' | asset_url | script_tag }}
+  {% endif %}
+  {% endif %}
+
+  {% if template contains 'product' %}
+  {{ 'jquery.bxslider.min.js' | asset_url | script_tag }}
+  {% endif %}
+
+  {% comment %}
+  {{ 'instafeed.js' | asset_url | script_tag }}
+	{% endcomment %}
+  
+  {% if template contains 'product' %}
+  {{ 'jquery-ui.js' | asset_url | script_tag }}
+  {{ 'jquery-ui.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+
+  <!--[if lt IE 9]>
+<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicons
+================================================== -->
+
+  <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}">
+
+  {% if template contains 'customers' %}
+  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+  {% endif %}
+
+  {% comment %}{{ content_for_header }}{% endcomment %}{% include 'header-scripts.zipifypages' %}
+  
+  {{ 'js-combined-header.js' | asset_url | script_tag }}
+  
+  {% comment %}
+{{ 'jquery.ajaxchimp.js' | asset_url | script_tag }}
+  {% endcomment %}
+  
+  <link rel="next" href="/next"/>
+  <link rel="prev" href="/prev"/>
+{% if product.metafields.inventory.ShappifyHidden == "true" %} <meta name="robots" content="noindex"> {% endif %}
+  
+  {% comment %}
+{% include 'sca.freegifts' %}
+  {% endcomment %}
+  {% include 'judgeme_core' %}<meta name="google-site-verification" content="XbKA_bJPMy4_PRuwn8arWAseghUYUG2NK0z9npeUYZ0" />
+<meta name="google-site-verification" content="XbKA_bJPMy4_PRuwn8arWAseghUYUG2NK0z9npeUYZ0" />
+
+<script type="text/javascript">
+!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var n=window.pintrk;n.queue=[],n.version="3.0";var t=document.createElement("script");t.async=!0,t.src=e;var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
+
+pintrk('load','2616549714616');
+pintrk('page');
+</script>
+<noscript>
+<img height="1" width="1" style="display:none;" alt=""
+src="https://ct.pinterest.com/v3/?tid=2616549714616&noscript=1" />
+</noscript>
+
+
+  {% include 'shogun-head' %}
+</head>
+
+   <script>
+      var dataLayer = window.dataLayer || [];
+    </script>
+
+  
+
+  {%comment%}
+   Dynmaic remarketing code setup
+  {%endcomment%}
+  
+  {% if template contains 'index' %}
+  <script type="text/javascript">
+  var google_tag_params = {
+  ecomm_pagetype: 'home'
+  };
+  </script>
+
+  {% elsif template contains 'collection' %}
+  <script type="text/javascript">
+  var google_tag_params = {
+  ecomm_pagetype: 'category',
+    ecomm_pcat:   '{{ collection.title }}'.toLowerCase()
+  };
+
+  </script>
+  {% elsif template contains 'product' %}
+  <script type= "text/javascript" >
+ //var product_variant = document.location.search.split('variant=')[1];  ;
+    var product_variant = "shopify_US_"+"{{product.id}}_"+"{{product.selected_or_first_available_variant.id}}";
+
+  var google_tag_params = {
+    
+    ecomm_prodid: "shopify_US_"+"{{product.id}}_"+"{{product.selected_or_first_available_variant.id}}",
+  ecomm_pcat:   '{{product.type}}', 
+  ecomm_pagetype: 'product',
+  ecomm_pvalue: {{ product.price | money_without_currency}}
+
+  };
+  </script>
+  {% elsif template contains 'cart' %}
+  <script type= "text/javascript">
+  var google_tag_params = {
+  ecomm_prodid: [{% for item in cart.items %}'shopify_US_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %},{% endunless %}{% endfor %}],
+  ecomm_pname:  [{% for item in cart.items %}'{{item.product.title}}'{% unless forloop.last %},{% endunless %}{% endfor %}],
+  ecomm_pcat:   [{% for item in cart.items %}'{{item.product.type}}'{% unless forloop.last %},{% endunless %}{% endfor %}], 
+  ecomm_pvalue: [{% for item in cart.items %}{{item.product.price | money_without_currency}}{% unless forloop.last %},{% endunless %}{% endfor %}],  
+  ecomm_pagetype: 'cart',
+  ecomm_totalvalue: {{cart.total_price | money_without_currency }}
+  }
+  </script>
+  {% elsif template contains 'search' %}
+  <script type="text/javascript">
+  var google_tag_params = {
+  ecomm_pagetype: 'searchresults',
+  }
+  </script>
+  {% else %}
+  <script type= "text/javascript">
+  var google_tag_params = {
+  ecomm_pagetype: 'other',
+  };
+  </script>
+  {% endif %}
+
+
+
+  <script>
+  window.dataLayer=window.dataLayer||[];
+  dataLayer.push ({   
+      'event':'dynamicRemarketingTriggered',
+      'google_tag_params': window.google_tag_params 
+  });
+  </script>
+
+<body class="gridlock shifter {{ template }} {% if disable_cart %}disabled-cart{% endif %}" data-template="{{ template }}" data-collection="{{ template }}-{{ collection.handle }}">
+  
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M3MMJNK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  
+  <script>
+    var locpath = location.pathname;
+    if(locpath == '/collections/' || locpath == '/collections')
+    {
+      location.href = '/'
+    }
+  </script>
+  {% include 'timber-cart' %}
+
+  <div class="shifter-page is-moved-by-drawer" id="PageContainer">  
+    <div class="page-wrap">
+      
+      
+  <header class="scrollheader">
+    <div class="bannertop{% if settings.full-width-header %} gridlock-fluid{% endif %}">
+      <div class="row">
+        {% if settings.enable_banner %}
+        <div class="desktop-12 tablet-12 mobile-3">
+         	
+          	
+        </div>
+        {% endif %}     
+        {% include 'mobile-cart' %}
+      </div>
+    </div> 
+    <div id="navigation"{% if settings.full-width-header %} class="gridlock-fluid"{% endif %}>
+      <div class="row">
+        <div class="nav-container desktop-12 tablet-6 mobile-3">
+          <div  class="logo">       
+            {% if settings.use_logo_image %}
+            <a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" style="border: 0;"/></a>
+            {% else %}
+            <a href="/">{{ shop.name }}</a>
+            {% endif %}     
+          </div>  
+          
+      		<ul class="top-right-bar">
+            <li><a class="button" href="/account/login">Wholesale Login</a></li>
+        		{% comment %}
+            <li><a href="https://butterflycraze.myshopify.com/pages/shipping-policy "><img src="{{ 'shipping-icon.png' | asset_url }}"  /><span class="box-title">Free Shipping</span><br><span class="box-tag">Over ${{ settings.freeship_msg_amount }}</span></a></li>
+        		<li><a href="https://butterflycraze.myshopify.com/pages/return-policy "><img src="{{ 'return-icon.png' | asset_url }}"  /><span class="box-title">Easy Returns</span><br><span class="box-tag">30 Day Policy</span></a></li>
+        		<li><a href="https://butterflycraze.myshopify.com/pages/contact-us"><img src="{{ 'contact-icon.png' | asset_url }}"  /><span class="box-title">Contact Us</span><br><span class="box-tag">877.587.6974</span></a></li>
+            {% endcomment %}
+        	</ul>
+          
+          <div class="row">
+            <div class="desktop-9 tablet-6 mobile-3">
+              <nav class="main-center-nav">
+                <ul id="main-nav" role="navigation"> 
+                  {% for link in linklists.main-menu.links %}
+                  {% include 'navigation' %}
+                  {% endfor %}
+                </ul>        
+              </nav>
+            </div>
+            <div class="desktop-3 tablet-6 mobile-3">
+              <ul class="nav-right-bar text-right">
+                <li><a href="https://butterflycraze.myshopify.com/pages/contact-us"><img src="{{ 'contact-icon.png' | asset_url }}"  /><span class="box-title">Contact Us</span><br><span class="box-tag">877.587.6974</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+       
+      </div>  
+    </div>
+    <div class="header-bottom gridlock-fluid">
+    	<div class="row">          	
+          <div class="desktop-6 tablet-3 mobile-3">
+            <form method="get" action="/search">
+              <div class="searchbox">                      
+                <input placeholder="Search" name="q" type="text">
+                <button class="search_btn">Search</button>                                                     
+              </div>
+            </form>
+          {% comment %}            
+            <div class="help-link">
+              <a href="#">Need Help?<em><img src="{{ 'help-link.png' | asset_url }}"  /></em></a>
+          	</div>
+          {% endcomment %}
+          </div>
+          <div class="desktop-6 tablet-3 mobile-3">
+            <div class="right-block">
+              {% comment %}<p><a href="/pages/give-10-get-10">Give $10, Get $10</a></p>{% endcomment %}
+              <ul class="cart-ad">
+                <li>
+                  <a href="/account">
+                    <img class="account-icon" src="{{ 'admin-thum-hover.png' | asset_url }}"  />
+                  	{% comment %}
+                    <img class="account-icon" src="{{ 'admin-thum.png' | asset_url }}"  />
+                    <img class="account-icon-hover" src="{{ 'admin-thum-hover.png' | asset_url }}"  />
+                    {% endcomment %}
+                  	</a>
+                  </li>
+                  <li class="cart-icon">
+                   	<a href="/cart" class="cart site-header__cart-toggle js-drawer-open-right">
+                      <img src="{{ 'cart-hover.png' | asset_url }}"  />
+                      {% comment %}<img src="{{ 'cart.png' | asset_url }}"  />{% endcomment %}
+                      {% comment %}<img class="cart-icon-hover" src="{{ 'cart.png' | asset_url }}" />{% endcomment %}
+                   	</a>
+                  </li>
+              </ul>
+            </div>	
+          </div>        
+      	</div>  
+    </div>
+    <style>
+      li.links-clearance a { color: #771a15 !important; }
+    </style>
+      </header>
+  <div id="phantom"></div>  
+  {% include 'promo-banners' %}
+
+
+
+        {% if template contains 'collection' %}
+      
+      {% if collection.image %}
+      {% assign banner_image = collections[collection.handle].image.src | collection_img_url: 'master' %}
+      <div class="collection-banner">
+        <img src="{{ banner_image }}" alt="{{ collection.title }}">
+      </div>
+      {% endif %} 
+      {% endif %}
+      
+      
+      
+      {% if template != 'index' %}
+      <div {% if template != 'collection' and template != 'page.about-us' and template != 'page.faq' and template != 'page.shipping-policy' and template != 'page.return-policy' and template != 'page.privacy-policy' and template != 'page.terms' %}id="content" class="row {% if template == 'cart' %}cart-productgrid{% endif %}"{% endif %}>	 
+        {% if settings.breadcrumb %}
+        {% include 'breadcrumb' %}	
+        {% endif %}	
+        
+        {% comment %}{{ content_for_layout }}{% endcomment %}{% include 'page-content.zipifypages' %}         
+        
+      </div>
+      {% else %}
+      
+      {% comment %}{{ content_for_layout }}{% endcomment %}{% include 'page-content.zipifypages' %}
+      
+      {% endif %}
+
+    </div>
+    
+
+    <footer>
+      <div id="footer-wrapper">	
+        <div id="footer" class="row">
+          {% assign grid = 0 %}
+          {% if settings.footer-1-links != '' %}{% assign grid = grid | plus: 1 %}{% endif %}
+          {% if settings.footer-2-links != '' %}{% assign grid = grid | plus: 1 %}{% endif %}
+          {% if settings.footer-3-links != '' %}{% assign grid = grid | plus: 1 %}{% endif %} 
+          {% assign grid = grid | plus: 2 %}
+          {% if grid > 0 %}
+          
+          {% if linklists[settings.footer-1-links].links != empty %}
+          <div class="desktop-{{ 12 | divided_by: grid }} tablet-half mobile-3">
+            {% if settings.footer-1-links != '' %}
+            <h4>{{ linklists[settings.footer-1-links].title }}</h4>
+            {% endif %}
+            <ul>
+              {% for link in linklists[settings.footer-1-links].links %}
+              <li>{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if linklists[settings.footer-2-links].links != empty %}
+          <div class="desktop-{{ 12 | divided_by: grid }} tablet-half mobile-3">
+            {% if settings.footer-2-links != '' %}
+            <h4>{{ linklists[settings.footer-2-links].title }}</h4>
+            {% endif %}
+            <ul>
+              {% for link in linklists[settings.footer-2-links].links %}
+              <li>{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if linklists[settings.footer-3-links].links != empty %}
+          <div class="desktop-{{ 12 | divided_by: grid }} tablet-half mobile-3">
+            {% if settings.footer-3-links != '' %}        
+            <h4>{{ linklists[settings.footer-3-links].title }}</h4>
+            {% endif %}
+            <ul>
+              {% for link in linklists[settings.footer-3-links].links %}
+              <li>{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if linklists[settings.footer-4-links].links != empty %}
+          <div class="desktop-{{ 12 | divided_by: grid }} tablet-half mobile-3">
+            {% if settings.footer-4-links != '' %}        
+            <h4>{{ linklists[settings.footer-4-links].title }}</h4>
+            {% endif %}
+            <ul>
+              {% for link in linklists[settings.footer-4-links].links %}
+              <li>{{ link.title | link_to: link.url }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          <div class="desktop-6 tablet-full mobile-3">
+            <div id="footer_signup">
+                  <div class="foot-news-cont">
+                    <div class="news-text">
+                      {% if settings.footer_news_title != blank %}
+                        <h4>{{ settings.footer_news_title }}</h4>
+                      {% endif %}
+                      {% if settings.footer_news_sub_title != blank %}
+                        <p>{{ settings.footer_news_sub_title }}</p>
+                      {% endif %}
+                    </div>  
+
+                    <form action="{{ settings.mailchimp }}" method="post" id="footer-newsletter" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                      <div class="email-cont">
+                      <input value="" name="email" class="email" id="footer-EMAIL" placeholder="Enter your email address & Save!" required="" type="email">
+                        <label class="error"></label>
+                      </div>
+                      <input data-id="ca:input" type="hidden" name="ca" value="2df43bc2-5bfd-4648-9db2-6da2aa23825e">
+                      <input value="Get 10% Off" name="subscribe" id="footer-subscribe" class="button" type="submit">
+                    </form>
+                    <style>
+
+                      #footer_signup .email-cont {
+                          display: inline-block;
+                          position: relative;
+                      }
+                      #footer_signup .email-cont label.error {
+                          top: 100%;
+                          color: red;
+                          position: absolute;
+                        text-align: left;
+                      }	
+                      #footer_signup .email-cont label.error a{
+                        color: #323334;
+                      }
+                    </style>
+                  </div>
+                  <div class="foot-news-thank">
+                    <h2>Thank You and Welcome!</h2>
+                  </div>
+                  <style>
+                    .foot-news-thank { clear: both; display: none; }
+                    .foot-news-thank h2 { color: #a3a8ad; }
+                  </style>
+                  <script>
+                    $(document).ready(function(){
+                        $('#footer-newsletter').submit(function(e){
+                            e.preventDefault();
+                          $.ajax({
+                            url: '/apps/newsletter/Newsletter/Subscribe',
+                            data: $(this).serialize(),
+                            dataType: 'json',
+                            type: 'POST',
+                            beforeSubmit: function(){
+                              $('#footer_signup .email-cont label.error').html('');
+                              $('#footer-newsletter input[type="submit"]').attr('disabled','disabled').addClass('disabled');
+                              $('#footer-newsletter input[type="submit"]').attr('value','Submitting...');
+                            },
+                            success: function(data){
+                              if(data.result == 'success'){
+                                $('.foot-news-cont').fadeOut(300, function(){
+                                  $('.foot-news-thank').fadeIn(300, function(){
+                                      $('.foot-news-cont').remove();
+                                  });
+                                });
+                              }else{
+                                $('#footer_signup .email-cont label.error').html(data.msg);
+                              }
+                                $('#footer-newsletter input[type="submit"]').removeAttr('disabled').removeClass('disabled');
+                                $('#footer-newsletter input[type="submit"]').attr('value','Submit');
+                            },
+                            error: function(data){
+                                //console.log(data);
+                                $('#footer-newsletter input[type="submit"]').removeAttr('disabled').removeClass('disabled');
+                                $('#footer-newsletter input[type="submit"]').attr('value','Submit');
+                            }
+                          });
+                        });
+                    });
+
+                  </script>
+                </div> 
+          </div>
+          
+          {% endif %}
+          
+          <ul id="footer-icons" class="desktop-12 tablet-12 mobile-3">            
+            {% if settings.show_instagram %}<li><a href="//instagram.com/{{ settings.instagram-id }}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>{% endif %}
+            {% if settings.show_twitter %}<li><a href="{{ settings.twittername }}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>{% endif %}
+            {% if settings.show_facebook %}<li><a href="{{ settings.facebook_url }}" target="_blank"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>{% endif %}            
+            {% if settings.show_pinterest %}<li><a href="{{ settings.pinterest_url }}" target="_blank"><i class="icon-pinterest icon-2x"></i></a></li>{% endif %}
+            {% if settings.show_tumblr %}<li><a href="{{ settings.tumblr_url }}" target="_blank"><i class="icon-tumblr icon-2x"></i></a></li>{% endif %}
+            {% if settings.show_youtube %}<li><a href="{{ settings.youtube_url }}" target="_blank"><i class="icon-youtube icon-2x"></i></a></li>{% endif %}
+            {% if settings.show_googleplus %}<li><a href="{{ settings.googleplus_url }}" target="_blank"><i class="icon-google-plus icon-2x"></i></a></li>{% endif %}
+            
+            {% if settings.show_rss %}<li><a href="{{ shop.url }}/blogs/news.atom" target="_blank"><i class="icon-rss icon-2x"></i></a></li>{% endif %}
+          </ul>
+          
+          
+          <div class="clear"></div>
+          {% if settings.footer_copyright != blank %}
+          {% assign copy_obj = settings.footer_copyright | newline_to_br | split: '<br />' %}
+            <div class="credit desktop-12 tablet-12 mobile-3" style="text-align: center;">
+              <ul>
+                  {% for copy in copy_obj %}
+                	{% if copy != blank %}
+                  	<li>{{ copy }}</li>
+                	{% endif %}
+                  {% endfor %}
+              	</ul>
+          	</div>
+          <div class="clear"></div>
+          {% endif %}
+        </div> 
+      </div>
+    </footer>
+
+    
+
+    <div style='display:none'>
+      <div id='search_popup' style='padding:30px;'>
+        <p class="box-title">SEARCH STORE<p>
+        <!-- BEGIN #subs-container -->
+        <div id="subs-container" class="clearfix">
+          <div id="search">
+            <form action="/search" method="get">
+              <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+            </form>
+          </div>  
+        </div>
+      </div>
+    </div>    
+  </div>  
+{% include 'popup' %}
+	{% include 'mobile-navigation' %}
+
+  <a href="#" class="scrollup"><i class="icon-angle-up icon-2x"></i> TOP</a>
+
+  <!-- Begin Recently Viewed Products -->
+  <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+
+    // Including api.jquery.js conditionnally.
+    if (typeof Shopify.resizeImage === 'undefined') {
+      document.write({{ "api.jquery.js" | shopify_asset_url | script_tag | json }});
+    }
+
+    //]]>
+  </script>
+
+  {{ '//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js' | script_tag }}
+  {{ 'jquery.products.min.js' | asset_url | script_tag }}
+
+  {% if template contains 'product' %}
+
+  <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+    Shopify.Products.recordRecentlyViewed();
+    //]]>
+  </script>
+  {% endif %}  
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=127142210767229";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+  {% include 'currencies' %}
+
+  
+  {% if settings.ajax_cart_method == "drawer" %}
+    {{ 'handlebars.min.js' | asset_url | script_tag }}
+    {% include 'ajax-cart-template' %}
+    {{ 'ajax-cart.js' | asset_url | script_tag }}
+    {{ 'newsletter.js' | asset_url | script_tag }}
+
+    <script>
+      jQuery(function($) {
+        ajaxCart.init({
+          formSelector: '#AddToCartForm',
+          cartContainer: '#CartContainer',
+          addToCartSelector: '#AddToCart',
+          cartCountSelector: '.CartCount',
+          cartCostSelector: '.CartCost',
+          moneyFormat: {{ shop.money_format | json }},
+          onToggleCallback: function(cart) {
+          Currency.convertAll(shopCurrency, Currency.currentCurrency);
+          jQuery('.selected-currency').text(Currency.currentCurrency);
+          }
+       });
+      });
+      jQuery('body').on('ajaxCart.afterCartLoad', function(evt, cart) {
+        $('.variation-title-scart').each(function(){
+          var variationTitle = $(this).text();
+          if(variationTitle){
+            var wordVars = variationTitle.split("/");
+            $.each(wordVars,function(e,v){
+
+              if(e == 0){
+                variationTitle = v;
+              }else{
+                v = v.toLowerCase();
+                variationTitle = variationTitle + "<br>" + v;
+              }
+            });
+          }
+          $(this).hide();
+          $(this).after("<p class='product-variant-scart'>"+variationTitle+"</p>");
+        });
+        // Bind to 'ajaxCart.afterCartLoad' to run any javascript after the cart has loaded in the DOM
+        timber.RightDrawer.open();
+      });  
+
+      $(function () {
+        $("#contact-select").selectbox();
+      });
+
+    </script>
+  {% endif %}
+
+  
+  
+  {% assign wholesale = false %}
+  {% if customer %}
+    {% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+      {% assign wholesale = true %}
+    {% endif %}
+  {% endif %}
+
+  <script>
+  {% if cart.item_count > 0 %}
+    {% if wholesale != true %}
+
+      var extraItems = [];
+      {% assign extra_found = false %}
+        {% for line_item in cart.items %}
+          {% if line_item.variant.metafields.c_f.wholesale_variant == 'yes' %}
+            extraItems.push({{ line_item.id }});
+              {% assign extra_found = true %}
+          {% endif %}
+        {% endfor %}
+      var postData = '';
+      extraItems.forEach(function(item){
+          postData += 'updates['+ item +']=0&';
+      });
+      postData = postData.substring(0,(postData.length-1));
+      function ValidateCart()
+      {
+        jQuery.post('/cart/update.js', postData,function(){
+          try{
+          ajaxCart.load();
+          }catch(err){}
+        });
+
+      }
+      function DeleteWholeSaleItem(id)
+      {
+        var prodData = 'updates['+ id +']=0';
+        jQuery.post('/cart/update.js', prodData);
+      }
+      {% if extra_found %}
+        $(document).ready(function(){
+            ValidateCart();
+        });
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  </script>
+	<script>
+      {% if wholesale and settings.wholesale_min_cart != blank %}
+        var checkAmount = {{ settings.wholesale_min_cart }};
+        var curAmount = {{ cart_total }};
+        function DisableCart(event){
+            event.preventDefault();
+        }
+        function ValidateWholesaleCart(amount){
+          if(amount >= checkAmount){
+            $('body').removeClass('disabled-cart');
+            try{
+                $('form[action="/cart"],form[action^="/cart?discount="]').unbind('submit',DisableCart);
+            }catch(err){}
+          }else{
+                $('form[action="/cart"],form[action^="/cart?discount="]').bind('submit',DisableCart);
+            	$('body').addClass('disabled-cart');
+          }
+        }
+        $(document).ready(function(){
+          ValidateWholesaleCart(curAmount);
+        });
+      {% endif %}
+  </script>
+  <script>
+    function DiscountCheck(amount){
+      {% assign activeDiscount = false %}
+    	{% if wholesale %}
+            {% if settings.freeship_whole_en and settings.freeship_whole_amount != blank and settings.freeship_whole_code != blank %}
+                var discountCode = '{{ settings.freeship_whole_code }}';
+                var minimumAmount = {{ settings.freeship_whole_amount }};
+                {% assign activeDiscount = true %}
+            {% endif %}
+        {% else %}
+            {% if settings.freeship_retail_en and settings.freeship_retail_amount != blank and settings.freeship_retail_code != blank %}
+                var discountCode = '{{ settings.freeship_retail_code }}';
+                var minimumAmount = {{ settings.freeship_retail_amount }};
+                {% assign activeDiscount = true %}
+            {% endif %}
+        {% endif %}
+        {% if activeDiscount %}
+                if(amount >= minimumAmount){
+                	$('form[action="/cart"],form[action^="/cart?discount="]').attr('action','/cart?discount='+discountCode);
+                }else{
+                	$('form[action="/cart"],form[action^="/cart?discount="]').attr('action','/cart');
+                }
+        {% endif %}
+    }
+  </script>
+  <script type="text/javascript">
+  var _learnq = _learnq || [];
+
+  _learnq.push(['account', 'QMd38A']);
+
+  (function () {
+  var b = document.createElement('script'); b.type = 'text/javascript'; b.async = true;
+  b.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'a.klaviyo.com/media/js/analytics/analytics.js';
+  var a = document.getElementsByTagName('script')[0]; a.parentNode.insertBefore(b, a);
+  })();
+</script>
+  
+  {% if template contains 'product' %}
+  <script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+  {% endif %}
+{% include 'page-footer.zipifypages' %}</body>
+</html>

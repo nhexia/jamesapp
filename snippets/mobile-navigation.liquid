@@ -1,0 +1,129 @@
+<nav class="shifter-navigation">
+  <div class="search">
+    <form action="/search" method="get">
+      <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+    </form>           
+  </div>
+  <script type="text/javascript">
+    $(document).ready(function($) {
+      $('#accordion').find('.accordion-toggle').click(function(){
+		$(this).toggleClass('open');
+        $('#accordion').find('.accordion-toggle').not($(this)).removeClass('open');
+        //Expand or collapse this panel
+        $(this).next().slideToggle('fast');
+
+        //Hide the other panels
+        $(".accordion-content").not($(this).next()).slideUp('fast');
+		
+      });
+
+      $('#accordion').find('.accordion-toggle2').click(function(){
+
+        //Expand or collapse this panel
+        $(this).toggleClass('open');
+        $('#accordion').find('.accordion-toggle2').not($(this)).removeClass('open');
+        $(this).next().slideToggle('fast');
+
+        //Hide the other panels
+
+        $(".accordion-content2").not($(this).next()).slideUp('fast');
+
+      });        
+
+
+    });
+  </script>    
+  <ul id="accordion">
+    {% for link in linklists.main-menu.links %}
+    	{% assign mega_found = false %}
+    	{% assign append_menu = '' %}
+    	{% assign outer_index = forloop.index0 | plus: 1 %}
+    
+    	{% for i in (1..4) %}
+    		{% assign append_menu = '' %}
+    		{% if outer_index > 1 %}
+            	{% capture append_menu %}_{{ outer_index }}{% endcapture %}
+            {% endif %}
+    
+    		{% capture mega_show_id %}mega_{{ i }}_show{{ append_menu }}{% endcapture %}
+    		{% capture show_links_id %}mega_{{ i }}_links{{ append_menu }}{% endcapture %}
+    		
+    		{% assign mega_links = settings[show_links_id] %}
+    		{% if settings[mega_show_id] == true and linklists[mega_links].links != empty %}
+    			{% assign mega_found = true %}
+    		{% endif %}
+    	{% endfor %}
+    
+    	  {% if mega_found == true %}
+            <li class="accordion-toggle">{{ link.title | link_to: link.url }}</li>
+            <div class="accordion-content">
+            {% for i in (1..4) %}
+              {% assign append_menu = '' %}
+              
+              {% if outer_index > 1 %}
+            	{% capture append_menu %}_{{ outer_index }}{% endcapture %}
+            {% endif %}
+              
+              {% capture mega_show_id %}mega_{{ i }}_show{{ append_menu }}{% endcapture %}
+              {% capture show_links_id %}mega_{{ i }}_links{{ append_menu }}{% endcapture %}
+              {% assign mega_links = settings[show_links_id] %}
+              
+              {% if settings[mega_show_id] == true and linklists[mega_links].links != empty %}
+                <div class="accordion-toggle2" >{{ linklists[mega_links].title }}</div>
+                <div class="accordion-content2">
+                  <ul>
+                    {% for link in linklists[mega_links].links %}
+                    <li>{{ link.title | link_to: link.url }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              
+            {% endfor %}
+          {% else %}
+          	{% capture child_list_handle %}{{ link.title | handleize }}{% endcapture %}
+            {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %}
+            <li class="accordion-toggle">{{ link.title }}</li>
+            <div class="accordion-content">
+              <ul class="sub">
+                {% for l in linklists[child_list_handle].links %}
+                  {% capture child_list_handle %}{{ l.title | handleize }}{% endcapture %}
+                  {% if linklists[child_list_handle] and linklists[child_list_handle].links.size > 0 %} 
+                  <div class="accordion-toggle2">{{ l.title }}</div>
+                  <div class="accordion-content2{% if forloop.first %} default{% endif %}">
+                    <ul class="sub">
+                      {% for l in linklists[child_list_handle].links %}
+                      <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                  {% else %}
+                  <li><a href="{{ l.url }}">{{ l.title }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+            {% else %}
+            <li>{{ link.title | link_to: link.url }}</li>
+            {% endif %}
+          {% endif %}
+              
+              
+    	</div>
+    
+    {% endfor %}
+  </ul>
+  <ul class="nav-account-link">
+    {% if shop.customer_accounts_enabled %}
+      <li class="cust">
+        {% if customer  %}
+        <a href="/account">My Account</a>
+        {% else %}
+        <a href="/account/login">My Account</a>
+        {% endif %}
+      </li>
+      {% endif %}
+  </ul>  
+
+</nav> 
+

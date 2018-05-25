@@ -1,0 +1,35 @@
+<div class="about-us">
+  
+  {% if page.metafields.c_f.banner_image_url != blank %}
+  	<div class="help-banner banner-view" style="background-image:url({{ page.metafields.c_f.banner_image_url }});">
+      <div class="row">
+        <div class="help-banner-text">
+          <div class="help-banner-title">
+            <h1>{{ page.title }}</h1>
+          </div>
+        </div>
+      </div>
+  	</div>
+  {% endif %}
+<div id="content" class="row">
+<div class="{% if settings.pagelist == '' %}desktop-12 tablet-6 mobile-3{% else %}desktop-9 tablet-4 mobile-3{% endif %}">
+  <div class="rte">
+  
+  		
+    		<div class="heading">
+              <h2>Thank you for visiting our website!</h2>
+              <p>we hope it "makes your heart sing" as we love to put it.</p>
+          	</div>
+          	<div class="inner-content">
+              <p>We are a giftware and decorative accessory company dedicated to offering you the latest in trendy, stylish and whimsical treasures for anyone young at heart!</p>
+              <p>Each year we search endlessly for fresh and unique ideas. We travel far around the world to bring you the special magical wonders that tickle your heart—the kind of things that give you "butterfly feelings".</p>
+              <p>As you browse the website, you will be presented with our latest online introduction—the butterfly collection. This is, by far, our most popular collection. These charming pieces of nature have captured people's imaginations and lit up many a child's eye. They are vibrant, beautiful and versatile. You can decorate your child's room as well as dazzle party guests by using them as decorative accessory. The possibilities for using our butterflies, flowers, dragonflies, ladybugs, and bees are endless. Let us spark your imagination by viewing our Ideas section.</p>
+              <p>We will continue to introduce other exciting collections throughout the year. Please check back to see the latest items we have added in our New Arrivals section.</p>
+              <p>Meanwhile, we want to know what you think. What special item you are looking for? What design ideas have you come up with? How we can help?<a href="/pages/contact-us"> Contact us</a> today!</p>              
+          	</div>
+          
+    	
+  </div>
+</div>
+  </div>
+</div>  

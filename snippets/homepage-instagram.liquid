@@ -1,0 +1,241 @@
+<section id="homepage-instagram" class="no-fouc">    
+    {% assign igimage = '{{image}}'%}
+    {% assign url = '{{link}}' %}
+    {% assign caption = '{{caption}}' %}
+  <article>
+    {% comment %}
+    	<div class="section-title row desktop-view">
+      		<h2>{{ 'layout.homepage.instagram' | t }}</h2>      
+    	</div>       
+       <div class="section-title row mobile-view">
+        <h2>
+          {% if settings.home_insta_mobile_title != blank %}
+              {{ settings.home_insta_mobile_title }}
+          {% endif %}
+
+          <em><img src="{{ 'instagram.png' | asset_url }}"  /></em>
+         </h2>
+
+         {% if settings.home_insta_mobile_sub_title != blank %}
+        <h3>
+          {{ settings.home_insta_mobile_sub_title }}
+         </h3>
+         {% endif %}
+
+      </div>
+   
+    {% if settings.instagram-user-id == blank %}
+    <div class="theme-instructions row">
+      <div class="onboard desktop-12 tablet-6 mobile-3">
+        <h3>Home page - instagram</h3>
+        You are seeing this message as you have enabled the Instagram section of your Home page options
+        but have yet to add your Instagram credentials to the section titled: <strong>Home page - Instagram</strong>.
+        <br /><br />
+        To configure this section go to the <a href="/admin/themes/96134342/editor">theme Customizer</a> and open the section named: <strong>Home page - Instagram</strong>.
+        <br /><br />
+        Need more help? take a look at our <a target="_blank" href="http://support.undergroundmedia.co.uk/customer/portal/articles/2386318-home-page---instagram">tutorial</a>.
+      </div>
+      <div class="theme-content" style="min-height: 100px">
+        {% for i in (1..6) %}
+        <div class="desktop-2 tablet-1 mobile-1">
+          <img src="//cdn.shopify.com/s/images/themes/product-{{ forloop.index }}.png" alt="{{ image.alt }}" />
+        </div>
+        {% endfor %}
+      </div>        
+    </div>
+    {% endif %}  
+    {%endcomment %} 
+    
+    <div class="gridlock-fluid">
+      <div class="row">
+        <div class="row">
+          <div class="feed-fake" style="display: none !important; visibility: hidden !important">
+            <div id="instafake"></div>
+          </div>
+          <div id="instafeed">
+             <div class="masonary-grid">
+                <div class="pinterest-grid">
+                   <div class="item grid-col-4">
+                      <div class="thumb pin-image">
+                         <a target="_blank" href="{{ settings.home_pin_url1 }}"  style="background-color: #fff;">
+                         <img src="{{ 'insta-image-1.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb pin-image" >
+                         <a target="_blank" href="{{ settings.home_pin_url2 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-3.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb ">
+                         <a target="_blank" href="https://www.pinterest.com/butterflycraze/" style="background-image: url({{ settings.home_pin_image5 | img_url: 'master' }});">
+                         <img src="{{ 'insta-image-7.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb pin-image">
+                         <a target="_blank" href="{{ settings.home_pin_url6 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-8.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb pin-image">
+                         <a target="_blank" href="{{ settings.home_pin_url4 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-9.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb">
+                         <a target="_blank" href="https://www.pinterest.com/butterflycraze/" style="background-image: url({{ settings.home_pin_image3 | img_url: 'master' }});">
+                         <img src="{{ 'insta-image-2.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                </div>
+                <div class="instagram-grid">
+                   <div class="item grid-col-4">
+                      <div class="thumb insta-image">
+                         <a target="_blank" href="{{ settings.home_insta_url4 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-10.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb insta-image">
+                         <a target="_blank" href="{{ settings.home_insta_url5 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-11.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb">
+                         <a target="_blank" href="https://www.instagram.com/butterflycraze.h2h/" style="background-image: url({{ settings.home_insta_image1 | img_url: 'master' }});">
+                         <img src="{{ 'insta-image-4.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb insta-image">
+                         <a target="_blank" href="{{ settings.home_insta_url2 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-5.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb insta-image">
+                         <a target="_blank" href="{{ settings.home_insta_url3 }}" style="background-color: #fff;">
+                         <img src="{{ 'insta-image-6.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                   <div class="item grid-col-4">
+                      <div class="thumb">
+                         <a target="_blank" href="https://www.instagram.com/butterflycraze.h2h/" style="background-image: url({{ settings.home_insta_image6 | img_url: 'master' }});">
+                         <img src="{{ 'insta-image-12.jpg' | asset_url }}" alt="">
+                         </a>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      
+      
+      $(window).on("load",function(){
+          masonary();
+      });
+      
+      // Masonary gallery
+        function masonary(){
+            if($('.pinterest-grid').length){
+                var $container1 = $('.pinterest-grid');
+
+                $container1.imagesLoaded( function() {
+                    $container1.masonry({
+                        itemSelector: '.item',
+                    });
+                })
+            };
+          if($('.instagram-grid').length){
+                var $container2 = $('.instagram-grid');
+
+                $container2.imagesLoaded( function() {
+                    $container2.masonry({
+                        itemSelector: '.item',
+                    });
+                })
+            };
+        }
+      
+    </script>
+  </article>
+</section>
+<script>
+  $(document).ready(function(){
+  	var userFeed = new Instafeed({
+        get: 'user',
+        userId: 5862806089,
+        accessToken: '5862806089.5ea0515.29a3cd235e7e4f7c85660b888a730aca',
+        limit: 6,
+		target: 'instafake',
+        resolution: 'standard_resolution',
+		success  : function(data) {
+            var counter = 0;
+            data.data.forEach(function(image){
+              try{
+              	var parent = $('#instafeed .thumb.insta-image').get(counter);
+                $('a',$(parent)).attr('href',image.link);
+                //$('img',$(parent)).attr('src',data.data[i].image.original.url);
+                $('a',$(parent)).css('background-image','url('+image.images.standard_resolution.url+')');
+            	counter++;
+              }catch(err){}
+            });
+            //return false;
+        }
+      });
+      userFeed.run();
+     $.ajax({
+      url: '/apps/newsletter/Social/Pinterest',
+      dataType: 'json',
+      type: 'GET',
+      success: function(data){
+        var length = $('#instafeed .thumb.pin-image').length;
+        for(i = 0; i < length; i++ ){
+          try{
+            //console.log(data.data[i].image.original.url);
+            var parent = $('#instafeed .thumb.pin-image').get(i);
+            $('a',$(parent)).attr('href',data.data[i].url);
+            //$('img',$(parent)).attr('src',data.data[i].image.original.url);
+            $('a',$(parent)).css('background-image','url('+data.data[i].image.original.url+')');
+          	
+          }catch(err){}
+        }
+      },
+      error: function(data){
+      	console.log(data);
+      }
+    });
+    
+  });
+</script>
+<style>
+ /* #instafeed .thumb a img{
+  	visibility: hidden;
+  }*/
+  #instafeed .thumb a{
+  	background-size: cover !important;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat !important;
+  }
+</style>

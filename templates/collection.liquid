@@ -1,0 +1,137 @@
+{% assign banner_img = '' %}
+{% if collection.handle == 'all' %}
+	{% assign banner_img = 'collection-banner.jpg' | asset_url %}
+{% elsif collection.image %}
+	{% assign banner_img = collection.image | img_url: 'master' %}
+{% endif %}
+
+  {% comment %}
+{% if banner_img != blank %}
+<div class="collection-banner">
+  	<img src="{{ banner_img }}"  />
+</div>
+{% endif %}
+  {% endcomment %}
+
+<div id="content" class="row">
+{% assign number = settings.products_per_page %}
+{% paginate collection.products by number %}
+
+<div class="section-title desktop-12 mobile-3 collectio-head">
+  <h1>{% if collection.handle == 'all' %}{{ 'collections.general.all_products' | t }}{% else %}{{ collection.title }}{% endif %}</h1>
+</div>
+
+{% if settings.show_collection_sidebar %}
+{% include 'collection-sidebar' %}
+{% endif %}
+
+<div class="{% if settings.show_collection_sidebar %}desktop-9{% else %}desktop-12{% endif %} tablet-4 mobile-3" id="bside">
+
+  {% if collection.description != blank %}
+  <div id="collection-description"> 
+    <div class="rte">{{ collection.description | remove: "[banner]" }}</div>  
+  </div>  
+  {% endif %}
+
+  <div class="clear"></div>  
+
+  <div id="product-loop">
+    {% for product in collection.products %}
+    {% assign prod_color_found = false %}
+    {% assign cur_prod_price = product.price_max | money_without_currency | plus: 0 %}
+            {% if cur_prod_price <= 1 %}
+                {% continue %}
+            {% endif %}
+    {% comment %}
+    {% include 'bold-product' with product, hide_action: 'skip' %}
+    {% endcomment %}
+    
+    {% for option in product.options %}
+        {% if option == 'Color' %}
+    	  {% assign prod_color_found = true %}
+          {% assign index = forloop.index0 %}
+          {% assign colorlist = '' %}
+          {% assign color = '' %}
+          {% for variant in product.variants %}
+    		{% assign currentColor = variant.options[index] %}
+    		{% assign colorTagFound = false %}
+    		{% for tag in current_tags %}
+    			{% assign tag_low = tag | downcase %}
+    			{% if tag_low contains 'color' %}
+    				{% assign colorTagFound = true %}
+    			{% endif %}
+    		{% endfor %}
+    		{% if colorTagFound %}
+    			{% assign tagColor = 'color-' | append: currentColor | handleize | downcase %}
+    			{% assign cur_tag_low = current_tags | downcase %}
+    			{% if cur_tag_low contains tagColor %}
+    			{% else %}
+    				{% continue %}
+    			{% endif %}
+    		{% endif %}
+    		
+            {% capture color %}
+              {{ variant.options[index] }}
+            {% endcapture %}
+    
+            {% unless colorlist contains color %}
+    
+            	<div data-color="{{ colorTagFound }}" data-tags="{{ current_tags }}" class="product {% if settings.products_per_row  == '3' %}desktop-4{% cycle ' first', '', ' last' %}{% elsif settings.products_per_row == '4' %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} tablet-half mobile-full" id="prod-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+                {% include 'product-variant-listing' %}
+                </div>
+    
+              {% capture tempList %}
+                {{ colorlist | append: color | append: ‘ ‘}}
+              {% endcapture %}
+              {% assign colorlist = tempList %}
+            {% endunless %}
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+      {% if prod_color_found != true %}
+    	<div class="product {% if settings.products_per_row  == '3' %}desktop-4{% cycle ' first', '', ' last' %}{% elsif settings.products_per_row == '4' %}desktop-3{% cycle ' first', '', '', ' last' %}{% endif %} tablet-half mobile-full" id="prod-{{ product.id }}" data-alpha="{{ product.title }}" data-price="{{ product.price }}">
+    	{% include 'product-listing' %}
+    	</div>
+      {% endif %}
+    {% endfor %} 
+  </div>
+  {% include 'pagination' %}
+</div>
+
+
+<div class="clear"></div>
+
+
+
+
+{% endpaginate %}
+
+</div>
+{% comment %}
+<script>
+  $(window).load(function(){
+  	 RemoveZeroRatings();
+      setTimeout(function(){
+		RemoveZeroRatings()
+      },1000);
+    setTimeout(function(){
+		RemoveZeroRatings()
+      },5000);
+    setTimeout(function(){
+		RemoveZeroRatings()
+      },10000);
+  });
+  function RemoveZeroRatings(){
+  	$('.jdgm-rev-widg__summary-stars').each(function(){
+      var reviews = $('.jdgm-star',this).length;
+      if(reviews >= 5){
+        var rating = $('.jdgm-star.jdgm--on',this).length;
+        if(rating <= 0){
+        }else{
+        	$(this).closest('.jdgm-review-widget').addClass('show-reviews');
+        }
+      }
+    });
+  }
+</script>
+{% endcomment %}

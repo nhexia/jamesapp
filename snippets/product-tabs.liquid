@@ -1,0 +1,70 @@
+ {% assign custom_fields = product.metafields.c_f %}
+<div id="prod-tabs">
+  <ul class="tabs">
+    <li><a href="#tabs-1">
+      <span>
+        Reviews
+      </span>
+      </a>
+    </li>
+    <li>
+      <a href="#tabs-2">
+        <span>
+          Description
+        </span>
+      </a>
+    </li>
+   
+    <li>
+      <a href="#tabs-3">
+        <span>
+          Q &amp; A
+        </span>
+      </a>
+    </li>
+   
+  </ul>
+  <div id="tabs-1">
+    
+     <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+   
+  </div>
+  <div id="tabs-2">     
+     {% if product.description != blank %}
+      <div class="description" itemprop="description">
+        {{ product.description }}
+      </div>
+      {% endif %}
+  </div>
+ 
+  	{% assign qaList = custom_fields.question_answer | newline_to_br | split: '<br />' %}
+	<div id="tabs-3">      
+      {% for qa in qaList %}
+      	{% assign qaObj  = qa | split: '~' %}
+              {% if qaObj[0] != blank and qaObj[1] != blank %}
+              <p>
+                <strong>
+                	{{ qaObj[0] | strip }}
+                </strong>
+                <br/>
+                {{ qaObj[1] | strip }}
+              </p>
+              {% endif %}
+        {% endfor %}
+      	<p class="questionandanswer">Need help with sizing? Have a suggestion or feedback? Let us know! Submit your question using the form below and we will get back to you!</p>
+      {% include 'contact-product-tab' %}
+	</div>  
+  
+</div>
+<script>
+  $(document).ready(function(){
+    $( "#prod-tabs" ).tabs();
+    $('#prod-tabs ul.tabs li:first a').addClass('active');
+    
+    /*//write-review toggle
+    $('.spr-summary-actions-newreview').click(function(e){
+      $('.spr-content .spr-form').slideToggle();
+      $(this).text($(this).text() == 'Write a Review' ? "Cancel a Review" : "Write a Review");
+    });*/
+  });
+</script>

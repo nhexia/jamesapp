@@ -1,0 +1,41 @@
+<div class="return-page">
+  {% if page.metafields.c_f.banner_image_url != blank %}
+  	<div class="help-banner banner-view" style="background-image:url({{ page.metafields.c_f.banner_image_url }});">
+  		<div class="row">
+      		<div class="help-banner-text">
+              <div class="help-banner-title">
+                <h1>{{ page.title }}</h1>
+              </div>              
+            </div>	
+      	</div>
+  	</div>
+  {% endif %}
+  <div id="content" class="row">
+    <div class="{% if settings.pagelist == '' %}desktop-12 tablet-6 mobile-3{% else %}desktop-9 tablet-4 mobile-3{% endif %}">
+      <div class="rte">
+       <div class="inner-text">	
+          <p>We will gladly accept returns of unwashed, unworn, or defective merchandise up to 30 days from the date of receipt. Please send your return in the original packaging.</p>
+          <div class="spacing-bar">
+         </div>  
+         <p>Return the package using any carrier you prefer to the following address:</p>
+         <p><strong>Attn: Customer Service Dept.</strong></p>
+            <p><strong>Heart to Heart Gifts, Inc.</strong></p>
+            <p><strong>3810 Oceanic Drive</strong></p>
+            <p><strong>Suite 201</strong></p>
+            <p><strong>Oceanside, CA 92056</strong></p>
+         <div class="spacing-bar"></div>
+            <p>Please maintain a record of the return package tracking number. Only merchandise received by our warehouse can be credited. Original shipping charges are not refundable.</p>
+            <div class="spacing-bar">
+         <p><strong> Making an Exchange </strong></p>
+            <p>Exchange requests must be made within 30 days of receipt. Items must be unwashed, unworn, or unused. Please specify the item, color, and size with a note. Any price differences will be charged or credited. You will need to pay shipping fees for the items you returned and the items we send out.</p>
+            <p>If you are exchanging an item because of a mistake on the part of Heart to Heart, we will pay the shipping cost to send a replacement item to you. The replacement order will be sent via Standard Ground Delivery.</p>    	
+        </div>		        	
+      </div>
+    </div>
+</div>  
+  </div>
+  </div>
+  
+
+
+

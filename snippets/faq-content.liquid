@@ -1,0 +1,66 @@
+
+  <div class="order-status">
+    <!--<a href="#" class="back">&lt; back to customer care</a> --> 
+    <!--<h1>frequently asked questions</h1>-->    
+    <div class="que-block">
+      <p>Welcome to our FAQ page! All of the information found on this page will help you in the event that you are left scratching your head in the middle of the night. Our Customer Service Department is not available 24/7, but everything that you will need to know is likely listed right here!</p>
+    </div>
+    <div class="faq-content">
+      <h2>most common</h2>
+      <div class="accordion">
+          <div class="accordion-section">
+              <a class="accordion-section-title">HOW DO YOUR T-SHIRTS FIT? DO YOU HAVE A SIZE CHART?</a>
+              <div class="accordion-section-content">
+                <p>This question gets asked a lot, but doesn't really have a concrete answer. No one person is identical. People are shaped differently, and personal preference varies from one fan to the next.</p>
+                <p>What we CAN tell you is that we haven't reinvented the t-shirt wheel. We offer a wide variety of sizes for both Men and Women. Our 50% Polyester, 50% Cotton premium heathered tops are sewn with a finer yarn than most "standard" t-shirts (40 singles v.s. 20 singles), thus a lighter weight garment (4.4 oz) with a slightly more tailored cut. Our sizing does not stray from traditional spec's, although the fabric is a bit lighter, while offering a more contoured fit.</p>
+                <p>A size chart can be found on each product details page.</p>
+              </div>
+          </div>
+          <div class="accordion-section">
+              <a class="accordion-section-title">WHAT ARE YOUR SHIPPING RATES?</a>
+              <div class="accordion-section-content">
+                <p>Each order that we receive here at Forged® is unique in its own way. This is also the case with each individual shipment. Forged® is very proud to offer multiple shipping services through FedEx, as well as the USPS. Depending upon the size of your order and how heavy your package is, our fulfillment system will determine the rate based upon your geographical location. </p>
+              </div>
+          </div>
+          <div class="accordion-section">
+              <a class="accordion-section-title" >WHAT ARE YOUR INTERNATIONAL SHIPPING RATES? WHAT ABOUT DUTIES?</a>
+              <div class="accordion-section-content">
+                <p>Forged® is proud to offer International Shipping options! Every shipment is unique, and each rate will vary depending upon the packages final destination. We have included a shipping rate calculator that can be found in your online shopping cart. To display this feature, simply add product to your cart and the calculator will appear at the bottom of the screen.</p>
+                <p>All duties associated with an International shipment are the responsibility of the purchaser/recipient. </p>
+              </div>
+          </div>
+          <div class="accordion-section">
+              <a class="accordion-section-title" >WHEN WILL MY ORDER BE SHIPPED? WHEN WILL IT ARRIVE?</a>
+              <div class="accordion-section-content">
+                <p>If your order was placed Monday through Thursday it will be shipped the same day or the day after. If your order was placed on Friday prior to 3:00pm PST, the order may be shipped the same day, if not it will be shipped on Monday (Forged® offices are closed Saturday and Sunday). You will receive an email confirmation once your order has been shipped. Depending upon the service type that you selected, your package will arrive accordingly. Please refer to your shipment confirmation email, as it will contain you FedEx or USPS tracking number. The email will contain a link that will allow you to track your package as it is in transit. </p>
+                <p>*PLEASE NOTE* Forged® offices are closed on Saturday and Sunday. Forged® only processes and ships packages during normal business hours. This is very important to remember if you request an Express shipping option after normal business hours or during the weekend, as it may not arrive to your address in the amount of time that it would typically take. Orders placed after 3:00pm may not reach our loading dock in time for regularly scheduled carrier pick-up, and will be shipped the following business day (no packages are shipped during the weekend). Express service shipments must be received by 3pm (Monday through Friday) or they will also be shipped the following business day.</p>
+              </div>
+          </div>
+          <div class="accordion-section">
+              <a class="accordion-section-title"  >WHAT IS THE STATUS OF MY ORDER? HOW DO I TRACK MY ORDER? </a>
+              <div class="accordion-section-content">
+                <p>Once you have placed an order, you can check its status at any time. Simply find the TRACK MY ORDER tab at the top of our website or at the bottom, in the footer. By simply entering your order number and email address, you will be able to access all of the information regarding your recent order on this page. Tracking your orders progress is very easy too! If your order has already been processed and shipped, a tracking number will display in the results when looking up your order on the TRACK MY ORDER  page. You can also refer to the shipment confirmation email that was sent to you after your initial order was placed. </p>
+              </div>              
+          </div>       
+      </div>
+    </div>
+  </div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".accordion-section-content").hide();
+    $(".accordion-section .accordion-section-title").click(function(){
+      if($(this).parent().children(".accordion-section-content").is(":visible"))
+      {
+        $(this).parent().children(".accordion-section-content").slideUp();
+        $(this).removeClass("active");
+      }
+      else
+      {
+        $(".accordion-section .accordion-section-title").removeClass('active');
+        $(".accordion-section-content").not($(this).parent().children(".accordion-section-content")).slideUp();
+        $(this).parent().children(".accordion-section-content").slideDown();
+        $(this).addClass("active");
+      }
+    });
+  });
+</script>

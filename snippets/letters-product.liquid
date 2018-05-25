@@ -1,0 +1,126 @@
+
+<div class="words-container">
+<input type="text" placeholder="Type word here" class="word-input" data-count="1" name="properties[Word1]"/>
+</div>
+<div class="clear"></div>
+<span class="validate-msg">*All letters are lowercase, no punctuation</span>
+<div class="clear"></div>
+<div class="add-word-link">
+  <a href="#"><span>+</span>Add Word</a>
+</div>
+<div class="words-counter">
+  <span class="words-count">Total Letters: <span class="count-value">0</span></span>
+  <div class="clear"></div>
+  <span class="cost-count">Total Cost: <span class="count-value">$0</span></span>
+  
+</div>
+<script>
+  var productPrice = {{ product.selected_or_first_available_variant.price | money_without_currency }};
+  $(document).ready(function(){
+    $('#AddToCartForm').keyup('input.word-input', function(){
+      var count = 0;
+      var price = 0;
+      $('#AddToCartForm input.word-input').each(function(){
+          var val = $(this).val();
+          count += val.length;
+          for (var x = 0; x < val.length; x++)
+          {
+              var letter = val.charAt(x);
+            if(letter != ''){
+              var letOpt = $('#AddToCartForm select[name="id"] option[data-letter="'+letter+'"]');
+              if(letOpt.length > 0){
+                  price += parseFloat($(letOpt).html());
+              }else{
+                  price += productPrice;
+              }
+            }
+          }
+      });
+      $('#AddToCartForm .words-counter .words-count .count-value').html(count);
+      $('#AddToCartForm .words-counter .cost-count .count-value').html('$'+price);
+    });
+  });
+  var formData = [];
+  var letterCount = 0;
+  $(document).ready(function(){
+    $('#AddToCartForm .add-word-link').click(function(e){
+    	e.preventDefault();
+      	var temp = $('#AddToCartForm .words-container .word-input').last().clone();
+      	var curCount = (parseInt($(temp).attr('data-count'))+1);
+      	$(temp).attr('data-count',curCount);
+		$(temp).attr('name','properties[Word'+curCount+']');
+      	$(temp).val('');
+      	$('#AddToCartForm .words-container').append($(temp));
+    });
+    
+    $('form[action^="/cart/add"]').submit(function(e){
+    	e.preventDefault();
+      	formData = [];
+      	var wordsCount= 1;
+      	$('#AddToCartForm input.word-input').each(function(){
+          var val = $(this).val();
+          for (var x = 0; x < val.length; x++)
+          {
+            var letter = val.charAt(x);
+            if(letter != ''){
+              var letOpt = $('#AddToCartForm select[name="id"] option[data-letter="'+letter+'"]');
+              
+              var id = parseInt($(letOpt).attr('value'));
+              var qty = 1;
+              var word = 'Word' + wordsCount;
+              var wordValue = $('.word-input[data-count="'+wordsCount+'"]').val();
+              //console.log(wordsCount +'-'+ wordValue)
+              //formData[id] = formData[id] || [];
+              //formData[id][wordValue] = formData[id][wordValue] || [];
+              //formData[id][wordValue] = formData[id][wordValue]? (parseInt(formData[id][wordValue])+1):1;
+              var foundIdx = -1;
+              var count = 0;
+              formData.forEach(function(data){
+                if(data.id == id && data.word == wordValue){
+                  console.log('found')
+                	foundIdx = count;
+                  //break;
+                }
+                count++;
+              });
+              if(foundIdx > -1){
+                formData[foundIdx].qty += 1;
+              }else{
+              	formData.push({ 'id' : id, 'qty' : qty, 'word': wordValue  });
+              }
+            }
+          }
+          wordsCount++;
+      });
+      letterCount = 0;
+      PostLetterData(letterCount);
+      $('#AddToCartForm input[type="submit"]').val('Adding...');
+      $('#AddToCartForm input[type="submit"]').attr('disabled','disabled');
+    });
+  });
+  function PostLetterData(){
+    if(letterCount < formData.length)
+    {
+      var qty = formData[letterCount].qty;
+      var id = formData[letterCount].id;
+      var word = formData[letterCount].word;
+  		jQuery.post('/cart/add.js', {
+                quantity: qty,
+                id: id,
+                properties: {
+                  word : word
+                }
+        }).always(function() {
+          letterCount++;
+          	PostLetterData();
+        });
+    }else{
+       $('#AddToCartForm input[type="submit"]').val('Add to Cart');
+      $('#AddToCartForm input[type="submit"]').removeAttr('disabled');
+      setTimeout(function(){
+      	ajaxCart.load();
+      },300);
+      
+    }
+  };
+</script>

@@ -1,0 +1,58 @@
+{% assign banner_title = page.metafields.c_f.banner_title %}
+{% assign banner_image = page.metafields.c_f.banner_image %}
+
+<div class="shipping-detail">
+  {% if banner_image != blank %}
+  <div class="collection-header headline-text test-collection {% if banner_image != blank %}page-banner-image{% endif %}">
+   {% comment %}
+    <h2>
+      {% if banner_title != blank %}
+      	{{ banner_title }}
+      {% else %}
+      	{{ page.title }}
+      {% endif %}
+    </h2> 
+    {% endcomment %}
+     
+    <img src="{{ banner_image }}"  />
+  </div>
+  {% endif %}
+</div>
+ {% if banner_image != blank %}
+<style>
+  /*.page-banner-image {
+    background-image: url("{{ banner_image }}");
+    background-size: cover;
+    background-position: center;
+  }*/
+</style>
+{% endif %}
+<div {% if template != 'page.contact-us' %}id="content" class="row" {% endif %}>
+  
+  <div class="row" id="content">
+    <div class="section-title desktop-12 customer">
+      <div class="desktop-9 tablet-4 mobile-3 right">
+        <div class="right-detail">
+      		<h1>{{ page.title }}</h1>
+          	
+      		{% if page.handle == 'contact-us' %}
+          		{{ page.content }}
+          		{% comment %}
+          		{% include 'contact-form' %}
+          		{% endcomment %}	
+          	{% elsif page.handle == 'faq' %}
+          		{% include 'faq-content' %}
+          	{% else %}
+          		<p>
+          			{{ page.content }}
+          		</p>
+          	{% endif %}
+          
+        </div>
+      </div>
+      {% include 'contact-sidebar' %}
+    </div>
+    </div>
+
+</div>
+

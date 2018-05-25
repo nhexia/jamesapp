@@ -1,0 +1,16 @@
+<article id="featured-logos" class="row">
+  {% unless settings.home-logos-title == blank %}
+    <div class="section-title row feature-product">
+      <h2>{{ settings.home-logos-title }}</h2>
+    </div>
+  {% endunless %}
+  
+  {% for i in (1..4) %}
+  	{% assign image = 'home_logo_image' | append: i %}
+  	{% unless settings[image] == blank %}
+      <div class="featured-on">
+        <img src="{{ settings[image] | img_url: '500x' }}" alt="{{ settings[image].alt | escape }}" />
+      </div>
+ 	{% endunless %}
+  {% endfor %}
+</article> 

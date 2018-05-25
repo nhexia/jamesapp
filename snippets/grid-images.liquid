@@ -1,0 +1,60 @@
+{% assign promo_url = promo | append: '_url' %}
+{% assign promo_img_url = promo | append: '.jpg' %}
+{% assign promo_title = promo | append: '_title' %}
+{% assign promo_mobile_title_raw = promo | append: '_mobile_title' %}
+{% assign promo_mobile_sub_title_raw = promo | append: '_mobile_sub_title' %}
+{% assign promo_mobile_content_align_raw = promo | append: '_mobile_content_align' %}
+
+{% assign promo_mobile_title = settings[promo_mobile_title_raw] %}
+{% assign promo_mobile_sub_title = settings[promo_mobile_sub_title_raw] %}
+{% assign promo_mobile_content_align = settings[promo_mobile_content_align_raw] %}
+
+{% assign promo_btn_en_raw = promo | append: '_btn_en' %}
+{% assign promo_btn_title_raw = promo | append: '_btn_title' %}
+{% assign promo_btn_en = settings[promo_btn_en_raw] %}
+{% assign promo_btn_title = settings[promo_btn_title_raw] %}
+
+<div class="promo-inner desktop-view">
+  <a href="{{ settings[promo_url] }}">
+    <img src="{{ promo_img_url | asset_url }}" alt="{{ settings[promo_title] }}">
+    <div class="overlay">
+      <div class="caption">     
+        
+        <p>{{ settings[promo_title] }}</p>
+        
+        {% if promo_btn_en and promo_btn_title != blank %}
+        <span>{{ promo_btn_title }}</span>
+        {% endif %}
+        	
+        
+      </div>	
+    </div>  
+  </a>
+</div>
+<div class="promo-inner mobile-view {{ promo_mobile_content_align }}">
+  <a href="{{ settings[promo_url] }}">
+    <img src="{{ promo_img_url | asset_url }}" alt="{{ settings[promo_title] }}">
+    <div class="overlay">
+      <div class="caption">
+        
+        {% if promo_mobile_title != blank %}
+        <h4>
+          {{ promo_mobile_title }}
+        </h4>
+        {% endif %}
+        
+        {% if promo_mobile_sub_title != blank %}
+        <p>
+          {{ promo_mobile_sub_title }}
+        </p>
+        {% endif %}
+        
+        {% if promo_btn_en and promo_btn_title != blank %}
+        <span>{{ promo_btn_title }}</span>
+        {% endif %}
+        	
+        
+      </div>	
+    </div>  
+  </a>
+</div>

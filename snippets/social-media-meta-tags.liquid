@@ -1,0 +1,107 @@
+{% comment %}
+Open graph tags.
+{% endcomment %}
+
+{% if settings.social_meta_title != blank %}
+	<meta property="og:title" content="{{ settings.social_meta_title }}">
+	<meta name="twitter:title" content="{{ settings.social_meta_title }}">
+{% else %}
+	{% if template == 'index' %}
+		<meta property="og:title" content="{{ page_title }}">
+		<meta name="twitter:title" content="{{ page_title }}">
+	{% elsif template contains 'product' %}
+		<meta property="og:title" content="{{ product.title | strip_html | escape }}">
+		<meta name="twitter:title" content="{{ product.title | strip_html | escape }}">
+	{% elsif template contains 'article' %}
+		<meta property="og:title" content="{{ article.title | strip_html | escape }}">
+		<meta name="twitter:title" content="{{ article.title | strip_html | escape }}">
+	{% elsif template == 'password' %}
+		<meta property="og:title" content="{{ shop.name | escape }}">
+		<meta name="twitter:title" content="{{ shop.name | escape }}">
+	{% else %}
+		<meta property="og:title" content="{{ page_title | escape }}">
+		<meta name="twitter:title" content="{{ page_title | escape }}">
+	{% endif %}
+{% endif %}
+
+	<meta property="og:image" content="http:{{ 'social_meta_image.jpg' | asset_url }}">
+	<meta property="og:image:secure_url" content="https:{{ 'social_meta_image.jpg' | asset_url }}">
+	<meta name="twitter:image" content="https:{{ 'social_meta_image.jpg' | asset_url }}">
+
+{% if settings.social_meta_desc != blank %}
+	<meta property="og:description" content="{{ settings.social_meta_desc }}">
+	<meta name="twitter:description" content="{{ settings.social_meta_desc }}">
+{% else %}
+	{% if template == 'index' %}
+		<meta property="og:description" content="{{ page_description }}">
+		<meta name="twitter:description" content="{{ page_description }}">
+	{% elsif template contains 'product' %}
+		<meta property="og:description" content="{{ product.description | strip_html | escape }}">
+		<meta name="twitter:description" content="{{ product.description | strip_html | escape }}">
+	{% elsif template contains 'article' %}
+		<meta property="og:description" content="{{ article.excerpt_or_content | strip_html | escape }}">
+		<meta name="twitter:description" content="{{ article.excerpt_or_content | strip_html | escape }}">
+	{% elsif template == 'password' %}
+		<meta property="og:description" content="{% unless shop.description == blank %}{{ shop.description | escape }}{% else %}{{ shop.name | escape }}{% endunless %}">
+		<meta name="twitter:description" content="{% unless shop.description == blank %}{{ shop.description | escape }}{% else %}{{ shop.name | escape }}{% endunless %}">
+	{% else %}
+		{% if page_description %}
+	        <meta property="og:description" content="{{ page_description | escape }}">
+			<meta name="twitter:description" content="{{ page_description | escape }}">
+        {% endif %}
+	{% endif %}
+{% endif %}
+
+{% if template == 'index' %}
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ canonical_url }}">
+
+
+{% elsif template contains 'product' %}
+
+<meta property="og:type" content="product">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html | escape }}">
+<meta property="og:price:currency" content="{{ shop.currency }}">
+
+{% elsif template contains 'article' %}
+
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonical_url }}">
+
+
+{% elsif template == 'password' %}
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ shop.url }}">
+
+{% else %}
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ canonical_url }}">
+
+{% endif %}
+
+<meta property="og:site_name" content="{{ shop.name }}">
+
+
+
+{% comment %}
+This snippet renders meta data needed to create a Twitter card.
+{% endcomment %}
+
+
+
+{% if template contains 'article' and article.image %}
+	<meta name="twitter:card" content="summary_large_image">
+{% elsif template == 'index' and hero_enabled %}
+	<meta name="twitter:card" content="summary_large_image">
+{% else %}
+	<meta name="twitter:card" content="summary">
+{% endif %}
+
+{% unless settings.show_twitter == 'false' %}
+	<meta name="twitter:site" content="@{{ settings.twittername | split: 'twitter.com/' | last }}">
+{% endunless %}
+

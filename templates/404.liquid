@@ -1,0 +1,59 @@
+ {% comment %}
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ 'general.404.title' | t }}</h1>
+</div>
+ {% endcomment %}
+<div class="desktop-12 tablet-6 mobile-3">
+  {% comment %}
+<label class="subtext">{{ 'general.404.subtext' | t }}</label>
+  {% endcomment %}
+  <div class="clear"></div>
+  <div class="int-banner">
+    	<div class="inner-content">
+          	<h1>Oopsies!</h1>
+          	<h3>We can’t seem to find the page you’re looking for</h3>
+          	<p class="err-code">error code: 404</p>
+          	<p class="click-link">Click <a href="/">HERE</a> to return to the home page</p>          	
+    	</div>
+    	<div class="int-mobile-thum">
+    		<img src="{{ '404mobilethum.jpg' | asset_url }}"  />
+    	</div>  
+  </div>  
+ {% comment %}
+    <p style="text-align:center; padding: 5% 0 3% 0; border-bottom: 1px solid #f0f0f0;">
+      <span style="font-size: 90px; line-height: 35px; color: #000; font-family: 'Open Sans';">404</span>
+      <br>
+      <span style="font-size: 18px; line-height: 20px; color: #000; font-family: 'Open Sans'; font-weight: lighter;">PAGE NOT FOUND
+        <br>
+        OOPS!
+      </span>
+      <br>
+      <br>
+      <span><a href="/" style="font-size:20px; font-weight: bold; font-family: 'Open Sans';">RETURN TO HOMEPAGE &gt;</a></span>
+    </p>
+  
+  <div id="search-bar">
+    <form action="/search" method="get">
+      <h3>{{ 'general.search.title' | t }}</h3>
+      <input type="text" name="q" id="q" placeholder="{{ 'general.search.placeholder' | t }}" />
+    </form>
+  </div>  
+ {% endcomment %}
+  
+  
+</div>
+{% comment %}
+
+    {% include 'collection-listing' %}
+  {% endcomment %}
+
+  
+<style>
+  #search-bar {
+  	text-align: center;
+    border: none;
+  }
+  #search-bar  input {
+  	margin: 0 auto;
+  }
+</style>

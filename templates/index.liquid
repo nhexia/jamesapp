@@ -1,0 +1,140 @@
+<div id="homepage">
+  <!-- Start Flexslider Option -->
+  {% if settings.slideshow == 'flexslider' %}
+  {% include 'flexslider' %}
+  <!-- End Flexslider option - Start Backstretch option -->
+  {% elsif settings.slideshow == 'backstretch' %}
+  {% include 'backstretch' %}
+  {% elsif settings.slideshow == 'split' %}
+  {% include 'split-images' %}
+  {% else %} 
+  <!-- End Backstretch option -->
+  {% endif %}
+  <div class="clear"></div>
+  {% if settings.home_section_1 != blank %}
+  {% include settings.home_section_1 %}
+  {% endif %}
+  {% if settings.home_section_2 != blank %}
+  {% include settings.home_section_2 %}
+  {% endif %}
+  {% if settings.home_section_3 != blank %}
+  {% include settings.home_section_3 %}
+  {% endif %}
+  {% if settings.home_section_4 != blank %}
+  {% include settings.home_section_4 %}
+  {% endif %}
+  {% if settings.home_section_5 != blank %}
+  {% include settings.home_section_5 %}
+  {% endif %}
+  {% if settings.home_section_6 != blank %}
+  {% include settings.home_section_6 %}
+  {% endif %}
+  {% if settings.home_section_7 != blank %}
+  {% include settings.home_section_7 %}
+  {% endif %}
+  {% if settings.home_section_8 != blank %}
+  {% include settings.home_section_8 %}
+  {% endif %}
+  {% if settings.home_section_9 != blank %}
+  {% include settings.home_section_9 %}
+  {% endif %}  
+  {% if settings.home_section_10 != blank %}
+  {% include settings.home_section_10 %}
+  {% endif %}  
+  {% if settings.home_section_11 != blank %}
+  {% include settings.home_section_11 %}
+  {% endif %} 
+  {% if settings.home_section_12 != blank %}
+  {% include settings.home_section_12 %}
+  {% endif %} 
+  {% if settings.home_section_13 != blank %}
+  {% include settings.home_section_13 %}
+  {% endif %} 
+</div>
+
+  <div class="load-wait">
+    <i class="icon-spinner icon-spin icon-large"></i>
+  </div>  
+<style>
+  .flex-control-nav {
+    bottom: 30px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.slides, .flex-control-nav, .flex-direction-nav, .flex-direction-nav li {
+    border: medium none;
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.flex-control-paging li a {
+    background: transparent none repeat scroll 0 0;
+    border: 1px solid #fff;
+    border-radius: 100%;
+    cursor: pointer;
+    display: block;
+    height: 21px;
+    text-indent: -9999px;
+    width: 21px;
+}
+a, a:visited {
+    color: #fff;
+    outline: 0 none;
+    text-decoration: none;
+    transition: color 0.1s linear 0s;
+}
+  .drawer a,.drawer a:visited {
+	color: #898d91;
+    transition: color 0.3s ease-in 0s;
+  }
+  
+.drawer a:hover {
+    color: #323334;
+    text-decoration: none;
+}
+  
+@media screen and ( max-width: 640px ) {
+  .homepage-promo .promo-inner.mobile-view .caption{
+    transform:none;
+    top:auto;
+    bottom:50px;
+    right:20px;
+    margin:0;
+    padding:0;
+    text-align:right;
+    max-width:280px;
+  }
+  .homepage-promo .promo-inner.mobile-view .caption.left-view{
+    left:20px;
+    text-align:left;
+  }
+   
+  section#homepage-promo .pimg .promo-inner.mobile-view .caption p{
+    padding:0;
+    margin:0;
+    font-size:21px;
+     font-family: 'open_sanslight';
+    letter-spacing:3px;
+    
+  }
+  .homepage-promo .promo-inner.mobile-view .caption *{
+  	text-transform: uppercase;
+  }
+  .homepage-promo .promo-inner.mobile-view.bottom-right .caption{
+  	right: 20px;
+  }
+  .homepage-promo .promo-inner.mobile-view.bottom-center .caption{
+  	right: auto;left: auto; margin: 0 auto; text-align:center;
+  }
+  .homepage-promo .promo-inner.mobile-view.bottom-center .caption *{
+  	text-align:center;
+  }
+  .homepage-promo .promo-inner.mobile-view.bottom-left .caption{
+  	right: auto;left: 20px; text-align:left;
+  }
+  .homepage-promo .promo-inner.mobile-view.bottom-left .caption *{
+  	text-align:left;
+  }
+}
+</style>

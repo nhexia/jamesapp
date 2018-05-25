@@ -1,0 +1,66 @@
+
+<div class="faq-page">
+  {% if page.metafields.c_f.banner_image_url != blank %}
+  	<div class="help-banner banner-view" style="background-image:url({{ page.metafields.c_f.banner_image_url }});">
+  		<div class="row">
+      		<div class="help-banner-text">
+              <div class="help-banner-title">
+                <h1>{{ page.title }}</h1>
+              </div>              
+            </div>	
+      	</div>
+  	</div>
+  {% endif %}
+<div id="content" class="row" >
+<div class="desktop-12 tablet-6 mobile-3">
+  <div class="rte">
+    
+    <div class="order-status">
+      <div class="faq-content">
+        <div class="accordion">
+            <div class="accordion-section">
+                <a class="accordion-section-title">How Is the Design Process at Heart To Heart?</a>
+                <div class="accordion-section-content">
+                  <p>The process of designing and launching a product at Heart To Heart can be compared to metamorphosis, it is long and painful process because we aim high. There are many rounds of brainstorm sessions among our design team, debates, working with manufacturers meticulously, keeping the cost within the budget, decision, and decisions... At Heart To Heart, everyone understands that every collection launched has to make your heart sing, otherwise, we will halt it.</p>
+                </div>
+            </div>
+            <div class="accordion-section">
+                <a class="accordion-section-title">How Did You Come Up with Butterfly Decoration Idea?</a>
+                <div class="accordion-section-content">
+                  <p>We began our business with the launch of butterfly decorations, a collection of hanging butterflies made of nylon materials for girl's room and party decor. We discovered the butterfly decor items at an international trade show and love the concept. However, the color, shape and quality is not that great. We worked hard with the manufacturer for the perfect color, material and craftmanship, such extra mile attitude and efforts really pain off and helped us outsell anyone in the marketplace. As a reward, hanging butterfly decoration collection is still going strong after ten years!</p>
+                  <p>Since then, we've also introduced some products that have a "timeless and universal" appeal. For example, fairy wings, and wood wall letters for nursery and kids room decorations. We did not invent these products, but, rather, we re-designed theme with new material and design so that the items look very new and refreshing. We've wanted to offer fairy wings for a long time and we searched high and low for materials that will look interesing so that our fairy winds will look "new" and "refreshing". We were so thrilled when we spotted a sequin elastic band at a local supply market. This unique and confortable sequin elastic band adds such a magical touch and style, along with the other elements, it sets fairy wings apart from anyone else. best of all, it is extremely confortable too.</p>
+                </div>
+            </div>
+            <div class="accordion-section">
+                <a class="accordion-section-title" >What's the font of your wall letters?</a>
+                <div class="accordion-section-content">
+                  <p>In the case of wood wall letters for nursery and kids room, the concept of hanging wooden letters for kids room has been around forever, and there are many companies that carry wall letters for kids room wall decorations. Again, we worked on many designs and weren't happy. We figured if we offer another set of wall letters that would look de jar vu to our  customers, we are not offering any value to our customers. With that goal in mind, we took inspiration from a baby's magazine font, have our designers stretched each long alphabet letters, such as "b", "d" and "h", added a little dot to each letter to make it look sweet and playful. The end result is a brand "new" and "refreshing" font. We get calls just about everyday from customers who want to know what the font is and they want to use it for their project. Today, these wall letter decorations are the most popular items among all Heart To Heart Collections.</p>
+                </div>
+            </div>      
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+  </div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".accordion-section-content").hide();
+    $(".accordion-section .accordion-section-title").click(function(){
+      if($(this).parent().children(".accordion-section-content").is(":visible"))
+      {
+        $(this).parent().children(".accordion-section-content").slideUp();
+        $(this).removeClass("active");
+      }
+      else
+      {
+        $(".accordion-section .accordion-section-title").removeClass('active');
+        $(".accordion-section-content").not($(this).parent().children(".accordion-section-content")).slideUp();
+        $(this).parent().children(".accordion-section-content").slideDown();
+        $(this).addClass("active");
+      }
+    });
+  });
+</script>

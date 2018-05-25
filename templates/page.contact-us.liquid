@@ -1,0 +1,227 @@
+{% assign banner_title = page.metafields.c_f.banner_title %}
+{% assign banner_image = page.metafields.c_f.banner_image %}
+{% assign contact_posted = false %}
+
+<div class="shipping-detail">
+  {% if banner_image != blank %}
+  <div class="collection-header headline-text test-collection {% if banner_image != blank %}page-banner-image{% endif %}">
+   {% comment %}
+    <h2>
+      {% if banner_title != blank %}
+        {{ banner_title }}
+      {% else %}
+        {{ page.title }}
+      {% endif %}
+    </h2> 
+    {% endcomment %}
+    
+    <img src="{{ banner_image }}"  />
+  </div>
+  {% endif %}
+</div>
+  
+  <div class="row" id="content">
+    <div class="section-title desktop-12 customer">
+      {% include 'contact-sidebar' %}
+      <div class="desktop-9 tablet-4 mobile-3 right">
+        <div class="right-detail head-title">
+          <h1>{{ page.title }}</h1>
+            
+          <div class="support-blockmain">
+              <div class="support-blockinner nav nav-tabs" role="tablist">
+                  
+                  
+                  <div class="desktop-4 tablet-3 mobile-3">
+                      <div class="support-popupblock">
+                          <a href="#" id="emailpopup" class="support-blocklink">
+                              <span class="inner-icon">
+                                  <img class="image-none-hover" src="//cdn.shopify.com/s/files/1/1957/5419/files/support_box1_image_hover.png?6284300106972692848" alt="Send an Email">
+                                  <img class="image-hover" src="//cdn.shopify.com/s/files/1/1957/5419/files/support_box1_image_hover.png?6284300106972692848" alt="Send an Email">
+                                </span>
+                      <h3>
+                                  Send an Email
+                                </h3>
+                      <p>
+                                  Contact our support team with any questions and we will get back to you soon!
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                  
+                  
+                  <div class="desktop-4 tablet-3 mobile-3">
+                      <div class="support-popupblock">
+                          <a href="#" id="emailpopup" class="support-blocklink">
+                              <span class="inner-icon">
+                                  <img class="image-none-hover" src="//cdn.shopify.com/s/files/1/1957/5419/files/support_box2_image_hover.png?6284300106972692848" alt="Chat with us">
+                                  <img class="image-hover" src="//cdn.shopify.com/s/files/1/1957/5419/files/support_box2_image_hover.png?6284300106972692848" alt="Chat with us">
+                                </span>
+                      <h3>
+                                  Chat with us
+                                </h3>
+                      <p>
+                                  Our support team is standing by available to answer any of your questions.
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                  
+                  
+                  <div class="desktop-4 tablet-3 mobile-3">
+                      <div class="support-popupblock">
+                          <a href="#" id="emailpopup" class="support-blocklink">
+                              <span class="inner-icon">
+                                  <img class="image-none-hover" src="//cdn.shopify.com/s/files/1/1957/5419/files/support_box3_image_hover.png?6284300106972692848" alt="Give us a Call">
+                                  <img class="image-hover" src="//cdn.shopify.com/s/files/1/1957/5419/files/support_box3_image_hover.png?6284300106972692848" alt="Give us a Call">
+                                </span>
+                      <h3>
+                                  Give us a Call
+                                </h3>
+                      <p>
+                                  Contact our team directly to speak to a rep on the phone.
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                  
+                </div>
+              
+                <div id="email-tab" class="view-content content-tab">
+                  <div class="inner-box">
+                      <div class="form-title">                          
+                          <h1>Send an Email</h1>
+                      </div>
+
+                      {% form 'contact' %}
+                        {% if form.posted_successfully? %}
+                          {% assign contact_posted = true %}
+                          <p class="success">{{ 'contact.form.post_success' | t }}</p>
+                        {% endif %}
+
+                        {% if form.errors %}
+                          {% assign contact_posted = true %}
+                          <div class="errors">
+                            <!-- {{ form.errors.size }} or {{ form.errors | size }} -->
+                            <p>Your contact form has {{ form.errors | size | pluralize: ‘an error’, ‘a few errors’ }}. To submit your form, make the following changes and try again:</p>
+
+                            {% for field in form.errors %}
+                              <p>The {{ field | capitalize | replace: 'Body', 'Message' }} field {{ form.errors.messages[field] }}.</p>
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+
+                        <div class="form-container">
+                          <div class="form-group left-input">                           
+                            <input type="text"  class="form-control" required name="contact[name]" placeholder="{{ 'contact.form.name' | t }}">
+                          </div>
+                          <div class="form-group right-input">
+                            <input type="email" class="form-control" required name="contact[email]" placeholder="{{ 'contact.form.email' | t }}">
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" name="contact[subject]" placeholder="Subject">
+                          </div>
+                          <div class="form-group">
+                            <textarea required class="form-control" rows="3" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}"></textarea>
+                          </div>
+                          <input type="submit" class="btn btn-default" value="{{ 'contact.form.send' | t }}" />
+                        </div>
+                      {% endform %}
+                    </div>
+                </div>
+                <div id="chat-tab" class="view-content content-tab">
+                  <div class="email-popupmain desktop-12">
+            <div class="desktop-9 tablet-6 mobile-3">
+                  <div class="emailp-right">
+                      <h1>Chat with us</h1>
+                        <p>Please enter your email address below to get started!</p>
+                            <form id="contact_form" class="email-popup-form">
+                                <div class="emailp-fieldsmain">
+                                     <div class="emailmain">
+                                      <div class="inputfield-data">  
+                                        <input id="email" type="email" placeholder="Please Enter Email" class="textfield" name="" required="" aria-required="true">
+                                        <input type="submit" value="submit" class="submit-btn">
+                                      </div>
+                                    </div>
+                                </div>
+                          </form>
+                      <div id="zopim-chat"></div>
+                    </div>
+                </div>
+            </div>
+                </div>
+              <div id="call-tab" class="view-content content-tab">
+                  <div class="email-popup call-popup">
+                      <div class="row">
+                          <div class="email-popupmain desktop-12">
+                              <div class="desktop-12 tablet-6 mobile-3">
+                                  <div class="emailp-right">
+                                      <h1>Give us a call</h1>
+                                      <p>Call the number below that reflects your area and a rep will be speaking wih you soon.</p>
+                                      <div class="callp-contact">
+                                          <ul class="callp-block">
+                                            <li>North America: <span><a href="tel:8775876974">(877) 587-6974</a></span></li>
+                                            <li>FAX: <span><a href="tel:7609660440">(760) 966-0440</a></span></li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+          
+        </div>
+      </div>
+      
+    </div>
+    </div>
+
+<script>
+  $(document).ready(function(){
+    
+    $('.support-blocklink').click(function(e){
+      e.preventDefault();
+        var index = $('.support-blocklink').index(this);
+        var acTabsCount = $('.view-content.content-tab.active').length;
+        var animDelay = 0;
+        var curTab = $('.view-content.content-tab').get(index);
+        var actTabs = $('.view-content.content-tab.active');
+        if(acTabsCount > 0){
+          $('.view-content.content-tab.active').slideUp(function(){
+            if($(curTab).not($(actTabs)).length > 0){
+              $(curTab).slideDown(function(){
+                var of = $(curTab).offset().top;
+                var headH = $('header').outerHeight();
+                of -= headH;
+                $('html, body').animate({
+                  scrollTop: of
+                });
+              });
+              $(curTab).addClass('active');
+            }
+          });
+            $('.view-content.content-tab.active').removeClass('active');
+        }else{
+          setTimeout(function(){
+            if($(curTab).not($(actTabs)).length > 0){
+              $(curTab).slideDown(function(){
+                var of = $(curTab).offset().top;
+                var headH = $('header').outerHeight();
+                of -= headH;
+                $('html, body').animate({
+                  scrollTop: of
+                });
+              });
+              $(curTab).addClass('active');
+            }
+          },animDelay);
+        }
+    });
+    {% if contact_posted %}
+      $('#emailpopup').click();
+    {% endif %}
+  });
+</script>
+
+

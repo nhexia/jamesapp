@@ -1,0 +1,288 @@
+{% assign wholesale = false %}
+{% assign cart_total = cart.total_price | money_without_currency %}
+{% if customer %}
+	{% if customer.metafields.c_f.wholesale_customer == 'yes' %}
+		{% assign wholesale = true %}
+	{% endif %}
+{% endif %}
+
+{% if wholesale %}
+	{% if settings.freeship_whole_en and settings.freeship_whole_amount != blank and cart_total >= settings.freeship_whole_amount and settings.freeship_whole_code != blank %}
+		{% assign discount_code = settings.freeship_whole_code %}
+	{% endif %}
+{% else %}
+	{% if settings.freeship_retail_en and settings.freeship_retail_amount != blank and cart_total >= settings.freeship_retail_amount and settings.freeship_retail_code != blank %}
+		{% assign discount_code = settings.freeship_retail_code %}
+	{% endif %}
+{% endif %}
+
+<script>if (typeof Shopify === "undefined") var Shopify = {}; Shopify.cart = {{ cart | json }};</script> 
+<div id="freegift_cart_container" name="sca.fg.cart" class="sca-fg-cart-container" style="display: none;">
+  <div id="freegift_message" class="owl-carousel"></div>
+</div> 
+<div id="sca-fg-slider-cart" style="display: none;">
+  <div class="sca-fg-cart-title">
+    <strong>Select your free gift (s)</strong>
+  </div>
+  <div id="sca_freegift_list" class="owl-carousel"></div>
+</div>
+<div id="sca_fg_cart">
+<div class="section-title desktop-12 mobile-3">
+  <h1>{{ 'cart.general.title' | t }}</h1>
+</div>
+
+<div class="clear"></div>
+
+<div id="shopping-cart" class="desktop-12 tablet-6 mobile-3">
+  
+  {% if cart.item_count == 0 %}
+  <style>body{display:none}</style>
+  <script>location.href = "/";</script>
+  
+  {% comment %}
+  <label class="subtext">{{ 'cart.general.empty' | t }}</label>
+    
+  {% include 'collection-listing' %}
+  
+  <div class="clear"></div>
+	{% endcomment %}
+  
+  
+  {% else %}
+  <script type="text/javascript">
+    function remove_item(id) {
+      document.getElementById('updates_'+id).value = 0;
+      document.getElementById('cartform').submit();
+    }
+  </script>
+  <h2 id="empty-cart" style="text-align: center; padding-bottom: 30px; display: none;">
+    <label class="subtext">{{ 'cart.general.empty' | t }}</label>
+  </h2>
+  <form action="/cart{% if discount_code != blank %}?discount={{ discount_code }}{% endif %}" method="post" id="cartform">
+    
+    
+    
+    <table id="shop-cart" class="desktop-9 tablet-6 mobile-3">
+      <thead>
+        <tr>
+        	<th class="head-first">
+            	<table width="100%" class="table product-table">
+                <thead>
+                  <tr>
+                    <th>{{ 'cart.general.product' | t }}</th>
+                  </tr>
+                </thead>
+              </table>
+            </th>
+            <th class="head-second">
+            	<table width="100%" class="table product-data-table">
+                    <thead>
+                      <tr>
+                        <th class="pro-color">COLOR</th>
+                        <th class="pro-size">Size</th>
+                        <th class="pro-qty">{{ 'cart.general.qty' | t }}</th>
+                        <th class="pro-price">{{ 'cart.general.price' | t }}</th>
+                        <th class="pro-total">{{ 'cart.general.total' | t }}</th>
+                      </tr>
+                    </thead>
+                  </table>
+            </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+        {% include 'bold-cart-item' with item %}
+        <tr class="main-cont" data-variant="{{ item.id }}" data-price="{{ item.price }}">
+        	<td class="head-first">
+            	<table width="100%" class="table product-table">
+                    <tbody>
+                      <tr>
+                        <td>
+                        <div class="cart-item">
+                <div class="cart-image">
+                  <a href="{{ item.url }}" title="{{ item.product.title | escape }}">
+                    <img src="{{ item.image | product_img_url: 'compact' }}"  alt="{{ item.product.featured_image.alt | escape }}" />
+                  </a>
+                </div>
+                <div class="cart-title">
+					<p>{{ item.product.title }}</p>
+                </div>
+              </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </td>
+            <td class="head-second">
+            	<table width="100%" class="table product-data-table">
+                    <tbody>
+                      <tr>
+                        <td class="pro-name">
+                          <div class="mobile-pname">{{ item.product.title }}</div>
+                          <div class="mobile-price">{{ item.line_price | money }}</div>
+                        </td>
+                        <td class="pro-color">{{ item.variant.option1 }}</td>
+                        <td class="pro-size">{{ item.variant.option2 }}</td>
+                        <td class="pro-item">{{ item.sku }}</td>
+                        <td class="pro-qty">
+                          <div class="mobile-qtytitle">QTY</div>
+                            <input type="number" min="0" class="cart-qt" size="4" name="updates[{{ item.id }}]" id="updates_{{ item.variant.id }}" value="{{ item.quantity }}" onfocus="this.select();" style="max-width: 50px; text-indent: 0; text-align: center; margin: 0 auto 10px; "/>    
+                          </td>
+                                        <td class="pro-price">
+                            <p>{{ item.price | money }}{% if item.variant.compare_at_price > item.price %}<br /><del>{{ item.variant.compare_at_price | money }}</del>{% endif %}</p>          
+                          </td>
+                                        <td class="pro-total">
+                            <p class="total-price">{{ item.line_price | money }}</p>
+                          </td>
+                       
+                      </tr>
+                    </tbody>
+                  </table>
+            </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    
+    
+    
+    
+    
+    <div id="basket-right" class="desktop-3 tablet-6 mobile-3">
+      <div id="right-sidebar">
+        <h4>{{ 'cart.general.subtotal' | t }} <span class="sub-total">{{ cart.total_price | money }}</span></h4>
+
+      
+      {% comment %}<input type="submit" name="update" id="update-cart" value="{{ 'cart.general.update' | t }}" class="button" />{% endcomment %}
+        
+      <input type="submit" name="checkout" id="checkout" value="{{ 'cart.general.checkout' | t }}" class="button" />
+        
+      <div class="clear"></div>
+       <p><a href="/">{{ 'cart.general.continue' | t }}</a></p> 
+      </div>
+    </div>
+    <div class="clear"></div>
+        <p style="font-size: 14px; color: #b91625; font-weight: bold; text-align: center;">
+          
+        </p>
+        
+    {% if settings.cart_notes_enable %}
+    <div id="cart-notes" class="desktop-12 mobile-3">
+      <label for="note"><strong>{{ 'cart.general.note' | t }}</strong></label>
+      <textarea name="note" id="note" rows="5" cols="60">{{cart.note}}</textarea>  
+    </div> 
+    {% endif %}
+
+    
+  </form>
+  {% endif %}
+  
+  {% comment %}
+  <div id="looked-at" class="desktop-12 mobile-half">
+    {% include 'recently-viewed' %}
+  </div>
+  {% endcomment %}
+  
+</div>
+
+<script>
+  function StickyCart()
+{
+
+  var headH = $('header').outerHeight();
+  var scrollTop = $(window).scrollTop();
+  var actScroll = headH + scrollTop;
+  var rightCartH = $('#right-sidebar').outerHeight();
+  var cartH = $('#shop-cart').height();
+  var cartOf = $('#shop-cart').offset().top;
+  var cartBotOf = cartH + cartOf;
+
+  if(actScroll >= cartOf && (cartBotOf-rightCartH) > actScroll)
+  {
+    $('#right-sidebar').addClass('sticky');
+    $('#right-sidebar').css('top','130px');
+  }
+  else if((cartBotOf-rightCartH) <= actScroll)
+  {
+    var top = (cartBotOf-rightCartH)+130 - actScroll;
+    $('#right-sidebar').css('top',top+'px');
+  }
+  else
+  {
+    $('#right-sidebar').removeClass('sticky');
+    $('#right-sidebar').css('top','auto');
+  }
+}
+$(window).scroll(function(){
+  StickyCart();
+});
+$(window).resize(function(){
+  StickyCart();
+});
+$(window).load(function(){
+  StickyCart();
+});
+  $(document).ready(function(){
+  StickyCart();
+});
+</script>
+
+{% comment %}
+<script>
+  ! function(e) {
+    e.fn.stickySidebar = function(o) {
+        var t = e.extend({
+                headerSelector: "header",
+                navSelector: "nav",
+                contentSelector: "#content",
+                footerSelector: "footer",
+                sidebarTopMargin: 20,
+                footerThreshold: 100
+            }, o),
+            r = function() {
+                var o = e(this),
+                    r = e(window).height(),
+                    i = (e(window).width(), e(document).height()),
+                    n = e(t.headerSelector).outerHeight(),
+                    s = e(t.navSelector).outerHeight(),
+                    c = o.outerHeight(),
+                    h = e(t.contentSelector).outerHeight(),
+                    a = e(t.footerSelector).outerHeight(),
+                    d = e(window).scrollTop(),
+                    l = n + s,
+                    f = i - (c + a + t.footerThreshold);
+              		if($('.collection-banner').length > 0)
+                    {
+                    	var colH = $('.collection-banner').outerHeight();
+                      	l = colH; 
+                    }
+                if (h > c && r > c)
+                    if (l > d) 
+                    {
+                      o.removeClass("sticky");
+                    }
+                    else if (d >= l && f > d) 
+                    {
+                      o.addClass("sticky").css("top", t.sidebarTopMargin);
+                    }
+                else {
+                    var u = f - d;
+                    o.addClass("sticky").css("top", u)
+                }
+            };
+        return this.each(function() {
+            e(window).on("scroll", e.proxy(r, this)), e(window).on("resize", e.proxy(r, this)), e.proxy(r, this)()
+        })
+    }
+}(jQuery);
+  $(document).ready(function(){
+  	/*$('#right-sidebar').stickySidebar({
+
+        sidebarTopMargin: 130,
+        footerThreshold: 160
+
+      });  */
+  });
+</script>
+{% endcomment %}
+</div>
